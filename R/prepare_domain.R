@@ -1,4 +1,6 @@
 prepare_domain <- function(domain, data,
+                           include_LOC = FALSE,
+                           include_METHOD = FALSE,
                            variables_include = c(),
                            timing_variables = c(
                              str_c(domain, "HR"), str_c(domain, "DY"),
