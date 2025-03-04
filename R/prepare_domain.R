@@ -9,7 +9,7 @@ prepare_domain <- function(domain, data,
                            values_fn = first){
   special_domains <- c("DM")
 
-  findings_domains <- c("LB", "MB", "VS", "RS", "MP") # MP, DD, PE, PF, RP, SC
+  findings_domains <- c("LB", "MB", "VS", "RS", "MP") # MP, DD, PE, PF, RP, SC  ## loc method
 
   event_domains <- c("SA", "HO", "ER", "PO") # "DS",
 
@@ -43,10 +43,16 @@ prepare_domain <- function(domain, data,
              UNITS = as.character(NA),
              TESTCD = as.character(NA),
              TIME = as.character(NA),
-             TIME_SOURCE = as.character(NA))
+             TIME_SOURCE = as.character(NA),
+             LOC = as.character(NA),
+             METHOD = as.character(NA))
 
     data[, "TESTCD"] <-
       data[, str_c(domain, "TESTCD")]
+    data[, "LOC"] <-
+      data[, str_c(domain, "LOC")]
+    data[, "METHOD"] <-
+      data[, str_c(domain, "METHOD")]
 
     if(length(variables_include) > 0){
       data <- data %>%
@@ -79,17 +85,55 @@ prepare_domain <- function(domain, data,
     }
 
     ## pivot
-    data <- data %>%
+    if(include_LOC == FALSE & include_METHOD == FALSE){
+      data <- data %>%
+        pivot_wider(
+          id_cols = c(
+            .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
+          ),
+          names_from = .data$TESTCD,
+          values_from = c(.data$RESULTS, .data$UNITS),
+          names_sort = TRUE, names_vary = "slowest",
+          names_glue = "{TESTCD}_{.value}",
+          values_fn = values_fn
+        )
+    } else if(include_LOC == TRUE & include_METHOD == FALSE){
+      data <- data %>%
       pivot_wider(
         id_cols = c(
           .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
         ),
         names_from = .data$TESTCD,
-        values_from = c(.data$RESULTS, .data$UNITS),
+        values_from = c(.data$RESULTS, .data$UNITS, .data$LOC),
         names_sort = TRUE, names_vary = "slowest",
         names_glue = "{TESTCD}_{.value}",
         values_fn = values_fn
       )
+    }else if(include_LOC == FALSE & include_METHOD == TRUE){
+      data <- data %>%
+      pivot_wider(
+        id_cols = c(
+          .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
+        ),
+        names_from = .data$TESTCD,
+        values_from = c(.data$RESULTS, .data$UNITS, .data$METHOD),
+        names_sort = TRUE, names_vary = "slowest",
+        names_glue = "{TESTCD}_{.value}",
+        values_fn = values_fn
+      )
+    }else{
+      data <- data %>%
+        pivot_wider(
+          id_cols = c(
+            .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
+          ),
+          names_from = .data$TESTCD,
+          values_from = c(.data$RESULTS, .data$UNITS, .data$LOC, .data$METHOD),
+          names_sort = TRUE, names_vary = "slowest",
+          names_glue = "{TESTCD}_{.value}",
+          values_fn = values_fn
+        )
+    }
 
     ## colnames
     colnames(data) <- gsub("_RESULTS", "", colnames(data))
