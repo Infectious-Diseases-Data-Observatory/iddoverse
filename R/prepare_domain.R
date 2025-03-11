@@ -9,7 +9,7 @@ prepare_domain <- function(domain, data,
                            values_fn = first){
   special_domains <- c("DM")
 
-  findings_domains <- c("LB", "MB", "VS", "RS", "MP") # MP, DD, PE, PF, RP, SC  ## loc method
+  findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP") # MP, DD, PE, PF, RP, SC  ## loc method
 
   event_domains <- c("SA", "HO", "ER", "PO") # "DS",
 
@@ -20,6 +20,8 @@ prepare_domain <- function(domain, data,
   variables_include <- str_to_upper(variables_include)
 
   timing_variables <- timing_variables[which(timing_variables %in% names(data))]
+
+  ## if domain METHOD | domain LOC != names(data)
 
   if(domain %in% special_domains){
     data <- data %>%
@@ -49,10 +51,16 @@ prepare_domain <- function(domain, data,
 
     data[, "TESTCD"] <-
       data[, str_c(domain, "TESTCD")]
-    data[, "LOC"] <-
-      data[, str_c(domain, "LOC")]
-    data[, "METHOD"] <-
-      data[, str_c(domain, "METHOD")]
+
+    if(include_LOC == TRUE){
+      data[, "LOC"] <-
+        data[, str_c(domain, "LOC")]
+    }
+
+    if(include_METHOD == TRUE){
+      data[, "METHOD"] <-
+        data[, str_c(domain, "METHOD")]
+    }
 
     if(length(variables_include) > 0){
       data <- data %>%
@@ -91,10 +99,10 @@ prepare_domain <- function(domain, data,
           id_cols = c(
             .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
           ),
-          names_from = .data$TESTCD,
-          values_from = c(.data$RESULTS, .data$UNITS),
+          names_from = c(.data$TESTCD, .data$UNITS),
+          values_from = c(.data$RESULTS),
           names_sort = TRUE, names_vary = "slowest",
-          names_glue = "{TESTCD}_{.value}",
+          names_glue = "{TESTCD}_{UNITS}_{.value}",
           values_fn = values_fn
         )
     } else if(include_LOC == TRUE & include_METHOD == FALSE){
@@ -103,10 +111,10 @@ prepare_domain <- function(domain, data,
         id_cols = c(
           .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
         ),
-        names_from = .data$TESTCD,
-        values_from = c(.data$RESULTS, .data$UNITS, .data$LOC),
+        names_from = c(.data$TESTCD, .data$LOC, .data$UNITS),
+        values_from = c(.data$RESULTS),
         names_sort = TRUE, names_vary = "slowest",
-        names_glue = "{TESTCD}_{.value}",
+        names_glue = "{TESTCD}_{LOC}_{UNITS}_{.value}",
         values_fn = values_fn
       )
     }else if(include_LOC == FALSE & include_METHOD == TRUE){
@@ -115,10 +123,10 @@ prepare_domain <- function(domain, data,
         id_cols = c(
           .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
         ),
-        names_from = .data$TESTCD,
-        values_from = c(.data$RESULTS, .data$UNITS, .data$METHOD),
+        names_from = c(.data$TESTCD, .data$METHOD, .data$UNITS),
+        values_from = c(.data$RESULTS),
         names_sort = TRUE, names_vary = "slowest",
-        names_glue = "{TESTCD}_{.value}",
+        names_glue = "{TESTCD}_{METHOD}_{UNITS}_{.value}",
         values_fn = values_fn
       )
     }else{
@@ -127,21 +135,22 @@ prepare_domain <- function(domain, data,
           id_cols = c(
             .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
           ),
-          names_from = .data$TESTCD,
-          values_from = c(.data$RESULTS, .data$UNITS, .data$LOC, .data$METHOD),
+          names_from = c(.data$TESTCD, .data$LOC, .data$METHOD, .data$UNITS),
+          values_from = c(.data$RESULTS),
           names_sort = TRUE, names_vary = "slowest",
-          names_glue = "{TESTCD}_{.value}",
+          names_glue = "{TESTCD}_{LOC}_{METHOD}_{UNITS}_{.value}",
           values_fn = values_fn
         )
     }
 
     ## colnames
     colnames(data) <- gsub("_RESULTS", "", colnames(data))
+    colnames(data) <- gsub(" ", "_", colnames(data))
     # colnames(pivot_data) <- gsub("_UNITS", "U", colnames(pivot_data))
 
     ## clean names
     data = data %>%
-      clean_names(case = "all_caps") %>%
+      # clean_names(case = "parsed") %>%
       arrange(USUBJID, str_rank(.data$TIME, numeric = TRUE))
 
     # return(pivot_data)
