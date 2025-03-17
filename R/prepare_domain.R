@@ -9,7 +9,7 @@ prepare_domain <- function(domain, data,
                            values_fn = first){
   special_domains <- c("DM")
 
-  findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP") # MP, DD, PE, PF, RP, SC  ## loc method
+  findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP") # PE, PF
 
   event_domains <- c("SA", "HO", "ER", "PO") # "DS",
 
@@ -22,6 +22,15 @@ prepare_domain <- function(domain, data,
   timing_variables <- timing_variables[which(timing_variables %in% names(data))]
 
   ## if domain METHOD | domain LOC != names(data)
+  if(include_LOC == TRUE & !(str_c(domain, "LOC") %in% names(data))){
+    rlang::warn("This dataset does not have a location (LOC) variable, yet include_LOC is TRUE")
+    include_LOC = FALSE
+  }
+
+  if(include_METHOD == TRUE & !(str_c(domain, "METHOD") %in% names(data))){
+    rlang::warn("This dataset does not have a method (METHOD) variable, yet include_METHOD is TRUE")
+    include_METHOD = FALSE
+  }
 
   if(domain %in% special_domains){
     data <- data %>%
