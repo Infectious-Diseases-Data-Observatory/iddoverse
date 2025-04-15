@@ -32,19 +32,25 @@ table_variables <- function(domain, data, by_STUDYID = FALSE) {
     } else if (domain == "MP") {
       return(table(data$MPLOC, useNA = "ifany"))
     } else if (domain == "SA") {
-      return(table(str_to_upper(data$SATERM), useNA = "ifany"))
+      return(table(str_to_upper(data$SATERM), useNA = "ifany"))  ###
     } else if (domain == "IN") {
-      return(table(str_to_upper(data$INTRT), useNA = "ifany"))
+      return(table(str_to_upper(data$INTRT), useNA = "ifany"))   ###
     } else if (domain == "VS") {
       return(table(data$VSTESTCD, useNA = "ifany"))
     } else if (domain == "DS") {
-      return(table(data$DSDECOD, useNA = "ifany"))
+      return(table(data$DSDECOD, useNA = "ifany"))               ###
     } else if (domain == "RS") {
       return(table(data$RSTESTCD, useNA = "ifany"))
     } else if (domain == "PO") {
-      return(table(str_to_upper(data$POTERM), useNA = "ifany"))
+      return(table(str_to_upper(data$POTERM), useNA = "ifany"))  ###
     } else if (domain == "SC") {
       return(table(data$SCTESTCD, useNA = "ifany"))
+    } else if (domain == "HO") {
+      return(table(data$HOTERM, useNA = "ifany"))                ###
+    } else if (domain == "ER") {
+      return(table(data$ERTERM, useNA = "ifany"))                ###
+    } else if (domain == "DD") {
+      return(table(data$DDTEST, useNA = "ifany"))
     }
   } else {
     if (domain == "DM") {
@@ -71,6 +77,12 @@ table_variables <- function(domain, data, by_STUDYID = FALSE) {
       return(table(data$STUDYID, str_to_upper(data$POTERM), useNA = "ifany"))
     } else if (domain == "SC") {
       return(table(data$STUDYID, data$SCTESTCD, useNA = "ifany"))
+    } else if (domain == "HO") {
+      return(table(data$HOTERM, useNA = "ifany"))                ###
+    } else if (domain == "ER") {
+      return(table(data$ERTERM, useNA = "ifany"))                ###
+    } else if (domain == "DD") {
+      return(table(data$DDTEST, useNA = "ifany"))
     }
   }
 }
