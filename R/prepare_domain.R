@@ -11,7 +11,7 @@ prepare_domain <- function(domain, data,
 
   findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP") # PE, PF
 
-  event_domains <- c("SA", "HO", "ER", "PO") # "DS",
+  event_domains <- c("SA", "HO", "ER", "PO") # , "DS"
 
   intervention_domains <- c("IN")
 
@@ -21,7 +21,6 @@ prepare_domain <- function(domain, data,
 
   timing_variables <- timing_variables[which(timing_variables %in% names(data))]
 
-  ## if domain METHOD | domain LOC != names(data)
   if(include_LOC == TRUE & !(str_c(domain, "LOC") %in% names(data))){
     rlang::warn("This dataset does not have a location (LOC) variable, yet include_LOC is TRUE")
     include_LOC = FALSE
@@ -76,23 +75,34 @@ prepare_domain <- function(domain, data,
         filter(TESTCD %in% variables_include)
     }
 
-    ## amalgamate
-    data[, "RESULTS"] <-
-      data[, str_c(domain, "STRESN")]
-    data[which(is.na(data$RESULTS)), "RESULTS"] <-
-      data[which(is.na(data$RESULTS)), str_c(domain, "STRESC")]
+    if(str_c(domain, "STRESN") %in% names(data)){
+      data[, "RESULTS"] <-
+        data[, str_c(domain, "STRESN")]
+    }
 
-    data[which(!is.na(data$RESULTS)), "UNITS"] <-
-      data[which(!is.na(data$RESULTS)), str_c(domain, "STRESU")]
+    if(str_c(domain, "STRESC") %in% names(data)){
+      data[which(is.na(data$RESULTS)), "RESULTS"] <-
+        data[which(is.na(data$RESULTS)), str_c(domain, "STRESC")]
+    }
 
-    ## if in modify_domains then add modify
+    if(str_c(domain, "STRESN") %in% names(data) |
+       str_c(domain, "STRESC") %in% names(data)){
+      data[which(!is.na(data$RESULTS)), "UNITS"] <-
+        data[which(!is.na(data$RESULTS)), str_c(domain, "STRESU")]
+    }
 
-    data[which(is.na(data$RESULTS)), "RESULTS"] <-
-      data[which(is.na(data$RESULTS)), str_c(domain, "ORRES")]
-    data[which(!is.na(data$RESULTS)), "UNITS"] <-
-      data[which(!is.na(data$RESULTS)), str_c(domain, "ORRESU")]
+    if(str_c(domain, "MODIFY") %in% names(data)){
+      data[which(is.na(data$RESULTS)), "RESULTS"] <-
+        data[which(is.na(data$RESULTS)), str_c(domain, "MODIFY")]
+    }
 
-    ## time
+    orres_index = which(is.na(data$RESULTS))
+
+    data[orres_index, "RESULTS"] <-
+      data[orres_index, str_c(domain, "ORRES")]
+    data[orres_index, "UNITS"] <-
+      data[orres_index, str_c(domain, "ORRESU")]
+
     for(i in 1:length(timing_variables)){
       data[which(is.na(data$TIME)), "TIME"] <-
         data[which(is.na(data$TIME)), timing_variables[i]]
@@ -101,7 +111,6 @@ prepare_domain <- function(domain, data,
         timing_variables[i]
     }
 
-    ## pivot
     if(include_LOC == FALSE & include_METHOD == FALSE){
       data <- data %>%
         pivot_wider(
@@ -152,17 +161,14 @@ prepare_domain <- function(domain, data,
         )
     }
 
-    ## colnames
     colnames(data) <- gsub("_RESULTS", "", colnames(data))
     colnames(data) <- gsub(" ", "_", colnames(data))
     # colnames(pivot_data) <- gsub("_UNITS", "U", colnames(pivot_data))
 
-    ## clean names
-    data = data %>%
+    # data = data %>%
       # clean_names(case = "parsed") %>%
-      arrange(USUBJID, str_rank(.data$TIME, numeric = TRUE))
+      # arrange(USUBJID, str_rank(.data$TIME, numeric = TRUE))
 
-    # return(pivot_data)
   } else if(domain %in% event_domains){
     data <- data %>%
       convert_blanks_to_na() %>%
@@ -183,10 +189,16 @@ prepare_domain <- function(domain, data,
     data[, "PRESP"] <-
       data[, str_c(domain, "PRESP")]
 
-    data[, "EVENT"] <-
-      data[, str_c(domain, "DECOD")]
-    data[which(is.na(data$EVENT)), "EVENT"] <-
-      data[which(is.na(data$EVENT)), str_c(domain, "MODIFY")]
+    if(str_c(domain, "DECOD") %in% names(data)){
+      data[, "EVENT"] <-
+        data[, str_c(domain, "DECOD")]
+    }
+
+    if(str_c(domain, "MODIFY") %in% names(data)){
+      data[which(is.na(data$EVENT)), "EVENT"] <-
+        data[which(is.na(data$EVENT)), str_c(domain, "MODIFY")]
+    }
+
     data[which(is.na(data$EVENT)), "EVENT"] <-
       data[which(is.na(data$EVENT)), str_c(domain, "TERM")]
 
@@ -221,8 +233,9 @@ prepare_domain <- function(domain, data,
     colnames(data) <- gsub("_EVENT", "", colnames(data))
 
     data = data %>%
-      clean_names(case = "all_caps") %>%
-      arrange(USUBJID, str_rank(.data$TIME, numeric = TRUE))
+      clean_names(case = "all_caps")
+    # %>%
+    #   arrange(USUBJID, stringr::str_rank(.data$TIME, numeric = TRUE))
   }
 
   return(data)
