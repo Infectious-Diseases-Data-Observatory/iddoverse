@@ -21,7 +21,7 @@ generate_code <- function(data){
   variables = readline("List the variables you want in the output dataset; seperate them with a comma (,):  ")
 
   if(variables != ""){
-    code = str_c(code, ", include_variables = c(", variables, ")")  # (variables %>% strsplit(","))[[1]]
+    code = str_c(code, ", variables_include = c(", variables, ")")  # (variables %>% strsplit(","))[[1]]
   }
 
   code = str_c(code, ")")
