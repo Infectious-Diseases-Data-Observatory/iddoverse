@@ -111,6 +111,14 @@ prepare_domain <- function(domain, data,
         timing_variables[i]
     }
 
+    value_fun_check <- data %>%
+      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
+      dplyr::summarise(n = dplyr::n()) %>%
+      ungroup() %>%
+      filter(n > 1)
+
+    print(str_c("Number of rows where values_fn has been used to pick record: ", nrow(value_fun_check)))
+
     if(include_LOC == FALSE & include_METHOD == FALSE){
       data <- data %>%
         pivot_wider(
@@ -217,6 +225,14 @@ prepare_domain <- function(domain, data,
       data[which(is.na(data$TIME_SOURCE) & !is.na(data$TIME)), "TIME_SOURCE"] <-
         timing_variables[i]
     }
+
+    value_fun_check <- data %>%
+      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
+      dplyr::summarise(n = dplyr::n()) %>%
+      ungroup() %>%
+      filter(n > 1)
+
+    print(str_c("Number of rows where values_fn has been used to pick record: ", nrow(value_fun_check)))
 
     data <- data %>%
       pivot_wider(
