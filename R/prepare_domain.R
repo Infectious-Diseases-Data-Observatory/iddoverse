@@ -9,11 +9,11 @@ prepare_domain <- function(domain, data,
                            values_fn = first){
   special_domains <- c("DM")
 
-  findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP") # PE, PF
+  findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF") # PE
 
   event_domains <- c("SA", "HO", "ER", "PO") # , "DS"
 
-  intervention_domains <- c("IN")
+  intervention_domains <- c("IN")  #------------ need to do --------------------
 
   domain <- str_to_upper(domain)
 
@@ -253,6 +253,11 @@ prepare_domain <- function(domain, data,
     # %>%
     #   arrange(USUBJID, stringr::str_rank(.data$TIME, numeric = TRUE))
   }
+
+
+  # else if(domain %in% intervention_domains){
+  #
+  # }
 
   return(data)
 }
