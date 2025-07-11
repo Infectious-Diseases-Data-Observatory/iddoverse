@@ -1,3 +1,8 @@
+# iddoverse 0.7.0
+* Merge pull request #28, large overhaul of functions to move to fewer, multi-domain functions
+* removal of single domain functions
+* issues #11 and #23 resolved
+
 # iddoverse 0.6.2
 * Added EVLINT
 
