@@ -21,6 +21,7 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr ungroup
 #' @importFrom janitor clean_names
+#' @importFrom janitor remove_empty
 #' @importFrom lubridate month
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
