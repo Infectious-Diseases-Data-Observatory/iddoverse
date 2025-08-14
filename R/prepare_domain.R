@@ -11,7 +11,7 @@ prepare_domain <- function(domain, data,
 
   findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF") # PE
 
-  event_domains <- c("SA", "HO", "ER", "PO") # , "DS"
+  event_domains <- c("SA", "HO", "ER", "PO") # "DS"
 
   intervention_domains <- c("IN")  #------------ need to do --------------------
 
@@ -117,7 +117,7 @@ prepare_domain <- function(domain, data,
       ungroup() %>%
       filter(n > 1)
 
-    print(str_c("Number of rows where values_fn has been used to pick record: ", nrow(value_fun_check)))
+    print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
 
     if(include_LOC == FALSE & include_METHOD == FALSE){
       data <- data %>%
@@ -232,7 +232,7 @@ prepare_domain <- function(domain, data,
       ungroup() %>%
       filter(n > 1)
 
-    print(str_c("Number of rows where values_fn has been used to pick record: ", nrow(value_fun_check)))
+    print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
 
     data <- data %>%
       pivot_wider(
