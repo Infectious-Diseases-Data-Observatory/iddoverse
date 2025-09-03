@@ -1,10 +1,10 @@
 create_clinical_table <- function(dm_domain, mb_domain = NULL, mp_domain = NULL,
                                   sa_domain = NULL, vs_domain = NULL){
-  data <- prepare_domain("dm", DM, variables_include = c("STUDYID", "USUBJID"))
+  data <- prepare_domain("dm", dm_domain, variables_include = c("STUDYID", "USUBJID"))
 
   if(!is.null(sa_domain)){
     data <- data %>%
-      left_join(prepare_domain("sa", SA,
+      full_join(prepare_domain("sa", sa_domain,
                                variables_include = c(
                                  "vomiting", "nausea", "fever",  "diarrhea",
                                  "abdominal pain", "jaundice", "bleeding",
@@ -13,19 +13,19 @@ create_clinical_table <- function(dm_domain, mb_domain = NULL, mp_domain = NULL,
 
   if(!is.null(mb_domain)){
     data <- data %>%
-      full_join(prepare_domain("mb", MB, variables_include = c("MTB", "HIV")))
+      full_join(prepare_domain("mb", mb_domain, variables_include = c("MTB", "HIV")))
   }
 
 
   if(!is.null(mp_domain)){
     data <- data %>%
-      full_join(prepare_domain("mp", MP, include_LOC = TRUE))
+      full_join(prepare_domain("mp", mp_domain, include_LOC = TRUE))
   }
 
 
   if(!is.null(vs_domain)){
     data <- data %>%
-      full_join(prepare_domain("vs", VS))
+      full_join(prepare_domain("vs", vs_domain))
   }
 
   data <- data %>%
