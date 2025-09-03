@@ -1,3 +1,32 @@
+#' Prepare IDDO-SDTM domain for analysis
+#'
+#' Amalgamate domain data and pivot wider to convert the IDDO-SDTM format data
+#' into a more analysable format. Command works on one domain and requires the
+#' two letter domain name as well as the domain data file.
+#'
+#' @param domain The two letter domain name of the data
+#' @param data The name of the data in the global environment
+#' @param include_LOC Boolean. Should the location (--LOC) be included in the
+#'   output. Default is FALSE.
+#' @param include_METHOD Boolean. Should the method (--METHOD) be included in
+#'   the output. Default is FALSE.
+#' @param variables_include List of variables to include in the output. Default
+#'   is to include all available variables.
+#' @param timing_variables List of timing variables which are to be used to
+#'   separate time points, this is hierarchical so the order is taken into
+#'   account. Default is: --HR, --DY, --STDY, VISITDY, VISITNUM, VISIT, EPOCH,
+#'   --EVLINT, --EVINTX.
+#' @param values_fn The function which will determine which data row is used in
+#'   the output, in the event there are multiple rows for the same subject with
+#'   the same time points (as listed in timing_variables). Default is first(),
+#'   i.e. if there is two rows from the same day and time, the first record will
+#'   be taken, the second will be dropped. Choice of timing_variables will
+#'   impact the number of rows impacted.
+#'
+#' @returns
+#'
+#' @export
+#'
 prepare_domain <- function(domain, data,
                            include_LOC = FALSE,
                            include_METHOD = FALSE,
