@@ -8,7 +8,7 @@ create_labs_table <- function(lb_domain,
                                 "VISIT", "EPOCH", "LBEVLINT", "LBEVINTX"),
                               values_funct = first){
 
-  prepare_domain("lb", lb_domain,
+  prepare_domain("LB", lb_domain,
                  include_METHOD = include_method,
                  variables_include = variables,
                  timing_variables = timing_variables,
