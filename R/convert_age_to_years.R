@@ -11,8 +11,6 @@
 #'
 #' @export
 #'
-#' @author Rhys Peploe
-#'
 #'
 convert_age_to_years <- function(data) {
   data <- data %>%
