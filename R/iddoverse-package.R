@@ -19,6 +19,7 @@
 #' @importFrom dplyr right_join
 #' @importFrom dplyr row_number
 #' @importFrom dplyr select
+#' @importFrom dplyr slice
 #' @importFrom dplyr ungroup
 #' @importFrom janitor clean_names
 #' @importFrom janitor remove_empty
