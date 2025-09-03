@@ -9,11 +9,12 @@ prepare_domain <- function(domain, data,
                            values_fn = first){
   special_domains <- c("DM")
 
-  findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF") # PE
+  findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF",
+                        "AU", "PC") # "MS"
 
   event_domains <- c("SA", "HO", "ER", "PO") # "DS"
 
-  intervention_domains <- c("IN")  #------------ need to do --------------------
+  intervention_domains <- c("IN", "PT")  #------------ need to do --------------------
 
   domain <- str_to_upper(domain)
 
@@ -213,7 +214,7 @@ prepare_domain <- function(domain, data,
     data <- data %>%
       filter(EVENT %in% variables_include)
 
-    if (any(is.na(data$PRESP))) {
+    if(any(is.na(data$PRESP))) {
       data[which(is.na(data$PRESP)), "PRESP"] <- "N"
       data[which(data$PRESP == "N"), "OCCUR"] <- "Y"
     }
@@ -250,14 +251,18 @@ prepare_domain <- function(domain, data,
 
     data = data %>%
       clean_names(case = "all_caps")
-    # %>%
-    #   arrange(USUBJID, stringr::str_rank(.data$TIME, numeric = TRUE))
+
   }
 
 
   # else if(domain %in% intervention_domains){
   #
   # }
+
+  if("TIME_SOURCE" %in% names(data)){
+    data <- data %>%
+      mutate(TIME_SOURCE = sub(paste0("^", domain), "--", TIME_SOURCE))
+  }
 
   return(data)
 }
