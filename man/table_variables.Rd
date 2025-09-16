@@ -8,7 +8,8 @@ table_variables(domain, data, by_STUDYID = FALSE)
 }
 \arguments{
 \item{domain}{The two letter code for the domain which matches the data.
-Character string. Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS", "DS", "RS".}
+Character string. Domains included: "DM", "LB", "RP", "MB", "MP", "SA",
+"IN", "VS", "DS", "RS".}
 
 \item{data}{The name of the SDTM domain dataset in the global environment.}
 
@@ -16,13 +17,11 @@ Character string. Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "V
 }
 \value{
 For Demographics (DM) domain, a character list with the column names.
-For all other domains, a table class object listing the variables under --TESTCD
-or INTRT, MPLOC, DSDECOD; where -- is the two letter domain name.
+For all other domains, a table class object listing the variables under
+--TESTCD or INTRT, MPLOC, DSDECOD; where -- is the two letter domain name.
 }
 \description{
-Uses table() to display the variables contained within an SDTM formatted data frame.
-Additionally can be split by STUDYID to display the options across multiple studies.
-}
-\author{
-Rhys Peploe
+Uses table() to display the variables contained within an SDTM
+formatted data frame. Additionally can be split by STUDYID to display the
+options across multiple studies.
 }
