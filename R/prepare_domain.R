@@ -4,8 +4,8 @@
 #' into a more analysable format. Command works on one domain and requires the
 #' two letter domain name as well as the domain data file.
 #'
-#' @param domain The two letter domain name of the data
-#' @param data The name of the data in the global environment
+#' @param domain The two letter domain name of the data.
+#' @param data The name of the data in the global environment.
 #' @param include_LOC Boolean. Should the location (--LOC) be included in the
 #'   output. Default is FALSE.
 #' @param include_METHOD Boolean. Should the method (--METHOD) be included in
@@ -21,9 +21,10 @@
 #'   the same time points (as listed in timing_variables). Default is first(),
 #'   i.e. if there is two rows from the same day and time, the first record will
 #'   be taken, the second will be dropped. Choice of timing_variables will
-#'   impact the number of rows impacted.
+#'   impact the number of rows affected.
 #'
-#' @returns
+#' @returns A dataframe which has been cleaned and subset based on the input
+#'   parameters
 #'
 #' @export
 #'
@@ -287,6 +288,73 @@ prepare_domain <- function(domain, data,
   # else if(domain %in% intervention_domains){
   #
   # }
+
+  else if(domain == "DS"){
+    data <- data %>%
+      convert_blanks_to_na() %>%
+      mutate(across(
+        (ends_with("TERM") | ends_with("DECOD") | ends_with("MODIFY")),
+        function(x) str_to_upper(as.character(x)))) %>%
+      mutate(across(
+        any_of(timing_variables),
+        function(x) as.character(x))) %>%
+      mutate(EVENT = as.character(NA),
+             # OCCUR = as.character(NA),
+             # PRESP = as.character(NA),
+             TIME = as.character(NA),
+             TIME_SOURCE = as.character(NA))
+
+    # data[, "OCCUR"] <-
+    #   data[, str_c(domain, "OCCUR")]
+    # data[, "PRESP"] <-
+    #   data[, str_c(domain, "PRESP")]
+
+    if(str_c(domain, "DECOD") %in% names(data)){
+      data[, "EVENT"] <-
+        data[, str_c(domain, "DECOD")]
+    }
+
+    if(str_c(domain, "MODIFY") %in% names(data)){
+      data[which(is.na(data$EVENT)), "EVENT"] <-
+        data[which(is.na(data$EVENT)), str_c(domain, "MODIFY")]
+    }
+
+    data[which(is.na(data$EVENT)), "EVENT"] <-
+      data[which(is.na(data$EVENT)), str_c(domain, "TERM")]
+
+    # data <- data %>%
+    #   filter(EVENT %in% variables_include)
+
+    # if(any(is.na(data$PRESP))) {
+    #   data[which(is.na(data$PRESP)), "PRESP"] <- "N"
+    #   data[which(data$PRESP == "N"), "OCCUR"] <- "Y"
+    # }
+
+    for(i in 1:length(timing_variables)){
+      data[which(is.na(data$TIME)), "TIME"] <-
+        data[which(is.na(data$TIME)), timing_variables[i]]
+
+      data[which(is.na(data$TIME_SOURCE) & !is.na(data$TIME)), "TIME_SOURCE"] <-
+        timing_variables[i]
+    }
+
+    value_fun_check <- data %>%
+      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
+      dplyr::summarise(n = dplyr::n()) %>%
+      ungroup() %>%
+      filter(n > 1)
+
+    print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+
+    data <- data %>%
+      select(STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT)
+
+    # colnames(data) <- gsub("_EVENT", "", colnames(data))
+
+    # data = data %>%
+    #   clean_names(case = "all_caps")
+
+  }
 
   if("TIME_SOURCE" %in% names(data)){
     data <- data %>%
