@@ -18,6 +18,3 @@ values.
 Convert the AGE of all subjects to years and change the AGEU to
 "YEARS".
 }
-\author{
-Rhys Peploe
-}
