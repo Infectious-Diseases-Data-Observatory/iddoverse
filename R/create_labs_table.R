@@ -1,3 +1,28 @@
+#' Create table of laboratory test results
+#'
+#' Uses the IDDO-SDTM laboratory test results (LB) domain to create a single
+#' dataset with various lab test result information summarised.
+#'
+#' @param lb_domain The name of the laboratory test results (LB) domain in the
+#'   global environment.
+#' @param variables A list of variables to be included in the output dataset.
+#' @param include_method Boolean. Should LBMETHOD be included in the output for all variables.
+#' @param timing_variables List of timing variables which are to be used to
+#'   separate time points, this is hierarchical so the order is taken into
+#'   account. Default is: LBHR, LBDY, LBSTDY, VISITDY, VISITNUM, VISIT, EPOCH,
+#'   LBEVLINT, LBEVINTX.
+#' @param values_funct The function which will determine which data row is used in
+#'   the output, in the event there are multiple rows for the same subject with
+#'   the same time points (as listed in timing_variables). Default is first(),
+#'   i.e. if there is two rows from the same day and time, the first record will
+#'   be taken, the second will be dropped. Choice of timing_variables will
+#'   impact the number of rows affected.
+#'
+#' @returns An analysis dataset, one row per person, per timepoint.
+#'
+#' @export
+#'
+
 create_labs_table <- function(lb_domain,
                               variables = c("ALB", "ALT", "AST", "BILI", "CREAT",
                                             "CD4", "G6PD", "HCT", "HGB", "HGBMET",

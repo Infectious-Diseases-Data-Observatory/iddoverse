@@ -1,3 +1,26 @@
+#' Create table of participant details and baseline characteristics.
+#'
+#' Joins several IDDO-SDTM domains together to create a single dataset with
+#' participant demographics, characteristics and baseline test results or
+#' findings.
+#'
+#' @param dm_domain The name of the demographics (DM) domain in the global
+#'   environment.
+#' @param lb_domain The name of the laboratory test results (LB) domain in the
+#'   global environment.
+#' @param mb_domain The name of the microbiology (MB) domain in the global
+#'   environment.
+#' @param rp_domain The name of the reproductive system findings (RP) domain in
+#'   the global environment.
+#' @param sc_domain The name of the subject characteristics (SC) domain in the
+#'   global environment.
+#' @param vs_domain The name of the vital signs (VS) domain in the global
+#'   environment.
+#'
+#' @returns An analysis dataset, one row per participant.
+#'
+#' @export
+#'
 create_participant_table <- function(dm_domain,
                                      lb_domain = NULL,
                                      mb_domain = NULL,
