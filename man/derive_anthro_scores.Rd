@@ -21,6 +21,5 @@ is only for children less than 5 years old.
 }
 \details{
 Note the function can be applied to a dataset with subjects greater than 5
-years old too, but those subjects will be filtered out. If using ANALYSE_X(),
-then over 5 year olds will still remain in the resultant dataset.
+years old too, but those subjects will be filtered out.
 }
