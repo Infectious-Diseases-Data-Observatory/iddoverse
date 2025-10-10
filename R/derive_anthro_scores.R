@@ -1,15 +1,15 @@
 #' Calculate WHO growth standards using the anthro() package.
 #'
-#' Calculates the Height for Age, Weight for Age and Weight for Height z-scores
-#' which are used to measure growth against the WHO population standards. This
-#' is only for children less than 5 years old.
+#' Calculates the Height for Age (HAZ), Weight for Age (WAZ) and Weight for
+#' Height (WHZ) z-scores which are used to measure growth against the WHO
+#' population standards. This is only for children less than 5 years old.
 #'
-#' Note the function can be applied to a dataset with subjects greater than 5
-#' years old too, but those subjects will be filtered out. If using ANALYSE_X(),
-#' then over 5 year olds will still remain in the resultant dataset.
+#' The function can be applied to a dataset with subjects greater than 5 years
+#' old too, but those subjects will be filtered out.
 #'
-#' @param data data frame contain the AGE, AGE_DAYS, WEIGHT & HEIGHT variables,
-#'   typically held in the Demographics (DM) and Vital Signs (VS) domains.
+#' @param data data frame that contains the AGE, AGEU, WEIGHT & HEIGHT
+#'   variables, typically held in the Demographics (DM) and Vital Signs (VS)
+#'   domains.
 #'
 #' @return data frame with only only 5 year olds included and additional columns
 #'   for WAZ, HAZ and WHZ scores, along with flags for each.
@@ -17,6 +17,13 @@
 #' @export
 #'
 #' @importFrom anthro anthro_zscores
+#'
+#' @examples
+#' data = prepare_domain("dm", DM_RPTESTB) %>%
+#'   full_join(prepare_domain("vs", VS_RPTESTB))
+#'
+#' derive_anthro_scores(data)
+#'
 #'
 derive_anthro_scores <- function(data) {
   data <- data %>%
@@ -50,8 +57,8 @@ derive_anthro_scores <- function(data) {
       anthro_zscores(
         sex = data_anthro$SEX,
         age = as.numeric(data_anthro$AGE_DAYS),
-        weight = as.numeric(data_anthro$WEIGHT),
-        lenhei = as.numeric(data_anthro$HEIGHT)
+        weight = as.numeric(data_anthro$WEIGHT_kg),
+        lenhei = as.numeric(data_anthro$HEIGHT_cm)
       ) %>%
         dplyr::select(
           "zlen", "flen", "zwei",
@@ -66,7 +73,7 @@ derive_anthro_scores <- function(data) {
         "WHZ" = "zwfl",
         "WHZ_FLAG" = "fwfl"
       ) %>%
-      select(-AGE_DAYS)
+      select(-.data$AGE_DAYS)
 
     return(bind_anthro)
   }
