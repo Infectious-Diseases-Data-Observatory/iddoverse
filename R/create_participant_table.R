@@ -2,24 +2,25 @@
 #'
 #' Joins several IDDO-SDTM domains together to create a single dataset with
 #' participant demographics, characteristics and baseline test results or
-#' findings.
+#' findings. Baseline timing is defined as actual study day (--DY) = 1, planned
+#' study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE.
 #'
-#' @param dm_domain The name of the demographics (DM) domain in the global
-#'   environment.
-#' @param lb_domain The name of the laboratory test results (LB) domain in the
-#'   global environment.
-#' @param mb_domain The name of the microbiology (MB) domain in the global
-#'   environment.
-#' @param rp_domain The name of the reproductive system findings (RP) domain in
-#'   the global environment.
-#' @param sc_domain The name of the subject characteristics (SC) domain in the
-#'   global environment.
-#' @param vs_domain The name of the vital signs (VS) domain in the global
-#'   environment.
+#' @param dm_domain A demographics/DM domain data frame.
+#' @param lb_domain A laboratory/LB domain data frame.
+#' @param mb_domain A microbiology/MB domain data frame.
+#' @param rp_domain A reproductive system findings/RP domain data frame.
+#' @param sc_domain A subject characteristics/SC domain data frame.
+#' @param vs_domain A vital signs/VS domain data frame.
 #'
 #' @returns An analysis dataset, one row per participant.
 #'
 #' @export
+#'
+#' @examples
+#' create_participant_table(dm_domain = DM_RPTESTB,
+#'                          lb_domain = LB_RPTESTB,
+#'                          vs_domain = VS_RPTESTB)
+#'
 #'
 create_participant_table <- function(dm_domain,
                                      lb_domain = NULL,
@@ -40,12 +41,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("EDULEVEL", "MARISTAT"),
                        timing_variables = c("SCDY", "VISITDY", "EPOCH"))%>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "SCDY") |
-              (TIME == 1 & TIME_SOURCE == "VISITDY") |
-              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
+            (.data$TIME == 1 & .data$TIME_SOURCE == "SCDY") |
+              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
+              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(TIME, TIME_SOURCE)) %>%
-          group_by(USUBJID) %>%
+          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
+          group_by(.data$USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -58,12 +59,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("HEIGHT", "WEIGHT", "BMI", "MUARMCIR"),
                        timing_variables = c("VSDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "VSDY") |
-              (TIME == 1 & TIME_SOURCE == "VISITDY") |
-              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
+            (.data$TIME == 1 & .data$TIME_SOURCE == "VSDY") |
+              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
+              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(TIME, TIME_SOURCE)) %>%
-          group_by(USUBJID) %>%
+          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
+          group_by(.data$USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -76,12 +77,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("G6PD"),
                        timing_variables = c("LBDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "LBDY") |
-              (TIME == 1 & TIME_SOURCE == "VISITDY") |
-              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
+            (.data$TIME == 1 & .data$TIME_SOURCE == "LBDY") |
+              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
+              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(TIME, TIME_SOURCE)) %>%
-          group_by(USUBJID) %>%
+          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
+          group_by(.data$USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -94,12 +95,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("HIV"),
                        timing_variables = c("MBDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "MBDY") |
-              (TIME == 1 & TIME_SOURCE == "VISITDY") |
-              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
+            (.data$TIME == 1 & .data$TIME_SOURCE == "MBDY") |
+              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
+              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(TIME, TIME_SOURCE)) %>%
-          group_by(USUBJID) %>%
+          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
+          group_by(.data$USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -112,12 +113,12 @@ create_participant_table <- function(dm_domain,
                                variables_include = c("PREGIND", "EGESTAGE"),
                                timing_variables = c("RPDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "RPDY") |
-              (TIME == 1 & TIME_SOURCE == "VISITDY") |
-              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
+            (.data$TIME == 1 & .data$TIME_SOURCE == "RPDY") |
+              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
+              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(TIME, TIME_SOURCE)) %>%
-          group_by(USUBJID) %>%
+          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
+          group_by(.data$USUBJID) %>%
           slice(1) %>%
           ungroup()
         )
