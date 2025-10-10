@@ -25,3 +25,11 @@ Uses table() to display the variables contained within an SDTM
 formatted data frame. Additionally can be split by STUDYID to display the
 options across multiple studies.
 }
+\examples{
+library(iddoverse)
+
+table_variables("LB", LB_RPTESTB)
+
+table_variables("VS", VS_RPTESTB, by_STUDYID = TRUE)
+
+}

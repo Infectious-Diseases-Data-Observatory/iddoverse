@@ -1,6 +1,6 @@
-#' @title Convert AGE to years.
+#' Convert AGE to years.
 #'
-#' @description Convert the AGE of all subjects to years and change the AGEU to
+#' Convert the AGE of all subjects to years and change the AGEU to
 #'   "YEARS".
 #'
 #' @param data data frame containing the AGE and AGEU variables; typically the
@@ -11,6 +11,10 @@
 #'
 #' @export
 #'
+#' @examples
+#' DM_RPTESTB
+#'
+#' convert_age_to_years(DM_RPTESTB)
 #'
 convert_age_to_years <- function(data) {
   data <- data %>%
