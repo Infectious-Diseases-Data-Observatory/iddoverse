@@ -1,4 +1,4 @@
-test_that("DERIVE_AGE_YEARS works", {
+test_that("convert_age_To_years works", {
   input_df <- data.frame(
     AGE = c(5, 16, 58, 60, 50),
     AGEU = c("YEARS", "MONTHS", "years", "MONTHS", "WEEKS")
@@ -9,5 +9,5 @@ test_that("DERIVE_AGE_YEARS works", {
     AGEU = c("YEARS", "YEARS", "YEARS", "YEARS", "YEARS")
   )
 
-  expect_equal(DERIVE_AGE_YEARS(input_df), output_df)
+  expect_equal(convert_age_to_years(input_df), output_df)
 })
