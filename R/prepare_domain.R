@@ -1,32 +1,48 @@
 #' Prepare IDDO-SDTM domain for analysis
 #'
 #' Amalgamate domain data and pivot wider to convert the IDDO-SDTM format data
-#' into a more analysable format. Command works on one domain and requires the
+#' into a more analysable format. Function works on one domain and requires the
 #' two letter domain name as well as the domain data file.
 #'
-#' @param domain The two letter domain name of the data.
-#' @param data The name of the data in the global environment.
+#' @param domain Character. The two letter domain name of the data.
+#' @param data Domain data frame.
 #' @param include_LOC Boolean. Should the location (--LOC) be included in the
 #'   output. Default is FALSE.
 #' @param include_METHOD Boolean. Should the method (--METHOD) be included in
 #'   the output. Default is FALSE.
-#' @param variables_include List of variables to include in the output. Default
-#'   is to include all available variables.
-#' @param timing_variables List of timing variables which are to be used to
-#'   separate time points, this is hierarchical so the order is taken into
-#'   account. Default is: --HR, --DY, --STDY, VISITDY, VISITNUM, VISIT, EPOCH,
-#'   --EVLINT, --EVINTX.
-#' @param values_fn The function which will determine which data row is used in
-#'   the output, in the event there are multiple rows for the same subject with
-#'   the same time points (as listed in timing_variables). Default is first(),
-#'   i.e. if there is two rows from the same day and time, the first record will
-#'   be taken, the second will be dropped. Choice of timing_variables will
-#'   impact the number of rows affected.
+#' @param variables_include Character list. List of variables to include in the
+#'   output. Default is to include all available variables.
+#' @param timing_variables Character list. List of timing variables which are to
+#'   be used to separate time points, this is hierarchical so the order is taken
+#'   into account. Default is: --HR, --DY, --STDY, VISITDY, VISITNUM, VISIT,
+#'   EPOCH, --EVLINT, --EVINTX.
+#'
+#'   (using default for example) Each row will be initially summarised based on
+#'   the --HR (study hour) variable, if that is missing then the --DY (study
+#'   day) variable is used, and so on. The output will be one row per
+#'   participant, per time point, where the time point for each row is the first
+#'   available variable listed in timing_variables.
+#' @param values_fn Function. The function which will determine which data row
+#'   is used in the output, in the event there are multiple rows for the same
+#'   subject with the same time points (as listed in timing_variables). Default
+#'   is first(), i.e. if there is two rows from the same day and time, the first
+#'   record will be taken, the second will be dropped. Choice of
+#'   timing_variables will impact the number of rows affected.
 #'
 #' @returns A dataframe which has been cleaned and subset based on the input
-#'   parameters
+#'   parameters.
 #'
 #' @export
+#'
+#' @examples
+#'
+#' prepare_domain("DM", DM_RPTESTB)
+#'
+#' prepare_domain("DM", DM_RPTESTB, variables_include = c("ARMCD", "AGE", "SEX"))
+#'
+#' prepare_domain("lb", LB_RPTESTB, timing_variables = c("VISITNUM", "VISITDY"))
+#'
+#' prepare_domain("vs", VS_RPTESTB, include_LOC = TRUE, values_fn = last)
 #'
 prepare_domain <- function(domain, data,
                            include_LOC = FALSE,
@@ -53,12 +69,12 @@ prepare_domain <- function(domain, data,
   timing_variables <- timing_variables[which(timing_variables %in% names(data))]
 
   if(include_LOC == TRUE & !(str_c(domain, "LOC") %in% names(data))){
-    rlang::warn("This dataset does not have a location (LOC) variable, yet include_LOC is TRUE")
+    rlang::warn(str_c("This dataset does not have a location (", domain, "LOC) variable, yet include_LOC is TRUE"))
     include_LOC = FALSE
   }
 
   if(include_METHOD == TRUE & !(str_c(domain, "METHOD") %in% names(data))){
-    rlang::warn("This dataset does not have a method (METHOD) variable, yet include_METHOD is TRUE")
+    rlang::warn(str_c("This dataset does not have a method (", domain, "METHOD) variable, yet include_METHOD is TRUE"))
     include_METHOD = FALSE
   }
 
@@ -68,7 +84,7 @@ prepare_domain <- function(domain, data,
 
     if(length(variables_include) > 0){
       data <- data %>%
-        select(any_of(variables_include))
+        select(STUDYID, USUBJID, any_of(variables_include))
     }
 
   } else if(domain %in% findings_domains){
@@ -103,7 +119,7 @@ prepare_domain <- function(domain, data,
 
     if(length(variables_include) > 0){
       data <- data %>%
-        filter(TESTCD %in% variables_include)
+        filter(.data$TESTCD %in% variables_include)
     }
 
     if(str_c(domain, "STRESN") %in% names(data)){
@@ -143,10 +159,10 @@ prepare_domain <- function(domain, data,
     }
 
     value_fun_check <- data %>%
-      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
+      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE, .data$TESTCD) %>%
       dplyr::summarise(n = dplyr::n()) %>%
       ungroup() %>%
-      filter(n > 1)
+      filter(.data$n > 1)
 
     print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
 
@@ -242,7 +258,7 @@ prepare_domain <- function(domain, data,
       data[which(is.na(data$EVENT)), str_c(domain, "TERM")]
 
     data <- data %>%
-      filter(EVENT %in% variables_include)
+      filter(.data$EVENT %in% variables_include)
 
     if(any(is.na(data$PRESP))) {
       data[which(is.na(data$PRESP)), "PRESP"] <- "N"
@@ -261,7 +277,7 @@ prepare_domain <- function(domain, data,
       group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
       dplyr::summarise(n = dplyr::n()) %>%
       ungroup() %>%
-      filter(n > 1)
+      filter(.data$n > 1)
 
     print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
 
@@ -342,12 +358,12 @@ prepare_domain <- function(domain, data,
       group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
       dplyr::summarise(n = dplyr::n()) %>%
       ungroup() %>%
-      filter(n > 1)
+      filter(.data$n > 1)
 
     print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
 
     data <- data %>%
-      select(STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT)
+      select(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE, .data$EVENT)
 
     # colnames(data) <- gsub("_EVENT", "", colnames(data))
 
@@ -358,7 +374,7 @@ prepare_domain <- function(domain, data,
 
   if("TIME_SOURCE" %in% names(data)){
     data <- data %>%
-      mutate(TIME_SOURCE = sub(paste0("^", domain), "--", TIME_SOURCE))
+      mutate(TIME_SOURCE = sub(paste0("^", domain), "--", .data$TIME_SOURCE))
   }
 
   return(data)
