@@ -1,3 +1,39 @@
+#' Create table of parasitemia data specifically for malaria parasites.
+#'
+#' Uses the IDDO-SDTM microbiology (MB) domain to create a single dataset with
+#' various microbiology information summarised.
+#'
+#' @param mb_domain A microbiology/MB domain data frame.
+#' @param variables Character list. A list of variables to be included in the output dataset.
+#' @param include_method Boolean. Should MBMETHOD be included in the output for
+#'   all variables.
+#' @param include_location Boolean. Should MBLOC be included in the output for
+#'   all variables.
+#' @param timing_variables Character list. List of timing variables which are to be used to
+#'   separate time points, this is hierarchical so the order is taken into
+#'   account. Default is: MBHR, MBDY, MBSTDY, VISITDY, VISITNUM, VISIT, EPOCH,
+#'   MBEVLINT, MBEVINTX.
+#'
+#'   (using default for example) Each row will be initially summarised based on
+#'   the --HR (study hour) variable, if that is missing then the --DY (study
+#'   day) variable is used, and so on. The output will be one row per
+#'   participant, per time point, where the time point for each row is the first
+#'   available variable listed in timing_variables.
+#' @param values_funct Function. The function which will determine which data row is used
+#'   in the output, in the event there are multiple rows for the same subject
+#'   with the same time points (as listed in timing_variables). Default is
+#'   first(), i.e. if there is two rows from the same day and time, the first
+#'   record will be taken, the second will be dropped. Choice of
+#'   timing_variables will impact the number of rows affected.
+#'
+#' @returns An analysis dataset, one row per person, per timepoint.
+#'
+#' @export
+#'
+#'
+#'
+#'
+
 create_malaria_parasitemia_table <- function(mb_domain,
                                              variables = c(
                                                "PFALCIPA", "PFALCIPS", "PFALCIP",
