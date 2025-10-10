@@ -1,14 +1,14 @@
-#' @title Tabulate function to display variables in a given domain
+#' Tabulate function to display variables in a given domain
 #'
-#' @description Uses table() to display the variables contained within an SDTM
-#'   formatted data frame. Additionally can be split by STUDYID to display the
-#'   options across multiple studies.
+#' Uses table() to display the variables contained within an SDTM
+#' formatted data frame. Additionally can be split by STUDYID to display the
+#' options across multiple studies.
 #'
-#' @param domain The two letter code for the domain which matches the data.
+#' @param domain Character. The two letter code for the domain which matches the data.
 #'   Character string. Domains included: "DM", "LB", "RP", "MB", "MP", "SA",
-#'   "IN", "VS", "DS", "RS".
-#' @param data The name of the SDTM domain dataset in the global environment.
-#' @param by_STUDYID Split by STUDYID if TRUE. Default is FALSE.
+#'   "IN", "VS", "DS", "RS", "PO", "SC", "HO", "ER" & "DD".
+#' @param data Domain data frame.
+#' @param by_STUDYID Boolean. Split data by STUDYID if TRUE. Default is FALSE.
 #'
 #' @return For Demographics (DM) domain, a character list with the column names.
 #'   For all other domains, a table class object listing the variables under
@@ -16,6 +16,10 @@
 #'
 #' @export
 #'
+#' @examples
+#' table_variables("LB", LB_RPTESTB)
+#'
+#' table_variables("VS", VS_RPTESTB, by_STUDYID = TRUE)
 #'
 table_variables <- function(domain, data, by_STUDYID = FALSE) {
   domain <- str_to_upper(domain)
