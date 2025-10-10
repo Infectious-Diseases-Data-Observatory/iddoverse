@@ -27,6 +27,7 @@
 #'
 #' @export
 #'
+#' @examples
 #' create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB)
 #'
 #' create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
