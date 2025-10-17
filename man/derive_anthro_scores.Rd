@@ -32,5 +32,4 @@ data = full_join(
 
 derive_anthro_scores(data)
 
-
 }
