@@ -84,7 +84,7 @@ prepare_domain <- function(domain, data,
 
     if(length(variables_include) > 0){
       data <- data %>%
-        select(STUDYID, USUBJID, any_of(variables_include))
+        select(.data$STUDYID, .data$USUBJID, any_of(variables_include))
     }
 
   } else if(domain %in% findings_domains){
