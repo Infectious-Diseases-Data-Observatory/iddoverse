@@ -30,6 +30,7 @@
 #' @examples
 #' create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB)
 #'
+#' # Change which timing_variables are used to summarise the data
 #' create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
 #'                            timing_variables = c("VISITDY", "EPOCH"))
 #'

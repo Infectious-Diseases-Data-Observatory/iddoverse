@@ -34,6 +34,7 @@
 #' @examples
 #' create_malaria_parasitemia_table(MB_RPTESTB)
 #'
+#' # Change which timing_variables are used to summarise the data
 #' create_malaria_parasitemia_table(MB_RPTESTB, timing_variables = "EPOCH")
 #'
 #' # Adding include_method = TRUE provides the method in the column of the analysis dataset

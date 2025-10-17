@@ -32,11 +32,11 @@
 #' @examples
 #' create_labs_table(LB_RPTESTB)
 #'
+#' # Change which timing_variables are used to summarise the data, select just Hemoglobin
 #' create_labs_table(LB_RPTESTB,
 #'                   variables = c("HGB"),
 #'                   timing_variables = c("EPOCH", "VISIT"))
 #'
-
 create_labs_table <- function(lb_domain,
                               variables = c("ALB", "ALT", "AST", "BILI", "CREAT",
                                             "CD4", "G6PD", "HCT", "HGB", "HGBMET",

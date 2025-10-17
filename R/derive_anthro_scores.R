@@ -19,6 +19,7 @@
 #' @importFrom anthro anthro_zscores
 #'
 #' @examples
+#' # Merge the DM (AGE, SEX) and VS (WEIGHT, HEIGHT) domains together
 #' data = merge(
 #'   prepare_domain("dm", DM_RPTESTB),
 #'   prepare_domain("vs", VS_RPTESTB)
