@@ -1,13 +1,11 @@
 #' Convert AGE to years.
 #'
-#' Convert the AGE of all subjects to years and change the AGEU to
-#'   "YEARS".
+#' Convert the AGE of all subjects to years and change the AGEU to "YEARS".
 #'
 #' @param data data frame containing the AGE and AGEU variables; typically the
 #'   Demographics (DM) domain.
 #'
-#' @return data frame with AGE and AGEU in years as opposed to the original
-#'   values.
+#' @return data frame with AGE in years as opposed to the original values.
 #'
 #' @export
 #'
@@ -16,7 +14,10 @@
 #'
 #' convert_age_to_years(DM_RPTESTB)
 #'
-convert_age_to_years <- function(data) {
+#' # Display AGEU in YEARS
+#' convert_age_to_years(DM_RPTESTB, remove_AGEU = FALSE)
+#'
+convert_age_to_years <- function(data, remove_AGEU = TRUE) {
   data <- data %>%
     mutate(AGEU = str_to_upper(.data$AGEU))
 
@@ -37,5 +38,12 @@ convert_age_to_years <- function(data) {
       data$AGEU[i] <- "YEARS"
     }
   }
+
+  if(remove_AGEU == TRUE){
+    data <- data %>%
+      select(-.data$AGEU) %>%
+      rename("AGE_YEARS" = "AGE")
+  }
+
   return(data)
 }
