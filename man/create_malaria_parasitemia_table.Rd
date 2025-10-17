@@ -15,10 +15,10 @@ create_malaria_parasitemia_table(
 )
 }
 \arguments{
-\item{mb_domain}{The name of the laboratory test results (MB) domain in the
-global environment.}
+\item{mb_domain}{A microbiology/MB domain data frame.}
 
-\item{variables}{A list of variables to be included in the output dataset.}
+\item{variables}{Character list. A list of variables to be included in the
+output dataset.}
 
 \item{include_method}{Boolean. Should MBMETHOD be included in the output for
 all variables.}
@@ -26,16 +26,22 @@ all variables.}
 \item{include_location}{Boolean. Should MBLOC be included in the output for
 all variables.}
 
-\item{timing_variables}{List of timing variables which are to be used to
-separate time points, this is hierarchical so the order is taken into
-account. Default is: MBHR, MBDY, MBSTDY, VISITDY, VISITNUM, VISIT, EPOCH,
-MBEVLINT, MBEVINTX.}
+\item{timing_variables}{Character list. List of timing variables which are to
+be used to separate time points, this is hierarchical so the order is taken
+into account. Default is: MBHR, MBDY, MBSTDY, VISITDY, VISITNUM, VISIT,
+EPOCH, MBEVLINT, MBEVINTX.
 
-\item{values_funct}{The function which will determine which data row is used
-in the output, in the event there are multiple rows for the same subject
-with the same time points (as listed in timing_variables). Default is
-first(), i.e. if there is two rows from the same day and time, the first
-record will be taken, the second will be dropped. Choice of
+(using default for example) Each row will be initially summarised based on
+the --HR (study hour) variable, if that is missing then the --DY (study
+day) variable is used, and so on. The output will be one row per
+participant, per time point, where the time point for each row is the first
+available variable listed in timing_variables.}
+
+\item{values_funct}{Function. The function which will determine which data
+row is used in the output, in the event there are multiple rows for the
+same subject with the same time points (as listed in timing_variables).
+Default is first(), i.e. if there is two rows from the same day and time,
+the first record will be taken, the second will be dropped. Choice of
 timing_variables will impact the number of rows affected.}
 }
 \value{
@@ -44,4 +50,13 @@ An analysis dataset, one row per person, per timepoint.
 \description{
 Uses the IDDO-SDTM microbiology (MB) domain to create a single dataset with
 various microbiology information summarised.
+}
+\examples{
+create_malaria_parasitemia_table(MB_RPTESTB)
+
+create_malaria_parasitemia_table(MB_RPTESTB, timing_variables = "EPOCH")
+
+# Adding include_method = TRUE provides the method in the column of the analysis dataset
+create_malaria_parasitemia_table(MB_RPTESTB, include_method = T)
+
 }
