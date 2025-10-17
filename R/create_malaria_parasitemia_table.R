@@ -37,7 +37,7 @@
 #' create_malaria_parasitemia_table(MB_RPTESTB, timing_variables = "EPOCH")
 #'
 #' # Adding include_method = TRUE provides the method in the column of the analysis dataset
-#' create_malaria_parasitemia_table(MB_RPTESTB, include_method = T)
+#' create_malaria_parasitemia_table(MB_RPTESTB, include_method = TRUE)
 #'
 create_malaria_parasitemia_table <- function(mb_domain,
                                              variables = c(
