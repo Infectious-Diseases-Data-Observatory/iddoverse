@@ -4,23 +4,24 @@
 \alias{convert_age_to_years}
 \title{Convert AGE to years.}
 \usage{
-convert_age_to_years(data)
+convert_age_to_years(data, remove_AGEU = TRUE)
 }
 \arguments{
 \item{data}{data frame containing the AGE and AGEU variables; typically the
 Demographics (DM) domain.}
 }
 \value{
-data frame with AGE and AGEU in years as opposed to the original
-values.
+data frame with AGE in years as opposed to the original values.
 }
 \description{
-Convert the AGE of all subjects to years and change the AGEU to
-"YEARS".
+Convert the AGE of all subjects to years and change the AGEU to "YEARS".
 }
 \examples{
 DM_RPTESTB
 
 convert_age_to_years(DM_RPTESTB)
+
+# Display AGEU in YEARS
+convert_age_to_years(DM_RPTESTB, remove_AGEU = FALSE)
 
 }
