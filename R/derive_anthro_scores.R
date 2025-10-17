@@ -19,13 +19,12 @@
 #' @importFrom anthro anthro_zscores
 #'
 #' @examples
-#' data = full_join(
+#' data = merge(
 #'   prepare_domain("dm", DM_RPTESTB),
 #'   prepare_domain("vs", VS_RPTESTB)
 #'   )
 #'
 #' derive_anthro_scores(data)
-#'
 #'
 derive_anthro_scores <- function(data) {
   data <- data %>%
