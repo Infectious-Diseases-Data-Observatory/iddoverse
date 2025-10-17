@@ -18,3 +18,9 @@ values.
 Convert the AGE of all subjects to years and change the AGEU to
 "YEARS".
 }
+\examples{
+DM_RPTESTB
+
+convert_age_to_years(DM_RPTESTB)
+
+}

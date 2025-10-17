@@ -9,24 +9,27 @@ create_clinical_table(
   mb_domain = NULL,
   mp_domain = NULL,
   sa_domain = NULL,
-  vs_domain = NULL
+  vs_domain = NULL,
+  values_funct = first
 )
 }
 \arguments{
-\item{dm_domain}{The name of the demographics (DM) domain in the global
-environment.}
+\item{dm_domain}{A demographics/DM domain data frame.}
 
-\item{mb_domain}{The name of the microbiology (MB) domain in the global
-environment.}
+\item{mb_domain}{A microbiology/MB domain data frame.}
 
-\item{mp_domain}{The name of the morphology and physiology (MP) domain in the
-global environment.}
+\item{mp_domain}{A morphology and physiology/MP domain data frame.}
 
-\item{sa_domain}{The name of the clinical and adverse events (SA) domain in
-the global environment.}
+\item{sa_domain}{A clinical and adverse events/SA domain data frame.}
 
-\item{vs_domain}{The name of the vital signs (VS) domain in the global
-environment.}
+\item{vs_domain}{A vital signs/VS domain data frame.}
+
+\item{values_funct}{Function. The function which will determine which data row is used
+in the output, in the event there are multiple rows for the same subject
+with the same time points (as listed in timing_variables). Default is
+first(), i.e. if there is two rows from the same day and time, the first
+record will be taken, the second will be dropped. Choice of
+timing_variables will impact the number of rows affected.}
 }
 \value{
 An analysis dataset, one row per person, per timepoint.
@@ -35,4 +38,11 @@ An analysis dataset, one row per person, per timepoint.
 Uses several IDDO-SDTM domains to create a single dataset with various
 demographic, microbiology, physiology, clinical and vital sign information
 summarised.
+}
+\examples{
+
+create_clinical_table(dm_domain = DM_RPTESTB,
+                      sa_domain = SA_RPTESTB,
+                      vs_domain = VS_RPTESTB)
+
 }

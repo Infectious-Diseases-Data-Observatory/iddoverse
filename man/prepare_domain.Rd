@@ -17,9 +17,9 @@ prepare_domain(
 )
 }
 \arguments{
-\item{domain}{The two letter domain name of the data.}
+\item{domain}{Character. The two letter domain name of the data.}
 
-\item{data}{The name of the data in the global environment.}
+\item{data}{Domain data frame.}
 
 \item{include_LOC}{Boolean. Should the location (--LOC) be included in the
 output. Default is FALSE.}
@@ -27,27 +27,44 @@ output. Default is FALSE.}
 \item{include_METHOD}{Boolean. Should the method (--METHOD) be included in
 the output. Default is FALSE.}
 
-\item{variables_include}{List of variables to include in the output. Default
-is to include all available variables.}
+\item{variables_include}{Character list. List of variables to include in the
+output. Default is to include all available variables.}
 
-\item{timing_variables}{List of timing variables which are to be used to
-separate time points, this is hierarchical so the order is taken into
-account. Default is: --HR, --DY, --STDY, VISITDY, VISITNUM, VISIT, EPOCH,
---EVLINT, --EVINTX.}
+\item{timing_variables}{Character list. List of timing variables which are to
+be used to separate time points, this is hierarchical so the order is taken
+into account. Default is: --HR, --DY, --STDY, VISITDY, VISITNUM, VISIT,
+EPOCH, --EVLINT, --EVINTX.
 
-\item{values_fn}{The function which will determine which data row is used in
-the output, in the event there are multiple rows for the same subject with
-the same time points (as listed in timing_variables). Default is first(),
-i.e. if there is two rows from the same day and time, the first record will
-be taken, the second will be dropped. Choice of timing_variables will
-impact the number of rows affected.}
+(using default for example) Each row will be initially summarised based on
+the --HR (study hour) variable, if that is missing then the --DY (study
+day) variable is used, and so on. The output will be one row per
+participant, per time point, where the time point for each row is the first
+available variable listed in timing_variables.}
+
+\item{values_fn}{Function. The function which will determine which data row
+is used in the output, in the event there are multiple rows for the same
+subject with the same time points (as listed in timing_variables). Default
+is first(), i.e. if there is two rows from the same day and time, the first
+record will be taken, the second will be dropped. Choice of
+timing_variables will impact the number of rows affected.}
 }
 \value{
 A dataframe which has been cleaned and subset based on the input
-parameters
+parameters.
 }
 \description{
 Amalgamate domain data and pivot wider to convert the IDDO-SDTM format data
-into a more analysable format. Command works on one domain and requires the
+into a more analysable format. Function works on one domain and requires the
 two letter domain name as well as the domain data file.
+}
+\examples{
+
+prepare_domain("DM", DM_RPTESTB)
+
+prepare_domain("DM", DM_RPTESTB, variables_include = c("ARMCD", "AGE", "SEX"))
+
+prepare_domain("lb", LB_RPTESTB, timing_variables = c("VISITNUM", "VISITDY"))
+
+prepare_domain("vs", VS_RPTESTB, include_LOC = TRUE, values_fn = last)
+
 }

@@ -7,19 +7,30 @@
 derive_anthro_scores(data)
 }
 \arguments{
-\item{data}{data frame contain the AGE, AGE_DAYS, WEIGHT & HEIGHT variables,
-typically held in the Demographics (DM) and Vital Signs (VS) domains.}
+\item{data}{data frame that contains the AGE, AGEU, WEIGHT & HEIGHT
+variables, typically held in the Demographics (DM) and Vital Signs (VS)
+domains.}
 }
 \value{
 data frame with only only 5 year olds included and additional columns
 for WAZ, HAZ and WHZ scores, along with flags for each.
 }
 \description{
-Calculates the Height for Age, Weight for Age and Weight for Height z-scores
-which are used to measure growth against the WHO population standards. This
-is only for children less than 5 years old.
+Calculates the Height for Age (HAZ), Weight for Age (WAZ) and Weight for
+Height (WHZ) z-scores which are used to measure growth against the WHO
+population standards. This is only for children less than 5 years old.
 }
 \details{
-Note the function can be applied to a dataset with subjects greater than 5
-years old too, but those subjects will be filtered out.
+The function can be applied to a dataset with subjects greater than 5 years
+old too, but those subjects will be filtered out.
+}
+\examples{
+data = full_join(
+  prepare_domain("dm", DM_RPTESTB),
+  full_join(prepare_domain("vs", VS_RPTESTB)
+  )
+
+derive_anthro_scores(data)
+
+
 }

@@ -14,23 +14,17 @@ create_participant_table(
 )
 }
 \arguments{
-\item{dm_domain}{The name of the demographics (DM) domain in the global
-environment.}
+\item{dm_domain}{A demographics/DM domain data frame.}
 
-\item{lb_domain}{The name of the laboratory test results (LB) domain in the
-global environment.}
+\item{lb_domain}{A laboratory/LB domain data frame.}
 
-\item{mb_domain}{The name of the microbiology (MB) domain in the global
-environment.}
+\item{mb_domain}{A microbiology/MB domain data frame.}
 
-\item{rp_domain}{The name of the reproductive system findings (RP) domain in
-the global environment.}
+\item{rp_domain}{A reproductive system findings/RP domain data frame.}
 
-\item{sc_domain}{The name of the subject characteristics (SC) domain in the
-global environment.}
+\item{sc_domain}{A subject characteristics/SC domain data frame.}
 
-\item{vs_domain}{The name of the vital signs (VS) domain in the global
-environment.}
+\item{vs_domain}{A vital signs/VS domain data frame.}
 }
 \value{
 An analysis dataset, one row per participant.
@@ -38,5 +32,13 @@ An analysis dataset, one row per participant.
 \description{
 Joins several IDDO-SDTM domains together to create a single dataset with
 participant demographics, characteristics and baseline test results or
-findings.
+findings. Baseline timing is defined as actual study day (--DY) = 1, planned
+study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE.
+}
+\examples{
+create_participant_table(dm_domain = DM_RPTESTB,
+                         lb_domain = LB_RPTESTB,
+                         vs_domain = VS_RPTESTB)
+
+
 }

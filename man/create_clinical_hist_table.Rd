@@ -13,18 +13,22 @@ create_clinical_hist_table(
 )
 }
 \arguments{
-\item{dm_domain}{The name of the demographics (DM) domain in the global
-environment.}
+\item{dm_domain}{A demographics/DM domain data frame.}
 
-\item{sa_domain}{The name of the clinical and adverse events (SA) domain in
-the global environment.}
+\item{sa_domain}{A clinical and adverse events/SA domain data frame.}
 
-\item{timing_variables}{List of timing variables which are to be used to
+\item{timing_variables}{Character list. List of timing variables which are to be used to
 separate time points, this is hierarchical so the order is taken into
 account. Default is: SAHR, SADY, SASTDY, VISITDY, VISITNUM, VISIT, EPOCH,
-SAEVLINT, SAEVINTX.}
+SAEVLINT, SAEVINTX.
 
-\item{values_funct}{The function which will determine which data row is used
+(using default for example) Each row will be initially summarised based on
+the --HR (study hour) variable, if that is missing then the --DY (study
+day) variable is used, and so on. The output will be one row per
+participant, per time point, where the time point for each row is the first
+available variable listed in timing_variables.}
+
+\item{values_funct}{Function. The function which will determine which data row is used
 in the output, in the event there are multiple rows for the same subject
 with the same time points (as listed in timing_variables). Default is
 first(), i.e. if there is two rows from the same day and time, the first
@@ -37,5 +41,12 @@ An analysis dataset, one row per person, per timepoint.
 \description{
 Uses the IDDO-SDTM clinical and adverse events (SA) domain to create a single
 dataset with various historic clinical information summarised. Historic
-refers to events that occured before the study start.
+refers to events that occurred before the study start.
+}
+\examples{
+create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB)
+
+create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
+                           timing_variables = c("VISITDY", "EPOCH"))
+
 }
