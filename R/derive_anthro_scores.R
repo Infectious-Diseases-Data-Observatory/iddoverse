@@ -21,7 +21,7 @@
 #' @examples
 #' data = full_join(
 #'   prepare_domain("dm", DM_RPTESTB),
-#'   full_join(prepare_domain("vs", VS_RPTESTB)
+#'   prepare_domain("vs", VS_RPTESTB)
 #'   )
 #'
 #' derive_anthro_scores(data)
