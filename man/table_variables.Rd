@@ -7,13 +7,13 @@
 table_variables(domain, data, by_STUDYID = FALSE)
 }
 \arguments{
-\item{domain}{The two letter code for the domain which matches the data.
+\item{domain}{Character. The two letter code for the domain which matches the data.
 Character string. Domains included: "DM", "LB", "RP", "MB", "MP", "SA",
-"IN", "VS", "DS", "RS".}
+"IN", "VS", "DS", "RS", "PO", "SC", "HO", "ER" & "DD".}
 
-\item{data}{The name of the SDTM domain dataset in the global environment.}
+\item{data}{Domain data frame.}
 
-\item{by_STUDYID}{Split by STUDYID if TRUE. Default is FALSE.}
+\item{by_STUDYID}{Boolean. Split data by STUDYID if TRUE. Default is FALSE.}
 }
 \value{
 For Demographics (DM) domain, a character list with the column names.
@@ -26,8 +26,6 @@ formatted data frame. Additionally can be split by STUDYID to display the
 options across multiple studies.
 }
 \examples{
-library(iddoverse)
-
 table_variables("LB", LB_RPTESTB)
 
 table_variables("VS", VS_RPTESTB, by_STUDYID = TRUE)
