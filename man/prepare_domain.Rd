@@ -61,10 +61,13 @@ two letter domain name as well as the domain data file.
 
 prepare_domain("DM", DM_RPTESTB)
 
+# Select just ARMCD, AGE & SEX
 prepare_domain("DM", DM_RPTESTB, variables_include = c("ARMCD", "AGE", "SEX"))
 
+# Change which timing_variables are used to summarise the data
 prepare_domain("lb", LB_RPTESTB, timing_variables = c("VISITNUM", "VISITDY"))
 
-prepare_domain("vs", VS_RPTESTB, include_LOC = TRUE, values_fn = last)
+# Include location in the output and change the values_fn to select the last result
+prepare_domain("vs", VS_RPTESTB, include_LOC = TRUE, values_fn = dplyr::last)
 
 }

@@ -51,6 +51,7 @@ dataset with various lab test result information summarised.
 \examples{
 create_labs_table(LB_RPTESTB)
 
+# Change which timing_variables are used to summarise the data, select just Hemoglobin
 create_labs_table(LB_RPTESTB,
                   variables = c("HGB"),
                   timing_variables = c("EPOCH", "VISIT"))

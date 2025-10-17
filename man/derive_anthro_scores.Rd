@@ -25,7 +25,8 @@ The function can be applied to a dataset with subjects greater than 5 years
 old too, but those subjects will be filtered out.
 }
 \examples{
-data = full_join(
+# Merge the DM (AGE, SEX) and VS (WEIGHT, HEIGHT) domains together
+data = merge(
   prepare_domain("dm", DM_RPTESTB),
   prepare_domain("vs", VS_RPTESTB)
   )
