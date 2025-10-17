@@ -17,6 +17,9 @@
 #'
 #' @export
 #'
+#' @examples
+#' create_malaria_pcr_table(PF_RPTESTB, RS_RPTESTB)
+#'
 create_malaria_pcr_table <- function(pf_domain, rs_domain,
                                      values_funct = first){
 
