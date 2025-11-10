@@ -63,8 +63,6 @@ prepare_domain <- function(domain, data,
 
   event_domains <- c("SA", "HO", "ER", "PO") # "DS"
 
-  intervention_domains <- c("IN", "PT")  #------------ need to do --------------------
-
   domain <- str_to_upper(domain)
 
   variables_include <- str_to_upper(variables_include)
@@ -303,11 +301,6 @@ prepare_domain <- function(domain, data,
 
   }
 
-
-  # else if(domain %in% intervention_domains){
-  #
-  # }
-
   else if(domain == "DS"){
     data <- data %>%
       convert_blanks_to_na() %>%
@@ -318,15 +311,8 @@ prepare_domain <- function(domain, data,
         any_of(timing_variables),
         function(x) as.character(x))) %>%
       mutate(EVENT = as.character(NA),
-             # OCCUR = as.character(NA),
-             # PRESP = as.character(NA),
              TIME = as.character(NA),
              TIME_SOURCE = as.character(NA))
-
-    # data[, "OCCUR"] <-
-    #   data[, str_c(domain, "OCCUR")]
-    # data[, "PRESP"] <-
-    #   data[, str_c(domain, "PRESP")]
 
     if(str_c(domain, "DECOD") %in% names(data)){
       data[, "EVENT"] <-
@@ -340,14 +326,6 @@ prepare_domain <- function(domain, data,
 
     data[which(is.na(data$EVENT)), "EVENT"] <-
       data[which(is.na(data$EVENT)), str_c(domain, "TERM")]
-
-    # data <- data %>%
-    #   filter(EVENT %in% variables_include)
-
-    # if(any(is.na(data$PRESP))) {
-    #   data[which(is.na(data$PRESP)), "PRESP"] <- "N"
-    #   data[which(data$PRESP == "N"), "OCCUR"] <- "Y"
-    # }
 
     for(i in 1:length(timing_variables)){
       data[which(is.na(data$TIME)), "TIME"] <-
@@ -367,17 +345,11 @@ prepare_domain <- function(domain, data,
 
     data <- data %>%
       select(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE, .data$EVENT)
-
-    # colnames(data) <- gsub("_EVENT", "", colnames(data))
-
-    # data = data %>%
-    #   clean_names(case = "all_caps")
-
   }
 
   if("TIME_SOURCE" %in% names(data)){
     data <- data %>%
-      mutate(TIME_SOURCE = sub(paste0("^", domain), "--", .data$TIME_SOURCE))
+      mutate(TIME_SOURCE = sub(paste0("^", domain), "", .data$TIME_SOURCE))
   }
 
   return(data)
