@@ -72,4 +72,5 @@ functionality, please describe them in
 ## Contact
 
 Please contact Rhys Peploe (<rhys.peploe@iddo.org> or
-<rhyspeploe1998@gmail.com>) if you would like to know more.
+<rhyspeploe1998@gmail.com>) if you would like to know more, need support or are
+interested in contributing to the package.
