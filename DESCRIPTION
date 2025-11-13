@@ -25,6 +25,7 @@ Imports:
     admiral,
     anthro,
     dplyr,
+    ggplot2,
     janitor,
     lubridate,
     magrittr,
