@@ -1,37 +1,32 @@
 ---
-title: "Welcome to the iddoverse: An R package for converting IDDO-SDTM data
-into analysis datasets" 
+title: "Welcome to the iddoverse: An R package for converting IDDO-SDTM data into 
+analysis datasets"
 tags:
 - R
 - Infectious Diseases
 - Data Transformation
 - Study Data Tabulation Model
 date: "10 November 2025" 
-output: word_document authors:
-- name: Rhys Peploe
+output: word_document 
+authors:
+- name: Rhys Peploe 
   orcid: "0009-0001-1669-3716" 
   affiliation: 1, 2
 - name: Dr James Wilson
-  orcid: XXX 
   affiliation: 1, 2
 - name: Dr Caitlin Naylor
-  orcid: XXX 
   affiliation: 1, 2
 - name: Dr Kasia Stepniewska
-  orcid: "0000-0002-1713-6209" 
   affiliation: XXX
 - name: Dr James A Watson
-  orcid: "0000-0001-5524-0325" 
   affiliation: 1, 2
 - name: Dr Prabin Dahal
-  orcid: "0000-0002-2158-846X" 
   affiliation: 1, 2 
 bibliography: paper.bib
 affiliations:
 - name: Infectious Diseases Data Observatory (IDDO), Oxford, United Kingdom
   index: 1
 - name: Centre for Tropical Medicine and Global Health, Nuffield Department of Medicine,
-University of Oxford, Oxford, United Kingdom 
   index: 2
 ---
 
@@ -59,7 +54,7 @@ analysts to modify the output. Consequently, the time spent on data manipulation
 will be reduced, allowing research to begin sooner, whilst also ensuring
 reproducibility and increasing the accessibility of the SDTM format. 
 
-#Statement of need 
+# Statement of need 
 
 Clinical studies are key elements in global scientific
 research, especially for infectious diseases which disproportionately affect
@@ -99,7 +94,7 @@ regardless of their data standard knowledge or programming ability. This will
 broaden the user audience of the data IDDO holds, increasing the accessibility
 of data and accelerate research by minimising the data transformation time [@patel]. 
 
-#IDDO Data Lifecycle 
+# IDDO Data Lifecycle 
 
 IDDO hosts a data repository spanning multiple infectious
 diseases. Owners of clinical data are encouraged to share their data with IDDO
