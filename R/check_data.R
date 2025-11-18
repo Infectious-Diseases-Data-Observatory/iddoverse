@@ -96,11 +96,11 @@ check_data <- function(data){
     labs(x = "Column", y = "Proportion of Column Missing") +
     coord_flip() +
     scale_x_discrete(limits = rev) +
-    ggplot2::geom_text(mapping = aes(label = column, y = proportion_missing+0.05),
-                       size = 3.5, colour = "#435C6D") +
-    ggplot2::theme(axis.text.y = ggplot2::element_blank(),
-                   axis.text.x = ggplot2::element_text(colour = "#435C6D"),
-                   axis.title = ggplot2::element_text(colour = "#435C6D"))
+    geom_text(mapping = aes(label = column, y = proportion_missing + 0.08),
+              size = 3.5, colour = "#435C6D") +
+    theme(axis.text.y = element_blank(),
+          axis.text.x = element_text(colour = "#435C6D"),
+          axis.title = element_text(colour = "#435C6D"))
 
   print(missingness_plot)
 
