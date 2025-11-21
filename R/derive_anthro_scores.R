@@ -7,9 +7,9 @@
 #' The function can be applied to a dataset with subjects greater than 5 years
 #' old too, but those subjects will be filtered out.
 #'
-#' @param data data frame that contains the AGE, AGEU, WEIGHT & HEIGHT
+#' @param data data frame that contains the AGE_YEARS, WEIGHT & HEIGHT
 #'   variables, typically held in the Demographics (DM) and Vital Signs (VS)
-#'   domains.
+#'   domains. Domains should have prepare_domain applied beforehand.
 #'
 #' @return data frame with only only 5 year olds included and additional columns
 #'   for WAZ, HAZ and WHZ scores, along with flags for each.
@@ -19,7 +19,7 @@
 #' @importFrom anthro anthro_zscores
 #'
 #' @examples
-#' # Merge the DM (AGE, SEX) and VS (WEIGHT, HEIGHT) domains together
+#' # Merge the DM (AGE_YEARS, SEX) and VS (WEIGHT, HEIGHT) domains together
 #' data = merge(
 #'   prepare_domain("dm", DM_RPTESTB),
 #'   prepare_domain("vs", VS_RPTESTB)
@@ -28,28 +28,9 @@
 #' derive_anthro_scores(data)
 #'
 derive_anthro_scores <- function(data) {
-  data <- data %>%
-    mutate(
-      AGEU = str_to_upper(.data$AGEU),
-      AGE_DAYS = NA
-    )
-
-  for (i in seq(1, nrow(data), 1)) {
-    if (is.na(data$AGEU[i])) {
-      next
-    } else if (data$AGEU[i] == "DAYS") {
-      data$AGE_DAYS[i] <- floor(data$AGE[i])
-    } else if (data$AGEU[i] == "WEEKS") {
-      data$AGE_DAYS[i] <- floor(data$AGE[i] * 7)
-    } else if (data$AGEU[i] == "MONTHS") {
-      data$AGE_DAYS[i] <- floor(data$AGE[i] * 30.417)
-    } else if (data$AGEU[i] == "YEARS") {
-      data$AGE_DAYS[i] <- floor(data$AGE[i] * 365.25)
-    }
-  }
-
   data_anthro <- data %>%
-    filter(data$AGE < 5 | data$AGE_DAYS < 1826)
+    mutate(AGE_DAYS = floor(.data$AGE_YEARS * 365.25)) %>%
+    filter(.data$AGE_YEARS < 5 | AGE_DAYS < 1826)
 
   if (nrow(data_anthro) == 0) {
     return(data_anthro)
@@ -75,7 +56,7 @@ derive_anthro_scores <- function(data) {
         "WHZ" = "zwfl",
         "WHZ_FLAG" = "fwfl"
       ) %>%
-      select(-.data$AGE_DAYS)
+      select(-AGE_DAYS)
 
     return(bind_anthro)
   }
