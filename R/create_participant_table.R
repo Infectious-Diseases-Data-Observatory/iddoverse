@@ -30,7 +30,7 @@ create_participant_table <- function(dm_domain,
                                      vs_domain = NULL){
   data <- prepare_domain("dm", dm_domain,
                          variables_include = c("STUDYID", "USUBJID",
-                                               "AGE", "AGEU", "SEX","RFSTDTC",
+                                               "AGE", "SEX","RFSTDTC",
                                                "RACE", "ETHNIC", "ARMCD", "COUNTRY",
                                                "SITEID", "DTHFL", "DTHDY", "DTHHR"))
 
@@ -41,7 +41,7 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("EDULEVEL", "MARISTAT"),
                        timing_variables = c("SCDY", "VISITDY", "EPOCH"))%>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "SCDY") |
+            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
               (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
               (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
@@ -59,7 +59,7 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("HEIGHT", "WEIGHT", "BMI", "MUARMCIR"),
                        timing_variables = c("VSDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "VSDY") |
+            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
               (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
               (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
@@ -77,7 +77,7 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("G6PD"),
                        timing_variables = c("LBDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "LBDY") |
+            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
               (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
               (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
@@ -95,7 +95,7 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("HIV"),
                        timing_variables = c("MBDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "MBDY") |
+            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
               (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
               (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
@@ -113,7 +113,7 @@ create_participant_table <- function(dm_domain,
                                variables_include = c("PREGIND", "EGESTAGE"),
                                timing_variables = c("RPDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "RPDY") |
+            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
               (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
               (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
           ) %>%
