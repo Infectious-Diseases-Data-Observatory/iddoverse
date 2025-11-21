@@ -6,22 +6,13 @@ tags:
 - Infectious Diseases
 - Data Transformation
 - Study Data Tabulation Model
-date: "10 November 2025" 
+date: "20 November 2025" 
 output: word_document 
 authors:
 - name: Rhys Peploe 
   orcid: "0009-0001-1669-3716" 
   affiliation: 1, 2
-- name: Dr James Wilson
-  affiliation: 1, 2
-- name: Dr Caitlin Naylor
-  affiliation: 1, 2
-- name: Dr Kasia Stepniewska
-  affiliation: XXX
-- name: Dr James A Watson
-  affiliation: 1, 2
-- name: Dr Prabin Dahal
-  affiliation: 1, 2 
+- name: everyone else (to do later)
 bibliography: paper.bib
 affiliations:
 - name: Infectious Diseases Data Observatory (IDDO), Oxford, United Kingdom
