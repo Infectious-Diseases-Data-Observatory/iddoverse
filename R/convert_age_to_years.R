@@ -25,16 +25,16 @@ convert_age_to_years <- function(data, remove_AGEU = TRUE) {
     if (is.na(data$AGEU[i])) {
       next
     } else if (data$AGEU[i] == "DAYS") {
-      data$AGE[i] <- floor(data$AGE[i] / 365.25)
+      data$AGE[i] <- data$AGE[i] / 365.25
       data$AGEU[i] <- "YEARS"
     } else if (data$AGEU[i] == "WEEKS") {
-      data$AGE[i] <- floor(data$AGE[i] / 52)
+      data$AGE[i] <- data$AGE[i] / 52
       data$AGEU[i] <- "YEARS"
     } else if (data$AGEU[i] == "MONTHS") {
-      data$AGE[i] <- floor(data$AGE[i] / 12)
+      data$AGE[i] <- data$AGE[i] / 12
       data$AGEU[i] <- "YEARS"
     } else {
-      data$AGE[i] <- floor(data$AGE[i])
+      data$AGE[i] <- data$AGE[i]
       data$AGEU[i] <- "YEARS"
     }
   }
