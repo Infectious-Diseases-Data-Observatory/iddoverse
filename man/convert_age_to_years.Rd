@@ -4,7 +4,7 @@
 \alias{convert_age_to_years}
 \title{Convert AGE to years.}
 \usage{
-convert_age_to_years(data, remove_AGEU = TRUE)
+convert_age_to_years(data)
 }
 \arguments{
 \item{data}{data frame containing the AGE and AGEU variables; typically the
