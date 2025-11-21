@@ -88,6 +88,11 @@ prepare_domain <- function(domain, data,
         select(.data$STUDYID, .data$USUBJID, any_of(variables_include))
     }
 
+    if("AGEU" %in% names(data)){
+      data = data %>%
+        convert_age_to_years()
+    }
+
   } else if(domain %in% findings_domains){
     data <- data %>%
       convert_blanks_to_na() %>%
