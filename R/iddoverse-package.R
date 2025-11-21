@@ -43,6 +43,7 @@
 #' @importFrom lubridate month
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @importFrom rlang warn
 #' @importFrom stringr str_c
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_flatten
