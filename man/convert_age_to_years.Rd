@@ -21,7 +21,4 @@ DM_RPTESTB
 
 convert_age_to_years(DM_RPTESTB)
 
-# Display AGEU in YEARS
-convert_age_to_years(DM_RPTESTB, remove_AGEU = FALSE)
-
 }
