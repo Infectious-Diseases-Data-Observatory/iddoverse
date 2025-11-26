@@ -6,7 +6,7 @@ check_data <- function(data){
 
   if("AGE" %in% names(data)){
     data = data %>%
-      convert_age_to_years() %>% #-------- needs AGEU
+      convert_age_to_years() %>%  #-------- needs AGEU
       rename("AGE" = "AGE_YEARS")
 
     age = tibble(
@@ -73,7 +73,7 @@ check_data <- function(data){
 
       outcome = outcome_data %>%
         count(STUDYID) %>%
-        rename("n_outcomes_before_VISITDY_7" = "n")
+        rename("n_PF_INTP_<VISITDY_7" = "n")
 
       return_list = append(return_list, list(outcome = outcome))
     }
@@ -100,7 +100,8 @@ check_data <- function(data){
               size = 3.5, colour = "#435C6D") +
     theme(axis.text.y = element_blank(),
           axis.text.x = element_text(colour = "#435C6D"),
-          axis.title = element_text(colour = "#435C6D"))
+          axis.title = element_text(colour = "#435C6D")) +
+    ggplot2::scale_y_continuous(breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1.0))
 
   print(missingness_plot)
 
