@@ -44,6 +44,8 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @importFrom rlang warn
+#' @importFrom stats na.omit
+#' @importFrom stats reorder
 #' @importFrom stringr str_c
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_flatten
@@ -55,5 +57,6 @@
 #' @importFrom tidyselect ends_with
 #' @importFrom tidyselect everything
 #' @importFrom tidyselect starts_with
+#' @importFrom utils globalVariables
 ## usethis namespace: end
 NULL
