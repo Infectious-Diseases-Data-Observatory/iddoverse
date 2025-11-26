@@ -55,6 +55,8 @@ table_variables <- function(domain, data, by_STUDYID = FALSE) {
       return(table(data$ERTERM, useNA = "ifany"))                ###
     } else if (domain == "DD") {
       return(table(data$DDTEST, useNA = "ifany"))
+    } else{
+      warn(str_c(domain, " domain not included in table_variables() function."))
     }
   } else {
     if (domain == "DM") {
@@ -82,11 +84,13 @@ table_variables <- function(domain, data, by_STUDYID = FALSE) {
     } else if (domain == "SC") {
       return(table(data$STUDYID, data$SCTESTCD, useNA = "ifany"))
     } else if (domain == "HO") {
-      return(table(data$HOTERM, useNA = "ifany"))                ###
+      return(table(data$STUDYID, data$HOTERM, useNA = "ifany"))                ###
     } else if (domain == "ER") {
-      return(table(data$ERTERM, useNA = "ifany"))                ###
+      return(table(data$STUDYID, data$ERTERM, useNA = "ifany"))                ###
     } else if (domain == "DD") {
-      return(table(data$DDTEST, useNA = "ifany"))
+      return(table(data$STUDYID, data$DDTEST, useNA = "ifany"))
+    } else{
+      warn(str_c(domain, " domain not included in table_variables() function."))
     }
   }
 }

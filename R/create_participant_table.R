@@ -41,12 +41,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("EDULEVEL", "MARISTAT"),
                        timing_variables = c("SCDY", "VISITDY", "EPOCH"))%>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
-              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
-              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
+            (TIME == 1 & TIME_SOURCE == "DY") |
+              (TIME == 1 & TIME_SOURCE == "VISITDY") |
+              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
-          group_by(.data$USUBJID) %>%
+          select(-c(TIME, TIME_SOURCE)) %>%
+          group_by(USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -59,12 +59,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("HEIGHT", "WEIGHT", "BMI", "MUARMCIR"),
                        timing_variables = c("VSDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
-              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
-              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
+            (TIME == 1 & TIME_SOURCE == "DY") |
+              (TIME == 1 & TIME_SOURCE == "VISITDY") |
+              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
-          group_by(.data$USUBJID) %>%
+          select(-c(TIME, TIME_SOURCE)) %>%
+          group_by(USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -77,12 +77,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("G6PD"),
                        timing_variables = c("LBDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
-              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
-              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
+            (TIME == 1 & TIME_SOURCE == "DY") |
+              (TIME == 1 & TIME_SOURCE == "VISITDY") |
+              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
-          group_by(.data$USUBJID) %>%
+          select(-c(TIME, TIME_SOURCE)) %>%
+          group_by(USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -95,12 +95,12 @@ create_participant_table <- function(dm_domain,
                        variables_include = c("HIV"),
                        timing_variables = c("MBDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
-              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
-              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
+            (TIME == 1 & TIME_SOURCE == "DY") |
+              (TIME == 1 & TIME_SOURCE == "VISITDY") |
+              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
-          group_by(.data$USUBJID) %>%
+          select(-c(TIME, TIME_SOURCE)) %>%
+          group_by(USUBJID) %>%
           slice(1) %>%
           ungroup()
       )
@@ -113,12 +113,12 @@ create_participant_table <- function(dm_domain,
                                variables_include = c("PREGIND", "EGESTAGE"),
                                timing_variables = c("RPDY", "VISITDY", "EPOCH")) %>%
           filter(
-            (.data$TIME == 1 & .data$TIME_SOURCE == "DY") |
-              (.data$TIME == 1 & .data$TIME_SOURCE == "VISITDY") |
-              (.data$TIME == "BASELINE" & .data$TIME_SOURCE == "EPOCH")
+            (TIME == 1 & TIME_SOURCE == "DY") |
+              (TIME == 1 & TIME_SOURCE == "VISITDY") |
+              (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
-          select(-c(.data$TIME, .data$TIME_SOURCE)) %>%
-          group_by(.data$USUBJID) %>%
+          select(-c(TIME, TIME_SOURCE)) %>%
+          group_by(USUBJID) %>%
           slice(1) %>%
           ungroup()
         )

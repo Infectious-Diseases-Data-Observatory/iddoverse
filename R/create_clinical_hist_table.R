@@ -42,7 +42,7 @@ create_clinical_hist_table <- function(dm_domain, sa_domain,
   data_dm <- prepare_domain("dm", dm_domain, variables_include = c("STUDYID", "USUBJID"))
 
   data_sa <- sa_domain %>%
-      filter(.data$SACAT == "MEDICAL HISTORY")
+      filter(SACAT == "MEDICAL HISTORY")
 
   data <- data_dm %>%
     right_join(prepare_domain("SA",

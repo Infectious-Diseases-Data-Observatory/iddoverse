@@ -55,7 +55,7 @@ prepare_domain <- function(domain, data,
                              str_c(domain, "HR"), str_c(domain, "DY"),
                              str_c(domain, "STDY"), "VISITDY", "VISITNUM",
                              "VISIT", "EPOCH", str_c(domain, "EVLINT"), str_c(domain, "EVINTX")),
-                           values_fn = first){
+                           values_fn = first, print_messages = TRUE){
   special_domains <- c("DM")
 
   findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF",
@@ -85,7 +85,7 @@ prepare_domain <- function(domain, data,
 
     if(length(variables_include) > 0){
       data <- data %>%
-        select(.data$STUDYID, .data$USUBJID, any_of(variables_include))
+        select(STUDYID, USUBJID, any_of(variables_include))
     }
 
     if("AGEU" %in% names(data)){
@@ -125,7 +125,7 @@ prepare_domain <- function(domain, data,
 
     if(length(variables_include) > 0){
       data <- data %>%
-        filter(.data$TESTCD %in% variables_include)
+        filter(TESTCD %in% variables_include)
     }
 
     if(str_c(domain, "STRESN") %in% names(data)){
@@ -165,21 +165,23 @@ prepare_domain <- function(domain, data,
     }
 
     value_fun_check <- data %>%
-      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE, .data$TESTCD) %>%
+      group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD) %>%
       dplyr::summarise(n = dplyr::n()) %>%
       ungroup() %>%
-      filter(.data$n > 1)
+      filter(n > 1)
 
-    print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+    if(print_messages == TRUE){
+      print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+    }
 
     if(include_LOC == FALSE & include_METHOD == FALSE){
       data <- data %>%
         pivot_wider(
           id_cols = c(
-            .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
+            STUDYID, USUBJID, TIME, TIME_SOURCE # timing vars
           ),
-          names_from = c(.data$TESTCD, .data$UNITS),
-          values_from = c(.data$RESULTS),
+          names_from = c(TESTCD, UNITS),
+          values_from = c(RESULTS),
           names_sort = TRUE, names_vary = "slowest",
           names_glue = "{TESTCD}_{UNITS}_{.value}",
           values_fn = values_fn
@@ -188,10 +190,10 @@ prepare_domain <- function(domain, data,
       data <- data %>%
       pivot_wider(
         id_cols = c(
-          .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
+          STUDYID, USUBJID, TIME, TIME_SOURCE # timing vars
         ),
-        names_from = c(.data$TESTCD, .data$LOC, .data$UNITS),
-        values_from = c(.data$RESULTS),
+        names_from = c(TESTCD, LOC, UNITS),
+        values_from = c(RESULTS),
         names_sort = TRUE, names_vary = "slowest",
         names_glue = "{TESTCD}_{LOC}_{UNITS}_{.value}",
         values_fn = values_fn
@@ -200,10 +202,10 @@ prepare_domain <- function(domain, data,
       data <- data %>%
       pivot_wider(
         id_cols = c(
-          .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
+          STUDYID, USUBJID, TIME, TIME_SOURCE # timing vars
         ),
-        names_from = c(.data$TESTCD, .data$METHOD, .data$UNITS),
-        values_from = c(.data$RESULTS),
+        names_from = c(TESTCD, METHOD, UNITS),
+        values_from = c(RESULTS),
         names_sort = TRUE, names_vary = "slowest",
         names_glue = "{TESTCD}_{METHOD}_{UNITS}_{.value}",
         values_fn = values_fn
@@ -212,10 +214,10 @@ prepare_domain <- function(domain, data,
       data <- data %>%
         pivot_wider(
           id_cols = c(
-            .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE # timing vars
+            STUDYID, USUBJID, TIME, TIME_SOURCE # timing vars
           ),
-          names_from = c(.data$TESTCD, .data$LOC, .data$METHOD, .data$UNITS),
-          values_from = c(.data$RESULTS),
+          names_from = c(TESTCD, LOC, METHOD, UNITS),
+          values_from = c(RESULTS),
           names_sort = TRUE, names_vary = "slowest",
           names_glue = "{TESTCD}_{LOC}_{METHOD}_{UNITS}_{.value}",
           values_fn = values_fn
@@ -224,11 +226,6 @@ prepare_domain <- function(domain, data,
 
     colnames(data) <- gsub("_RESULTS", "", colnames(data))
     colnames(data) <- gsub(" ", "_", colnames(data))
-    # colnames(pivot_data) <- gsub("_UNITS", "U", colnames(pivot_data))
-
-    # data = data %>%
-      # clean_names(case = "parsed") %>%
-      # arrange(USUBJID, str_rank(.data$TIME, numeric = TRUE))
 
   } else if(domain %in% event_domains){
     data <- data %>%
@@ -264,11 +261,11 @@ prepare_domain <- function(domain, data,
       data[which(is.na(data$EVENT)), str_c(domain, "TERM")]
 
     data <- data %>%
-      filter(.data$EVENT %in% variables_include)
+      filter(EVENT %in% variables_include)
 
     if(any(is.na(data$PRESP))) {
       data[which(is.na(data$PRESP)), "PRESP"] <- "N"
-      data[which(data$PRESP == "N"), "OCCUR"] <- "Y"
+      data[which(is.na(data$OCCUR) & data$PRESP == "N"), "OCCUR"] <- "Y"
     }
 
     for(i in 1:length(timing_variables)){
@@ -280,20 +277,22 @@ prepare_domain <- function(domain, data,
     }
 
     value_fun_check <- data %>%
-      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
+      group_by(STUDYID, USUBJID, TIME, TIME_SOURCE) %>%
       dplyr::summarise(n = dplyr::n()) %>%
       ungroup() %>%
-      filter(.data$n > 1)
+      filter(n > 1)
 
-    print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+    if(print_messages == TRUE){
+      print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+    }
 
     data <- data %>%
       pivot_wider(
         id_cols = c(
-          .data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE
+          STUDYID, USUBJID, TIME, TIME_SOURCE
         ),
-        names_from = .data$EVENT,
-        values_from = c(.data$PRESP, .data$OCCUR),
+        names_from = EVENT,
+        values_from = c(PRESP, OCCUR),
         names_sort = TRUE, names_vary = "slowest",
         names_glue = "{EVENT}_{.value}",
         values_fn = values_fn
@@ -304,9 +303,7 @@ prepare_domain <- function(domain, data,
     data = data %>%
       clean_names(case = "all_caps")
 
-  }
-
-  else if(domain == "DS"){
+  } else if(domain == "DS"){
     data <- data %>%
       convert_blanks_to_na() %>%
       mutate(across(
@@ -341,20 +338,22 @@ prepare_domain <- function(domain, data,
     }
 
     value_fun_check <- data %>%
-      group_by(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE) %>%
+      group_by(STUDYID, USUBJID, TIME, TIME_SOURCE) %>%
       dplyr::summarise(n = dplyr::n()) %>%
       ungroup() %>%
-      filter(.data$n > 1)
+      filter(n > 1)
 
-    print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+    if(print_messages == TRUE){
+      print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+    }
 
     data <- data %>%
-      select(.data$STUDYID, .data$USUBJID, .data$TIME, .data$TIME_SOURCE, .data$EVENT)
+      select(STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT)
   }
 
   if("TIME_SOURCE" %in% names(data)){
     data <- data %>%
-      mutate(TIME_SOURCE = sub(paste0("^", domain), "", .data$TIME_SOURCE))
+      mutate(TIME_SOURCE = sub(paste0("^", domain), "", TIME_SOURCE))
   }
 
   return(data)

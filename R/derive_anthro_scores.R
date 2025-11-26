@@ -29,8 +29,8 @@
 #'
 derive_anthro_scores <- function(data) {
   data_anthro <- data %>%
-    mutate(AGE_DAYS = floor(.data$AGE_YEARS * 365.25)) %>%
-    filter(.data$AGE_YEARS < 5 | AGE_DAYS < 1826)
+    mutate(AGE_DAYS = floor(AGE_YEARS * 365.25)) %>%
+    filter(AGE_YEARS < 5 | AGE_DAYS < 1826)
 
   if (nrow(data_anthro) == 0) {
     return(data_anthro)

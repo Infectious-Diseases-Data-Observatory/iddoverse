@@ -16,7 +16,7 @@
 #'
 convert_age_to_years <- function(data) {
   data <- data %>%
-    mutate(AGEU = str_to_upper(.data$AGEU))
+    mutate(AGEU = str_to_upper(AGEU))
 
   if(nrow(data) == 0){
     # skip to end if empty
