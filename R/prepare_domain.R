@@ -28,6 +28,8 @@
 #'   is first(), i.e. if there is two rows from the same day and time, the first
 #'   record will be taken, the second will be dropped. Choice of
 #'   timing_variables will impact the number of rows affected.
+#' @param print_messages Boolean. Should messages from the function be generated
+#'   and shown in the user's console. Default is TRUE.
 #'
 #' @returns A dataframe which has been cleaned and subset based on the input
 #'   parameters.

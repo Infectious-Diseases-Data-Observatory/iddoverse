@@ -13,7 +13,8 @@ prepare_domain(
   timing_variables = c(str_c(domain, "HR"), str_c(domain, "DY"), str_c(domain, "STDY"),
     "VISITDY", "VISITNUM", "VISIT", "EPOCH", str_c(domain, "EVLINT"), str_c(domain,
     "EVINTX")),
-  values_fn = first
+  values_fn = first,
+  print_messages = TRUE
 )
 }
 \arguments{
@@ -47,6 +48,9 @@ subject with the same time points (as listed in timing_variables). Default
 is first(), i.e. if there is two rows from the same day and time, the first
 record will be taken, the second will be dropped. Choice of
 timing_variables will impact the number of rows affected.}
+
+\item{print_messages}{Boolean. Should messages from the function be generated
+and shown in the user's console. Default is TRUE.}
 }
 \value{
 A dataframe which has been cleaned and subset based on the input
