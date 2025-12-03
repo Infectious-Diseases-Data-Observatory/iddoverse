@@ -1,3 +1,5 @@
+#' @export
+#'
 check_data <- function(data){
   studyid = data %>%
     count(STUDYID)
