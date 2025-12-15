@@ -48,6 +48,7 @@
 #' @importFrom stats reorder
 #' @importFrom stringr str_c
 #' @importFrom stringr str_detect
+#' @importFrom stringr str_ends
 #' @importFrom stringr str_flatten
 #' @importFrom stringr str_replace_all
 #' @importFrom stringr str_to_upper
