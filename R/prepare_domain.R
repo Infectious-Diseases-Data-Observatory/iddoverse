@@ -146,17 +146,19 @@ prepare_domain <- function(domain, data,
         data[which(!is.na(data$RESULTS)), str_c(domain, "STRESU")]
     }
 
+    modify_index = which(is.na(data$RESULTS))
+
     if(str_c(domain, "MODIFY") %in% names(data)){
-      data[which(is.na(data$RESULTS)), "RESULTS"] <-
-        data[which(is.na(data$RESULTS)), str_c(domain, "MODIFY")]
+      data[orres_index, "RESULTS"] <-
+        data[orres_index, str_c(domain, "MODIFY")]
     }
 
     orres_index = which(is.na(data$RESULTS))
 
     data[orres_index, "RESULTS"] <-
       data[orres_index, str_c(domain, "ORRES")]
-    data[orres_index, "UNITS"] <-
-      data[orres_index, str_c(domain, "ORRESU")]
+    data[modify_index, "UNITS"] <-
+      data[modify_index, str_c(domain, "ORRESU")]
 
     for(i in 1:length(timing_variables)){
       data[which(is.na(data$TIME)), "TIME"] <-
