@@ -16,8 +16,9 @@ check_data <- function(data){
       AGE_min = min(data$AGE, na.rm = TRUE),
       AGE_max = max(data$AGE, na.rm = TRUE),
       n_missing_AGE = nrow(data[which(is.na(data$AGE)),"AGE"]),
-      n_AGE_under_18 = nrow(data[which(as.numeric(data$AGE) < 18),"AGE"]),
-      n_AGE_over_90 = nrow(data[which(as.numeric(data$AGE) > 90),"AGE"])
+      n_AGE_under_6M = nrow(data[which(as.numeric(data$AGE) < 0.5),"AGE"]),
+      n_AGE_under_18Y = nrow(data[which(as.numeric(data$AGE) < 18),"AGE"]),
+      n_AGE_over_90Y = nrow(data[which(as.numeric(data$AGE) > 90),"AGE"])
     )
 
     return_list = append(return_list, list(age = age))
@@ -38,33 +39,61 @@ check_data <- function(data){
       testcd_data = testcd_data %>%
         mutate(SPEC = NA)
     }
+    if(all(!(str_detect(names(data), "MODIFY")))){
+      testcd_data = testcd_data %>%
+        mutate(MODIFY = NA)
+    }
 
-    names(testcd_data)[which(str_detect(names(testcd_data), "TESTCD"))] = "TESTCD"
-    names(testcd_data)[which(str_detect(names(testcd_data), "LOC"))] = "LOC"
-    names(testcd_data)[which(str_detect(names(testcd_data), "METHOD"))] = "METHOD"
-    names(testcd_data)[which(str_detect(names(testcd_data), "SPEC"))] = "SPEC"
-    names(testcd_data)[which(str_detect(names(testcd_data), "STRESC"))] = "STRESC"
-    names(testcd_data)[which(str_detect(names(testcd_data), "STRESN"))] = "STRESN"
-    names(testcd_data)[which(str_detect(names(testcd_data), "STRESU"))] = "STRESU"
+    names(testcd_data)[which(str_ends(names(testcd_data), "TESTCD"))] = "TESTCD"
+    names(testcd_data)[which(str_ends(names(testcd_data), "LOC"))] = "LOC"
+    names(testcd_data)[which(str_ends(names(testcd_data), "METHOD"))] = "METHOD"
+    names(testcd_data)[which(str_ends(names(testcd_data), "SPEC"))] = "SPEC"
+    names(testcd_data)[which(str_ends(names(testcd_data), "STRESC"))] = "STRESC"
+    names(testcd_data)[which(str_ends(names(testcd_data), "STRESN"))] = "STRESN"
+    names(testcd_data)[which(str_ends(names(testcd_data), "STRESU"))] = "STRESU"
+    names(testcd_data)[which(str_ends(names(testcd_data), "MODIFY"))] = "MODIFY"
+    names(testcd_data)[which(str_ends(names(testcd_data), "ORRES"))] = "ORRES"
+    names(testcd_data)[which(str_ends(names(testcd_data), "ORRESU"))] = "ORRESU"
 
-    ## --------- almagamate data orres, modify ---------------------------
+    testcd_data = testcd_data %>%
+      convert_blanks_to_na() %>%
+      mutate(RESULTS = as.character(STRESN),
+             UNITS = as.character(STRESU))
 
-    testcd = testcd_data %>%
-      group_by(STUDYID, TESTCD) %>%
-      summarise(min = min(STRESN, na.rm = TRUE),
-                max = max(STRESN, na.rm = TRUE),
-                n_levels = length(na.omit(unique(STRESC))),
-                n_UNITS = length(na.omit(unique(STRESU))),
-                UNITS = str_flatten(na.omit(unique(STRESU)), collapse = ", "),
-                n_LOC = length(na.omit(unique(LOC))),
-                LOC = str_flatten(unique(LOC), collapse = ", "),
-                n_METHOD = length(na.omit(unique(METHOD))),
-                METHOD = str_flatten(unique(METHOD), collapse = ", "),
-                n_SPEC = length(na.omit(unique(SPEC))),
-                SPEC = str_flatten(unique(SPEC), collapse = ", ")) %>%
-      ungroup()
+    testcd_data[which(is.na(testcd_data$RESULTS)), "RESULTS"] =
+      as.character(testcd_data[which(is.na(testcd_data$RESULTS)), "STRESC"])
 
-    #---- suppress/replace warning msg when inf??
+    modify_index = which(is.na(testcd_data$RESULTS))
+
+    testcd_data[modify_index, "RESULTS"] =
+      as.character(testcd_data[modify_index, "MODIFY"])
+
+    orres_index = which(is.na(testcd_data$RESULTS))
+
+    testcd_data[orres_index, "RESULTS"] =
+      as.character(testcd_data[orres_index, "ORRES"])
+
+    testcd_data[modify_index, "UNITS"] <-
+      as.character(testcd_data[modify_index, "ORRESU"])
+
+    suppressWarnings({
+      testcd = testcd_data %>%
+        group_by(STUDYID, TESTCD) %>%
+        summarise(min = min(as.numeric(RESULTS), na.rm = TRUE),
+                  max = max(as.numeric(RESULTS), na.rm = TRUE),
+                  n_UNITS = length(na.omit(unique(UNITS))),
+                  UNITS = str_flatten(na.omit(unique(UNITS)), collapse = ", "),
+                  n_LOC = length(na.omit(unique(LOC))),
+                  LOC = str_flatten(na.omit(unique(LOC)), collapse = ", "),
+                  n_METHOD = length(na.omit(unique(METHOD))),
+                  METHOD = str_flatten(na.omit(unique(METHOD)), collapse = ", "),
+                  n_SPEC = length(na.omit(unique(SPEC))),
+                  SPEC = str_flatten(na.omit(unique(SPEC)), collapse = ", ")) %>%
+        ungroup()
+    })
+
+    testcd[which(is.infinite(testcd$min)), "min"] = NA
+    testcd[which(is.infinite(testcd$max)), "max"] = NA
 
     return_list = append(return_list, list(testcd= testcd))
 
@@ -92,8 +121,9 @@ check_data <- function(data){
   missingness_plot = ggplot(
     missingness_table, aes(x = reorder(column, -proportion_missing), y = proportion_missing)
     ) +
-    geom_point(colour = "#E31B23") +
-    geom_segment(mapping = aes(y = 0, yend = proportion_missing), colour = "#14B1E7") +
+    geom_segment(mapping = aes(y = 0, yend = proportion_missing), colour = "#14B1E7",
+                 linewidth = 1.2) +
+    geom_point(colour = "#E31B23", size = 3) +
     theme_minimal() +
     labs(x = "Column", y = "Proportion of Column Missing") +
     coord_flip() +
