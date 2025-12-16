@@ -149,8 +149,8 @@ prepare_domain <- function(domain, data,
     modify_index = which(is.na(data$RESULTS))
 
     if(str_c(domain, "MODIFY") %in% names(data)){
-      data[orres_index, "RESULTS"] <-
-        data[orres_index, str_c(domain, "MODIFY")]
+      data[modify_index, "RESULTS"] <-
+        data[modify_index, str_c(domain, "MODIFY")]
     }
 
     orres_index = which(is.na(data$RESULTS))
