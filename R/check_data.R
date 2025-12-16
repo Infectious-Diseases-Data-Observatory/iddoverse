@@ -1,15 +1,35 @@
+#' Perform data checks on IDDO-SDTM data
+#'
+#' Provides a variety of checks and summaries on IDDO-SDTM data including
+#' summarising the number of rows by study ID (STUDYID), the number
+#' of participants under 6 month, 18 years and over 90 years, and the number of
+#' units used by each test (TESTCD) and study ID.
+#'
+#' @param data A dataset using IDDO-SDTM columns
+#'
+#' @returns A list with various summaries/checks, the number of which is
+#' dependent on what variables are present in the input data. A plot is also
+#' returned showing the missingness in each variable.
+#'
 #' @export
 #'
-check_data <- function(data){
+#' @examples
+#' check_data(DM_RPTESTB)
+#'
+#' check_data(LB_RPTESTB)
+#'
+check_data <- function(data, age_in_years = FALSE){
   studyid = data %>%
     count(STUDYID)
 
   return_list = list(studyid = studyid)
 
   if("AGE" %in% names(data)){
-    data = data %>%
-      convert_age_to_years() %>%  #-------- needs AGEU
-      rename("AGE" = "AGE_YEARS")
+    if(age_in_years == FALSE){
+      data = data %>%
+        convert_age_to_years() %>%  #-------- needs AGEU
+        rename("AGE" = "AGE_YEARS")
+    }
 
     age = tibble(
       n_USUBJID = length(unique(data$USUBJID)),
