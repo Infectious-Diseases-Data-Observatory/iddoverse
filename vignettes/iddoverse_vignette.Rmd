@@ -1,10 +1,7 @@
 ---
-title: "iddoverse"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{iddoverse}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "iddoverse" output: rmarkdown::html_vignette vignette: >
+%\VignetteIndexEntry{iddoverse} %\VignetteEncoding{UTF-8}
+%\VignetteEngine{knitr::rmarkdown} editor_options: markdown: wrap: 72
 ---
 
 ```{r, include = FALSE}
@@ -16,265 +13,99 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Purpose
 
-<!-- # Introduction -->
+Creating analysis ready datasets ('analysis datasets') in R, using the data from the Infectious Diseases Data Observatory (IDDO) repository. 
 
-<!-- Study Data Tabulation Model (SDTM) a standardised format designed for data -->
-<!-- storage. It provides a coherent framework for pooling data from multiple studies and clinical trials. However, -->
-<!-- SDTM is not a suitable data format for analysis. Several complex data pivots are required -->
-<!-- before graphing and analysing data is possible. This vignette walks through the \{iddoverse\} R package demonstrating key functions and results for users of Infectious Disease Data Observatory (IDDO) domains (datasets) -->
-<!-- to transform information from long to wide configurations, designed to work independently or -->
-<!-- within other functions. The package is designed to be user-friendly for a broad audience of -->
-<!-- varying programming ability. Collectively, the code combines key information, selects variables -->
-<!-- of interest, pivots them into a wide data format, adds extra functionality to provide further -->
-<!-- insights and merges several domains together. Documentation for each function can be viewed in R, after installing the package, using the ? command.  -->
+Data requesters can use this package to support the transformation of datasets (known as domains) from SDTM (Study Data Tabulation Model, the data format used by IDDO) to datasets for analysis ('analysis datasets'). The package is intended for epidemiologists, statisticians and data scientists with a diverse range of programming ability, but with some familiarity with R software. Advanced knowledge of the SDTM ontology is not required. This package intends to minimise the time spent on data manipulation, whilst also ensuring reproducibility and increases the accessibility of the SDTM format. All functions come with documentation and examples which can be viewed using the `?` command.
 
-<!-- ## Installing the Package -->
+## Installing the Package
 
-<!-- If you have not downloaded the \{iddoverse\} package before, or need to update the function, which is advised regularly, run the following code in the R console: -->
+```{r, warning=FALSE, message=FALSE}
+# uncomment the following line to install these packages if required
+# install.packages(c("devtools"))
+devtools::install_github("RhysPeploe/iddoverse")
 
-<!-- ```{r, warning=FALSE, message=FALSE} -->
-<!-- # install.packages("devtools") # Only run this line if devtools is not installed -->
-<!-- devtools::install_github("RhysPeploe/iddoverse") -->
-<!-- ``` -->
+library(iddoverse)
+```
 
-<!-- ## Required Packages -->
+## Getting Started
 
-<!-- ```{r setup, warning=FALSE, message=FALSE} -->
-<!-- library(iddoverse) -->
-<!-- library(tibble) -->
-<!-- library(dplyr) -->
-<!-- library(kableExtra) -->
-<!-- ``` -->
+IDDO uses the Study Data Tabulation Model (SDTM) format for most of its data, so when the data is transferred to data requesters, there will be several datasets, each with a specific purpose. These datasets are referred to as domains and each have a two letter code (i.e. DM - demographics, MB - microbiology, VS - vital signs).
 
-<!-- # Categories of Function -->
+Within the package, there are several synthetic, example domains that can be used to gain familiarity with the IDDO-SDTM data. Each domain starts with the two letter domain code followed by the studyid: RPTESTB
 
-<!-- There are broadly 5 types of action that a function could perform, namely: -->
+```{r}
+# demographics (DM) domain
+DM_RPTESTB
 
-<!-- * CLEAN: Performs a number of string replacements to correct commonly misspelt or foreign words and standardises synonyms to increase the homogeneity of the data. -->
-<!-- * DERIVE: Computing or converting data to provide more functionality. -->
-<!-- * PREP: Takes long format data then filters, manipulates and pivots to a wide format. CLEAN and some DERIVE actions are called by PREP functions. -->
-<!-- * ANALYSE: Merges domains into one analysis dataset. Calls PREP and some DERIVE commands. -->
-<!-- * JOIN: Combines variables which represent the same or similar information into a more concise set of features. -->
+# microbiology (MB) domain
+MB_RPTESTB
+```
 
-<!-- ## CLEAN\_ Functions -->
+## `prepare_domain()`
 
-<!-- A handful of domains are cleaned, the majority do not require this since the IDDO curation team uses controlled terminology, however, for some domains this is a significant and difficult task to standardise every treatment or adverse effect a subject could experience. Blood transfusions, for example, are represented by a number of different entries, yet are all the same intervention, INPRESP (whether the variable was pre-specified to be captured) and INOCCUR (whether the event occurred or not) are also standardised. -->
+SDTM domains, such as the MB domain, can have up to 3 columns for the results and a variety of over 20 timing variables, while this preserves the intricacies in the trial data, it also creates complexity for analysis. `prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible can be easily merged with other data. Each dataset (known as a domain) hastwo letter domain code is specified in the first parameter, followed by the domain data frame.
 
-<!-- ```{r} -->
-<!-- IN <- data.frame( -->
-<!--   INTRT = c("BLOOD TRANSFUSION", "PACKED RED BLOOD CELLS", "WHOLE BLOOD 450ML", "TRANSFUSION"), -->
-<!--   INPRESP = c("Y", "Y", TRUE, NA), -->
-<!--   INOCCUR = c("Y", TRUE, FALSE, "UNKNOWN") -->
-<!-- ) -->
+```{r}
+prepare_domain("mb",
+               MB_RPTESTB)
+```
 
-<!-- kable(IN) -->
-<!-- kable(CLEAN_IN(IN)) -->
-<!-- ``` -->
+timing vars/heirarchy
+```{r}
+prepare_domain("MB",
+               MB_RPTESTB,
+               timing_variables = "VISITDY")
+```
 
-<!-- ## DERIVE\_ Functions -->
+vars include
+```{r}
+prepare_domain("vs", 
+               VS_RPTESTB, 
+               variables_include = "TEMP")
+```
 
-<!-- These commands provide new features or convert existing ones, in the below code, DERIVE\_SEASON takes the date and returns a new variable with the calendar season, DERIVE\_AGE\_DAYS provides a new column with the subject's age in days, while the DERIVE\_AGE\_YEARS converts existing age all to years. Body Mass Index (BMI) is calculated and, if necessary, replaced by DERIVE\_BMI and DERIVE\_ANTHRO determines the z scores for World Health Organisation (WHO) growth standards for children under 5 years old. The new columns are seen in join_df. -->
+loc and method
+```{r}
+prepare_domain("vs", 
+               VS_RPTESTB, 
+               variables_include = "TEMP", 
+               include_LOC = TRUE)
+```
 
-<!-- ```{r, fig.align='left'} -->
-<!-- derive_df_raw <- data.frame( -->
-<!--   USUBJID = c("001", "002", "003", "004"), -->
-<!--   RFSTDTC = c( -->
-<!--     as.Date("2023/01/01"), as.Date("2023/04/01"), -->
-<!--     as.Date("2023/08/01"), as.Date("2023/12/01") -->
-<!--   ), -->
-<!--   AGE = c(35, 24, 4, 54), -->
-<!--   AGEU = c("YEARS", "MONTHS", "YEARS", "YEARS"), -->
-<!--   SEX = c(1, 2, 2, 1), -->
-<!--   HEIGHT = c(180, 97, 109, 155), -->
-<!--   WEIGHT = c(80, 10, 18, 67) -->
-<!-- ) -->
+values fn
+join two prepares 
 
-<!-- kable(derive_df_raw) -->
-<!-- derive_df <- derive_df_raw %>% -->
-<!--   DERIVE_SEASON() %>% -->
-<!--   DERIVE_AGE_DAYS() %>% -->
-<!--   DERIVE_AGE_YEARS() %>% -->
-<!--   DERIVE_BMI() -->
+```{r}
 
-<!-- join_df <- left_join( -->
-<!--   derive_df, -->
-<!--   derive_df %>% DERIVE_ANTHRO() -->
-<!-- ) -->
-<!-- kable(join_df) -->
-<!-- ``` -->
-
-<!-- ## PREP\_ Functions -->
-
-<!-- Most domains require transformation from long format where there is one row per event, to a wider alternative where events and other variables are columns because it is more usual to analyse in the latter. This is performed in the PREP\_ set of tools which are all domain specific. Data is filtered and relevant columns are mutated to ensure the object classes are coercible, before data manipulation, if appropriate, and finally pivoting the data wider. Manipulation that is commonly performed is creating a new column to initially match the standardised result or decoded term, then where NAs exist, fill those cells with the modified results or terms, and if NAs still exist, fill the gaps with the original, contributor-provided data. -->
-
-<!-- ```{r} -->
-<!-- lb_df <- data.frame( -->
-<!--   STUDYID = c( -->
-<!--     "RPTESTB", "RPTESTB", "RPTESTB", "RPTESTB", "RPTESTB", "RPTESTB", -->
-<!--     "RPTESTB", "RPTESTB", "RPTESTB", "RPTESTB" -->
-<!--   ), -->
-<!--   DOMAIN = "LB", -->
-<!--   USUBJID = c( -->
-<!--     "RPTESTB_001", "RPTESTB_001", "RPTESTB_001", "RPTESTB_002", "RPTESTB_002", -->
-<!--     "RPTESTB_002", "RPTESTB_002", "RPTESTB_003", "RPTESTB_003", "RPTESTB_003" -->
-<!--   ), -->
-<!--   LBTESTCD = c("HGB", "PLAT", "HGB", "HGB", "PLAT", "HGB", "HCG", "HGB", "PLAT", "HGB"), -->
-<!--   LBTEST = c( -->
-<!--     "Hemoglobin", "Platelets", "Hemoglobin", "Hemoglobin", "Platelets", -->
-<!--     "Hemoglobin", "Choriogonadotropin Beta", "Hemoglobin", "Platelets", "Hemoglobin" -->
-<!--   ), -->
-<!--   LBORRES = c("95", "181000", "88", "101", "100000", "99", "NEG", "98", "90000", "102"), -->
-<!--   LBMODIFY = NA, -->
-<!--   LBORRESU = c("g/L", "10^6/L", "g/L", "g/L", "10^6/L", "g/L", NA, "g/L", "10^6/L", "g/L"), -->
-<!--   LBSTRESC = c(NA, NA, NA, NA, NA, NA, "NEGATIVE", NA, NA, NA), -->
-<!--   LBSTRESN = c(95, 181, 88, 101, 100, 99, NA, 98, 90, 102), -->
-<!--   LBSTRESU = c("g/L", "10^9/L", "g/L", "g/L", "10^9/L", "g/L", NA, "g/L", "10^9/L", "g/L"), -->
-<!--   VISITNUM = c(1, 2, 3, 1, 2, 3, 1, 1, 2, 3), -->
-<!--   VISITDY = c(1, 3, 42, 1, 3, 42, 1, 1, 3, NA), -->
-<!--   EPOCH = c( -->
-<!--     "BASELINE", "TREATMENT", "FOLLOW UP", "BASELINE", "TREATMENT", "FOLLOW UP", -->
-<!--     "BASELINE", "BASELINE", "TREATMENT", "FOLLOW UP" -->
-<!--   ), -->
-<!--   LBDY = c(1, 3, 42, 1, 4, 40, 1, 2, 5, NA) -->
-<!-- ) -->
-
-<!-- kable(lb_df) -->
-<!-- kable(PREP_LB_BL(lb_df)) -->
-<!-- kable(PREP_LB_FU(lb_df)) -->
-<!-- ``` -->
+```
 
 
-<!-- ## ANALYSE\_ Functions -->
+## Standardised Tables for Analysis
 
-<!-- Up until this stage, the domains have been transformed individually and remain separate. Within, ANALYSE\_ functions, they are merged in turn in order to produce the custom analysis dataset. These functions call the other DERIVE and PREP actions so users can solely interact with the ANAYLSE\_ functions, or use the constituent parts to make their own version. However, knowledge of the process and how the data is processed is advisable for understanding and due diligence; inspecting the resultant data is pivotal to catch potential errors. Any output composed using the code will depend on the quality of the data. -->
+```{r}
+create_participant_table(dm_domain = DM_RPTESTB,
+                         rp_domain = RP_RPTESTB,
+                         vs_domain = VS_RPTESTB)
+```
 
-<!-- ```{r} -->
-<!-- # one,two more domains (dm-derive, in-clean/prep, lb - prep) -->
-<!-- dm_df <- data.frame( -->
-<!--   STUDYID = c("RPTESTB", "RPTESTB", "RPTESTB"), -->
-<!--   DOMAIN = c("DM", "DM", "DM"), -->
-<!--   USUBJID = c("RPTESTB_001", "RPTESTB_002", "RPTESTB_003"), -->
-<!--   SUBJID = c("001", "002", "003"), -->
-<!--   RFSTDTC = c("2023/01", "2023/01", "2023/02"), -->
-<!--   DTHDTC = c("2023/08", NA, NA), -->
-<!--   DTHFL = c("Y", NA, NA), -->
-<!--   SITEID = c("OXFORD", "OXFORD", "OXFORD"), -->
-<!--   AGE = c(67, 18, 48), -->
-<!--   AGEU = c("YEARS", "YEARS", "MONTHS"), -->
-<!--   SEX = c("F", "F", "M"), -->
-<!--   RACE = c("White", "White", "White"), -->
-<!--   ETHNIC = c("British", "Irish", "British"), -->
-<!--   ARMCD = c("PBO", "TRT", "TRT"), -->
-<!--   ARM = c("PLACEBO", "TREATMENT", "TREATMENT"), -->
-<!--   COUNTRY = c("UK", "UK", "UK"), -->
-<!--   DMDTC = c("2023/01", "2023/01", "2023/02"), -->
-<!--   DMDY = c(1, 1, 1) -->
-<!-- ) -->
+```{r}
+create_malaria_pcr_table(pf_domain = PF_RPTESTB,
+                         rs_domain = RS_RPTESTB)
+```
 
-<!-- kable(dm_df) -->
-<!-- sa_df <- data.frame( -->
-<!--   STUDYID = c("RPTESTB", "RPTESTB", "RPTESTB"), -->
-<!--   DOMAIN = c("SA", "SA", "SA"), -->
-<!--   SASEQ = c(1, 1, 1), -->
-<!--   USUBJID = c("RPTESTB_001", "RPTESTB_002", "RPTESTB_001"), -->
-<!--   SATERM = c("Fever", "P/F-MALARIA", "P/F-MALARIA"), -->
-<!--   SAMODIFY = c(NA, NA, NA), -->
-<!--   SADECOD = c("FEVER", NA, NA), -->
-<!--   SACAT = c("MEDICAL HISTORY", NA, NA), -->
-<!--   SAPRESP = c(NA, NA, NA), -->
-<!--   SAOCCUR = c(NA, NA, NA), -->
-<!--   SASEV = c("SEVERE", "SEVERE", NA), -->
-<!--   VISITNUM = c(1, 2, 3), -->
-<!--   VISIT = c("Day 0", "Day 2", "Week 6"), -->
-<!--   VISITDY = c(1, 3, 42), -->
-<!--   EPOCH = c("BASELINE", "TREATMENT", "FOLLOW UP"), -->
-<!--   SADTC = c("2023/01", "2023/01", "2023/02"), -->
-<!--   SADY = c(NA, 4, NA), -->
-<!--   SASTDY = c(-18, NA, 39), -->
-<!--   SAENDY = c(-4, NA, 42), -->
-<!--   SADUR = c(NA, NA, NA), -->
-<!--   SAEVINTX = c(NA, NA, NA) -->
-<!-- ) -->
+## Data Checks \& Summaries
 
-<!-- kable(sa_df) -->
+```{r}
+check_data(DM_RPTESTB)
 
-<!-- baseline_df <- ANALYSE_BASELINE(" ", -->
-<!--   DATA_DM = dm_df, -->
-<!--   DATA_LB = lb_df, -->
-<!--   DATA_MB = NULL, -->
-<!--   DATA_SA = sa_df -->
-<!-- ) -->
-
-<!-- kable(baseline_df) -->
-<!-- follow_up_df <- ANALYSE_FOLLOW_UP("VL", -->
-<!--   DATA_DM = dm_df, -->
-<!--   DATA_LB = lb_df, -->
-<!--   DATA_MB = NULL, -->
-<!--   DATA_SA = sa_df -->
-<!-- ) -->
-<!-- ``` -->
+check_data(LB_RPTESTB)
+```
 
 
-<!-- ## JOIN\_ Functions -->
+## Other resources
 
-<!-- After merging several domains into one dataset, there are a number of similar variables which exist and there is reason to merge these features together to avoid confusion. Several combinations of pregnancy test result (HCG) and Pregnancy Indicator (PREGIND), with the resultant, joined PREGNANT variable are shown below. In this case, the lab result, HCG, is more reliable than the response given when a subject is asked whether they are pregnant, PREGIND, so the PREGNANT variable will take the HCG value by default and if that is missing, will then take the PREGIND information. In the analysis dataset, only PREGNANT will appear, if both HCG and PREGIND were present in the original SDTM data. -->
-
-<!-- ```{r} -->
-<!-- join_df_raw <- data.frame( -->
-<!--   HCG = c("POSITIVE", "POSITIVE", "NEGATIVE", NA, NA), -->
-<!--   PREGIND = c("POSITIVE", "NEGATIVE", NA, "POSITIVE", NA) -->
-<!-- ) -->
-
-<!-- join_df_raw -->
-
-<!-- join_df <- cbind( -->
-<!--   join_df_raw, -->
-<!--   join_df_raw %>% JOIN_PREGNANT() -->
-<!-- ) -->
-
-<!-- join_df -->
-
-<!-- # analyse (rp-join) -->
-<!-- ``` -->
-
-
-<!-- ## Other Functions -->
-
-<!-- ### DOMAIN_TABLE -->
-
-<!-- To easily assess the variables in a domain, the DOMAIN_TABLE() function uses table() to display the frequency of terms, tests and treatments so that the user can specify additional variables in the PREP\_ and ANALYSE\_ steps. Demographic (DM) variables are the various column names, most domains this will be the TESTCD, such as in the Laboratory Test Results (LB).  -->
-
-<!-- ```{r} -->
-<!-- DOMAIN_TABLE("dm", dm_df) -->
-
-<!-- DOMAIN_TABLE("lb", lb_df) -->
-<!-- ``` -->
-
-
-<!-- # Function Directory -->
-
-<!-- Here is a list of the functions in the \{iddoverse\} package with a description and the required domains; the table can be filtered and sorted.  -->
-
-<!-- ```{r, echo=FALSE, warning=FALSE} -->
-<!-- library(reactable) -->
-
-<!-- functs <- tibble::tribble( -->
-<!--   ~Functions, ~Description, ~`Required Domains`, -->
-<!--   "DERIVE_BMI()", "Computes the Body Mass Index for subjects aged 18 and over", "DM, VS" -->
-<!-- ) %>% dplyr::select(Functions, Description, `Required Domains`) -->
-
-<!-- reactable( -->
-<!--   functs, -->
-<!--   columns = list( -->
-<!--     Functions = colDef( -->
-<!--       minWidth = 100 -->
-<!--     ) -->
-<!--   ), -->
-<!--   defaultSorted = list("Functions" = "desc", "Required Domains" = "desc"), -->
-<!--   filterable = TRUE, -->
-<!--   resizable = TRUE, -->
-<!--   defaultPageSize = 20 -->
-<!-- ) -->
-<!-- ``` -->
-
+paper
+iddo wiki
+data team videos
