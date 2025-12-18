@@ -9,25 +9,24 @@
 
 <!-- badges: end -->
 
-The {iddoverse} contains R functions to convert IDDO-curated SDTM
-domains into analysis datasets, similar to ADaM datasets. These reusable
+The `iddoverse` contains R functions to convert IDDO-curated SDTM 
+domains into analysis ready datasets('analysis datasets'). These reusable
 functions aim to provide a toolbox for researchers to modify the
 analysis dataset to their study-specific needs, speeding up the time it
 takes to create analysable data.
 
-This package takes inspiration from the Pharmaverse, specifically the
-[{admiral}](https://github.com/pharmaverse/admiral) R package, however,
+This package takes inspiration from the `pharmaverse`, specifically the
+[`admiral`](https://github.com/pharmaverse/admiral) R package, however,
 IDDO-SDTM formats are not strictly compliant with standards required by
-pharma companies, as a result, the purpose for the {iddoverse} is to map
-the IDDO-SDTM format to IDDO-ADaM datasets.
+pharmacutical companies and the target audience of the `iddoverse` are 
+researchers who do not have a working knowledge of SDTM, unlike the `pharmaverse`.
 
     IDDO - Infectious Disease Data Observatory
-    SDTM - Study Data Tabulation Model, an internation data storage model from CDISC.
-    ADaM - Analysis Data Model, an internation data analysis model from CDISC.
+    SDTM - Study Data Tabulation Model, an internation data storage model from CDISC which is used by IDDO.
 
 ## Installation
 
-You can install the development version of IDDOverse from
+You can install the development version of `iddoverse` from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -37,8 +36,7 @@ library(iddoverse)
 ```
 
 We recommend updating the install regularly as the package is developing
-constantly. Version 1.0 will be released in 2024, development timeline
-is currently being created. Until then, versions starting with ‘0.’
+constantly. Versions starting with ‘0.’
 should be expected to change without notification.
 
 It is best to remove the package and reinstall the current version:
@@ -52,13 +50,12 @@ library(iddoverse)
 
 ## Why is this useful?
 
-The code will speed up the time taken to produce analysis datasets and
-provide consistent outputs. The user should be able to simply input
-their domains and the code should create an analysis dataset.
+The package will assist researchers manpiulate their datasets transferred from IDDO,
+ minimising the time spent on data transformation before analysis can begin. 
 
 ## Citation
 
-To cite iddoverse in publications, see
+To cite `iddoverse` in publications, see
 [CITATION](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
 
 ## Issues
