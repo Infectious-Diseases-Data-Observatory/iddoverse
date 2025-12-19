@@ -19,7 +19,6 @@ globalVariables(c(
   "OCCUR",
   "SACAT",
 
-  #--------- CHECK DATA
   "STRESN",
   "STRESC",
   "STRESU",
@@ -28,6 +27,7 @@ globalVariables(c(
   "EPOCH",
   "column",
   "proportion_missing",
+
   #--------- SUM PARA
   ".",
   "TPARA",
