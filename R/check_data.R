@@ -24,6 +24,16 @@ check_data <- function(data, age_in_years = FALSE){
 
   return_list = list(studyid = studyid)
 
+  if("SEX" %in% names(data)){
+    sex = data.frame(
+      table(data$SEX, useNA = "always")
+    ) %>%
+      rename("SEX" = "Var1",
+             "n" = "Freq")
+
+    return_list = append(return_list, list(sex = sex))
+  }
+
   if("AGE" %in% names(data)){
     if(age_in_years == FALSE){
       data = data %>%
@@ -100,6 +110,11 @@ check_data <- function(data, age_in_years = FALSE){
       testcd = testcd_data %>%
         group_by(STUDYID, TESTCD) %>%
         summarise(min = min(as.numeric(RESULTS), na.rm = TRUE),
+                  q5 = quantile(as.numeric(RESULTS), na.rm = TRUE, probs = 0.05),
+                  q25 = quantile(as.numeric(RESULTS), na.rm = TRUE, probs = 0.25),
+                  q50 = quantile(as.numeric(RESULTS), na.rm = TRUE, probs = 0.5),
+                  q75 = quantile(as.numeric(RESULTS), na.rm = TRUE, probs = 0.75),
+                  q95 = quantile(as.numeric(RESULTS), na.rm = TRUE, probs = 0.95),
                   max = max(as.numeric(RESULTS), na.rm = TRUE),
                   n_UNITS = length(na.omit(unique(UNITS))),
                   UNITS = str_flatten(na.omit(unique(UNITS)), collapse = ", "),
