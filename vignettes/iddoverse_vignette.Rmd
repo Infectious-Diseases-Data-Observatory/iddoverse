@@ -1,7 +1,13 @@
 ---
-title: "iddoverse" output: rmarkdown::html_vignette vignette: >
-%\VignetteIndexEntry{iddoverse} %\VignetteEncoding{UTF-8}
-%\VignetteEngine{knitr::rmarkdown} editor_options: markdown: wrap: 72
+title: "iddoverse" 
+output: rmarkdown::html_vignette 
+vignette: >
+  %\VignetteIndexEntry{iddoverse} 
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown} 
+editor_options: 
+markdown: 
+wrap: 72
 ---
 
 ```{r, include = FALSE}
@@ -15,7 +21,7 @@ knitr::opts_chunk$set(
 
 ## Purpose
 
-Creating analysis ready datasets ('analysis datasets') in R, using the data from the Infectious Diseases Data Observatory (IDDO) repository. 
+Creating analysis ready datasets ('analysis datasets') in R, using the data from the Infectious Diseases Data Observatory (IDDO) repository.
 
 Data requesters can use this package to support the transformation of datasets from SDTM (Study Data Tabulation Model, the data format used by IDDO) to datasets for analysis ('analysis datasets'). The package is intended for epidemiologists, statisticians and data scientists with a diverse range of programming ability, but with some familiarity with R software. Advanced knowledge of the SDTM ontology is not required. This package intends to minimise the time spent on data manipulation, whilst also ensuring reproducibility and increases the accessibility of the SDTM format. All functions come with documentation and examples which can be viewed using the `?` command.
 
@@ -27,7 +33,7 @@ Data requesters can use this package to support the transformation of datasets f
 devtools::install_github("RhysPeploe/iddoverse")
 
 library(iddoverse)
-# library(dplyr)
+library(dplyr)
 ```
 
 ## Getting Started
@@ -46,7 +52,7 @@ MB_RPTESTB
 
 ## `prepare_domain()`
 
-SDTM domains, such as the MB domain, can have up to 3 columns for the results and a variety of over 20 timing variables, while this preserves the intricacies in the trial data, it also creates complexity for analysis. `prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible can be easily merged with other data. 
+SDTM domains, such as the MB domain, can have up to 3 columns for the results and a variety of over 20 timing variables, while this preserves the intricacies in the trial data, it also creates complexity for analysis. `prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible can be easily merged with other data.
 
 In `prepare_domain()`, the first parameter is the two letter domain code followed by the domain data frame.
 
@@ -55,9 +61,7 @@ prepare_domain("mb",
                MB_RPTESTB)
 ```
 
-These best choices follow a hierarchical list of variables, so
-for a given row, if the first variable in the hierarchy list is not present, the second will be used unless that is also empty, and so on. 
-For the best choice timing variable, there is a default hierarchy though users are encouraged to specify the list of timing variables which are most relevant to the study and objectives they have. 
+These best choices follow a hierarchical list of variables, so for a given row, if the first variable in the hierarchy list is not present, the second will be used unless that is also empty, and so on. For the best choice timing variable, there is a default hierarchy though users are encouraged to specify the list of timing variables which are most relevant to the study and objectives they have.
 
 For example, a researcher may only want planned visit days as the timing variable, so they can specify `VISITDY`. The `TIME_SOURCE` changes compared to the previous example as the hierarchy has changed.
 
@@ -67,7 +71,7 @@ prepare_domain("MB",
                timing_variables = "VISITDY")
 ```
 
-Additional parameters include subsetting the output on the variables of interest, by using `variables_include` to select just weight and temperature 
+Additional parameters include subsetting the output on the variables of interest, by using `variables_include` to select just weight and temperature
 
 ```{r}
 prepare_domain("vs", 
@@ -97,12 +101,9 @@ left_join(
 
 ## Standardised Tables for Analysis
 
-The package also contains functions to create standardised analysis datasets, these start with `create_`. These scripts use the `prepare_domain()` function multiple times to extract specific variables from the domains they reside in. 
-The choice of which variables to include are based on subject matter expertise. The purpose of these tables is to provide most of the key information for an analysis, such as the information typically presented in Table 1 of clinical trials. 
-A key limitation is that these functions cannot address every need of researchers and neither it would be possible to attempt to make an all-encompassing solution due to the large variability in the dataset within and across diseases. 
-However, these standardised tables do provide useful key information with minimal user input, ideal for those who are not experienced R or programming users.
+The package also contains functions to create standardised analysis datasets, these start with `create_`. These scripts use the `prepare_domain()` function multiple times to extract specific variables from the domains they reside in. The choice of which variables to include are based on subject matter expertise. The purpose of these tables is to provide most of the key information for an analysis, such as the information typically presented in Table 1 of clinical trials. A key limitation is that these functions cannot address every need of researchers and neither it would be possible to attempt to make an all-encompassing solution due to the large variability in the dataset within and across diseases. However, these standardised tables do provide useful key information with minimal user input, ideal for those who are not experienced R or programming users.
 
-create particpant
+`create_participant_table()` creates a one row per participant analysis table along with several participant characteristic variables and baseline test information.
 
 ```{r}
 create_participant_table(dm_domain = DM_RPTESTB,
@@ -110,27 +111,33 @@ create_participant_table(dm_domain = DM_RPTESTB,
                          vs_domain = VS_RPTESTB)
 ```
 
-create malaria
+`create_malaria_pcr_table()` creates a one row per person, per timepoint table combining the polymerase chain reaction (PCR) test information, drawing from both the Pharmacogenomics Genetics (PF) and Disease Response and Clinical Classification (RS) domains.
 
 ```{r}
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
                          rs_domain = RS_RPTESTB)
 ```
 
-## Data Checks \& Summaries
+## Data Checks & Summaries
 
-`iddoverse` also contains functions to check and summarise the IDDO-SDTM data for the user, this supports with exploratory data analysis and
-can inform the choice of parameter options within `prepare_domain`.
+`iddoverse` also contains functions to check and summarise the IDDO-SDTM data for the user, this supports with exploratory data analysis and can inform the choice of parameter options within `prepare_domain`. The output tables are based on whether certain column names exist in the data, so the `age` summary is only included when `AGE` is present. The possible outputs are:
 
-```{r}
+-   `$studyid`: table of the number of rows per `STUDYID`.
+-   `$sex`: table of the number of rows per `SEX`.
+-   `$age`: summarises the number of unique `USUBJIDs`, the minimum and maximum ages in years, the number of missing ages, number of participant under 6 months old, under 18 years old and over 90 years old.
+-   `$testcd`: Creates a table for each `STUDYID` and `TESTCD` (code for a specific test/finding) with the min, max and various quantiles for numeric results, and the number of unique units, locations, methods and specimens.
+-   `$outcome`: Reports the number of rows where outcome events occurred within the first 7 planned study days.
+-   `$missingness`: The proportion of missing data in each variable, accompanied with a plot visualisaing the information.
+
+```{r, fig.width=7.2, fig.height=4}
 check_data(DM_RPTESTB)
 
 check_data(LB_RPTESTB)
 ```
 
-
 ## Other resources
 
-paper
-iddo wiki
-data team videos
+-   Paper: ['Welcome to the iddoverse: An R package for converting IDDO-SDTM data into analysis datasets'](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/tree/main/paper)
+-   [IDDO Wiki](https://wiki.iddo.org/en/Data-Engineering)
+    -   [IDDO's Introduction to SDTM Videos](https://wiki.iddo.org/en/Data-Engineering/Resources-For-Users/Intro-And-Background/SDTM-videos)
+    -   [IDDO-SDTM Implementation Manual](https://wiki.iddo.org/en/Data-Engineering/IDDO-SDTM-Implementation-Manual)
