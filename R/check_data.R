@@ -6,6 +6,9 @@
 #' units used by each test (TESTCD) and study ID.
 #'
 #' @param data A dataset using IDDO-SDTM columns
+#' @param age_in_years Boolean. Is the AGE column in years. Default is FALSE,
+#' and function will call `convert_age_to_years` if FALSE, otherwise will not
+#' convert age.
 #'
 #' @returns A list with various summaries/checks, the number of which is
 #' dependent on what variables are present in the input data. A plot is also
