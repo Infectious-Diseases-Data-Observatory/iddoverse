@@ -10,7 +10,7 @@
 <!-- badges: end -->
 
 The `iddoverse` contains R functions to convert IDDO-curated SDTM 
-domains into analysis ready datasets('analysis datasets'). These reusable
+domains into analysis ready datasets ('analysis datasets'). These reusable
 functions aim to provide a toolbox for researchers to modify the
 analysis dataset to their study-specific needs, speeding up the time it
 takes to create analysable data.
