@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 Creating analysis ready datasets ('analysis datasets') in R, using the data from the Infectious Diseases Data Observatory (IDDO) repository. 
 
-Data requesters can use this package to support the transformation of datasets (known as domains) from SDTM (Study Data Tabulation Model, the data format used by IDDO) to datasets for analysis ('analysis datasets'). The package is intended for epidemiologists, statisticians and data scientists with a diverse range of programming ability, but with some familiarity with R software. Advanced knowledge of the SDTM ontology is not required. This package intends to minimise the time spent on data manipulation, whilst also ensuring reproducibility and increases the accessibility of the SDTM format. All functions come with documentation and examples which can be viewed using the `?` command.
+Data requesters can use this package to support the transformation of datasets from SDTM (Study Data Tabulation Model, the data format used by IDDO) to datasets for analysis ('analysis datasets'). The package is intended for epidemiologists, statisticians and data scientists with a diverse range of programming ability, but with some familiarity with R software. Advanced knowledge of the SDTM ontology is not required. This package intends to minimise the time spent on data manipulation, whilst also ensuring reproducibility and increases the accessibility of the SDTM format. All functions come with documentation and examples which can be viewed using the `?` command.
 
 ## Installing the Package
 
@@ -27,11 +27,12 @@ Data requesters can use this package to support the transformation of datasets (
 devtools::install_github("RhysPeploe/iddoverse")
 
 library(iddoverse)
+# library(dplyr)
 ```
 
 ## Getting Started
 
-IDDO uses the Study Data Tabulation Model (SDTM) format for most of its data, so when the data is transferred to data requesters, there will be several datasets, each with a specific purpose. These datasets are referred to as domains and each have a two letter code (i.e. DM - demographics, MB - microbiology, VS - vital signs).
+IDDO uses the SDTM format for most of its data, so when the data is transferred to data requesters, there will be several datasets, each with a specific purpose. These datasets are referred to as domains and each have a two letter code (i.e. DM - demographics, MB - microbiology, VS - vital signs).
 
 Within the package, there are several synthetic, example domains that can be used to gain familiarity with the IDDO-SDTM data. Each domain starts with the two letter domain code followed by the studyid: RPTESTB
 
@@ -45,44 +46,63 @@ MB_RPTESTB
 
 ## `prepare_domain()`
 
-SDTM domains, such as the MB domain, can have up to 3 columns for the results and a variety of over 20 timing variables, while this preserves the intricacies in the trial data, it also creates complexity for analysis. `prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible can be easily merged with other data. Each dataset (known as a domain) hastwo letter domain code is specified in the first parameter, followed by the domain data frame.
+SDTM domains, such as the MB domain, can have up to 3 columns for the results and a variety of over 20 timing variables, while this preserves the intricacies in the trial data, it also creates complexity for analysis. `prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible can be easily merged with other data. 
+
+In `prepare_domain()`, the first parameter is the two letter domain code followed by the domain data frame.
 
 ```{r}
 prepare_domain("mb",
                MB_RPTESTB)
 ```
 
-timing vars/heirarchy
+These best choices follow a hierarchical list of variables, so
+for a given row, if the first variable in the hierarchy list is not present, the second will be used unless that is also empty, and so on. 
+For the best choice timing variable, there is a default hierarchy though users are encouraged to specify the list of timing variables which are most relevant to the study and objectives they have. 
+
+For example, a researcher may only want planned visit days as the timing variable, so they can specify `VISITDY`. The `TIME_SOURCE` changes compared to the previous example as the hierarchy has changed.
+
 ```{r}
 prepare_domain("MB",
                MB_RPTESTB,
                timing_variables = "VISITDY")
 ```
 
-vars include
+Additional parameters include subsetting the output on the variables of interest, by using `variables_include` to select just weight and temperature 
+
 ```{r}
 prepare_domain("vs", 
                VS_RPTESTB, 
-               variables_include = "TEMP")
+               variables_include = c("TEMP", "WEIGHT"))
 ```
 
-loc and method
+The location (`LOC`) and method (`METHOD`) of a test or finding may be required in the analysis dataset. `include_LOC` and `include_METHOD` can be set to `TRUE` to include them in the column names of the test/finding along with the units, (i.e.e `TEMP_AXILLA_C`). If the location or method is `NA`, then `NA` will appear in the column name.
+
 ```{r}
 prepare_domain("vs", 
                VS_RPTESTB, 
-               variables_include = "TEMP", 
+               variables_include = c("TEMP", "WEIGHT"), 
                include_LOC = TRUE)
 ```
 
-values fn
-join two prepares 
+When the function pivots the data, they may be occasions where two rows for the same test/finding/event have the same STUDYID, USUBJID, TIME value, TIME_SOURCE, in this scenario, there rows are not uniquely separable so the first row is taken by default. This can be changed to another function using `values_fn`. The number of rows affected will be reported by in the console when running `prepare_domain()` by default, unless `print_messages` is set to `FALSE`.
+
+Once one domain has been transformed, the consistent keys allow for easy merging with other prepared domains, allowing for a customised analysis dataset can be built.
 
 ```{r}
-
+left_join(
+  prepare_domain("MB", MB_RPTESTB, timing_variables = "VISIT"),
+  prepare_domain("Vs", VS_RPTESTB, timing_variables = "VISIT", include_LOC = TRUE)
+)
 ```
 
-
 ## Standardised Tables for Analysis
+
+The package also contains functions to create standardised analysis datasets, these start with `create_`. These scripts use the `prepare_domain()` function multiple times to extract specific variables from the domains they reside in. 
+The choice of which variables to include are based on subject matter expertise. The purpose of these tables is to provide most of the key information for an analysis, such as the information typically presented in Table 1 of clinical trials. 
+A key limitation is that these functions cannot address every need of researchers and neither it would be possible to attempt to make an all-encompassing solution due to the large variability in the dataset within and across diseases. 
+However, these standardised tables do provide useful key information with minimal user input, ideal for those who are not experienced R or programming users.
+
+create particpant
 
 ```{r}
 create_participant_table(dm_domain = DM_RPTESTB,
@@ -90,12 +110,17 @@ create_participant_table(dm_domain = DM_RPTESTB,
                          vs_domain = VS_RPTESTB)
 ```
 
+create malaria
+
 ```{r}
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
                          rs_domain = RS_RPTESTB)
 ```
 
 ## Data Checks \& Summaries
+
+`iddoverse` also contains functions to check and summarise the IDDO-SDTM data for the user, this supports with exploratory data analysis and
+can inform the choice of parameter options within `prepare_domain`.
 
 ```{r}
 check_data(DM_RPTESTB)
