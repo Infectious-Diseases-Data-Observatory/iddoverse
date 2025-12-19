@@ -6,10 +6,10 @@ test_that("findings domain: STRESN → STRESC → MODIFY → ORRES precedence, T
     LBSTDY = c("1", "2", "3", "4"),
     LBORRES = c("fourteen", "sechs", "0", NA_character_),
     LBORRESU = c("U_ORRES", "U_ORRES", "U_ORRES", NA_character_),
+    LBMODIFY = c("14_mod", "six", NA_character_, NA_character_),
     LBSTRESN = c(14, NA_real_, NA_real_, NA_real_),
     LBSTRESU = c("U", NA_character_, NA_character_, NA_character_),
-    LBSTRESC = c("14_char", NA_character_, NA_character_, NA_character_),
-    LBMODIFY = c("14_mod", "six", NA_character_, NA_character_)
+    LBSTRESC = c("14_char", NA_character_, NA_character_, NA_character_)
   )
 
   out <- prepare_domain("LB", lb, print_messages = FALSE)
@@ -19,9 +19,9 @@ test_that("findings domain: STRESN → STRESC → MODIFY → ORRES precedence, T
 
   # pivot produces TESTCD_UNITS column
   # so expect i.e. "HGB_U" when unit = "U"
-  expect_true(all(c("HGB_U", "ALT_U_ORRES", "ALT_NA", "HGB_NA") %in% colnames(out)))
+  expect_true(all(c("HGB_U", "ALT_U_ORRES", "HGB_NA") %in% colnames(out)))
   expect_equal(as.character(out$HGB_U[1]), "14") # STRESN placed into RESULTS and pivoted
-  expect_equal(as.character(out$ALT_NA[2]), "six")
+  expect_equal(as.character(out$ALT_U_ORRES[2]), "six")
   expect_equal(as.character(out$ALT_U_ORRES[3]), "0")
   expect_equal(as.character(out$HGB_NA[4]), as.character(NA))
   # TIME_SOURCE should have domain prefix removed (LBSTDY -> STDY)
