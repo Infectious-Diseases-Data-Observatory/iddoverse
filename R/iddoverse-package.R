@@ -45,6 +45,7 @@
 #' @importFrom rlang .data
 #' @importFrom rlang warn
 #' @importFrom stats na.omit
+#' @importFrom stats quantile
 #' @importFrom stats reorder
 #' @importFrom stringr str_c
 #' @importFrom stringr str_detect
