@@ -135,7 +135,16 @@ check_data(DM_RPTESTB)
 check_data(LB_RPTESTB)
 ```
 
-## Other resources
+## Miscellaneous Functions
+
+`table_variables()` is a simple function to tabulate the variables in a domain. Not all domains are currently covered in this function but most are. This function may be useful when deciding which variables to include in the `prepare_domain()` output.
+
+```{r}
+table_variables("vS", VS_RPTESTB)
+```
+
+
+## Other Resources
 
 -   Paper: ['Welcome to the iddoverse: An R package for converting IDDO-SDTM data into analysis datasets'](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/tree/main/paper)
 -   [IDDO Wiki](https://wiki.iddo.org/en/Data-Engineering)
