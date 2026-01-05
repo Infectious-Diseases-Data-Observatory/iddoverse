@@ -15,6 +15,9 @@
 #' convert_age_to_years(DM_RPTESTB)
 #'
 convert_age_to_years <- function(data) {
+
+  assert_data_frame(data, required_vars = exprs(AGE, AGEU))
+
   data <- data %>%
     mutate(AGEU = str_to_upper(AGEU))
 
