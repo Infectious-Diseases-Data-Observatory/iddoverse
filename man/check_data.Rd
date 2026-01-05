@@ -8,6 +8,10 @@ check_data(data, age_in_years = FALSE)
 }
 \arguments{
 \item{data}{A dataset using IDDO-SDTM columns}
+
+\item{age_in_years}{Boolean. Is the AGE column in years. Default is FALSE,
+and function will call \code{convert_age_to_years} if FALSE, otherwise will not
+convert age.}
 }
 \value{
 A list with various summaries/checks, the number of which is
