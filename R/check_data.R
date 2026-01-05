@@ -22,6 +22,10 @@
 #' check_data(LB_RPTESTB)
 #'
 check_data <- function(data, age_in_years = FALSE){
+
+  assert_data_frame(data, required_vars = exprs(STUDYID),
+                    message = "Required variable `STUDYID` is missing in dataset")
+
   studyid = data %>%
     count(STUDYID)
 
@@ -37,10 +41,14 @@ check_data <- function(data, age_in_years = FALSE){
     return_list = append(return_list, list(sex = sex))
   }
 
-  if("AGE" %in% names(data)){
+  if(all(c("AGE", "USUBJID") %in% names(data))){
     if(age_in_years == FALSE){
+      assert_data_frame(data, required_vars = exprs(AGEU),
+                        message = "Required variable `AGEU` is missing in dataset.
+                        If AGE is already in Years, then set age_in_years = TRUE")
+
       data = data %>%
-        convert_age_to_years() %>%  #-------- needs AGEU
+        convert_age_to_years() %>%
         rename("AGE" = "AGE_YEARS")
     }
 
@@ -57,24 +65,44 @@ check_data <- function(data, age_in_years = FALSE){
     return_list = append(return_list, list(age = age))
   }
 
-  if(any(str_detect(names(data), "TESTCD"))){
+  if(any(str_detect(names(data), "TESTCD")) ){
     testcd_data = data
 
     if(all(!(str_detect(names(data), "LOC")))){
       testcd_data = testcd_data %>%
-        mutate(LOC = NA)
+        mutate(LOC = as.character(NA))
     }
     if(all(!(str_detect(names(data), "METHOD")))){
       testcd_data = testcd_data %>%
-        mutate(METHOD = NA)
+        mutate(METHOD = as.character(NA))
     }
     if(all(!(str_detect(names(data), "SPEC")))){
       testcd_data = testcd_data %>%
-        mutate(SPEC = NA)
+        mutate(SPEC = as.character(NA))
     }
     if(all(!(str_detect(names(data), "MODIFY")))){
       testcd_data = testcd_data %>%
-        mutate(MODIFY = NA)
+        mutate(MODIFY = as.character(NA))
+    }
+    if(all(!(str_detect(names(data), "STRESC")))){
+      testcd_data = testcd_data %>%
+        mutate(STRESC = as.character(NA))
+    }
+    if(all(!(str_detect(names(data), "STRESN")))){
+      testcd_data = testcd_data %>%
+        mutate(STRESN = as.character(NA))
+    }
+    if(all(!(str_detect(names(data), "STRESU")))){
+      testcd_data = testcd_data %>%
+        mutate(STRESU = as.character(NA))
+    }
+    if(all(!(str_detect(names(data), "ORRES$")))){
+      testcd_data = testcd_data %>%
+        mutate(ORRES = as.character(NA))
+    }
+    if(all(!(str_detect(names(data), "ORRESU")))){
+      testcd_data = testcd_data %>%
+        mutate(ORRESU = as.character(NA))
     }
 
     names(testcd_data)[which(str_ends(names(testcd_data), "TESTCD"))] = "TESTCD"
@@ -90,24 +118,34 @@ check_data <- function(data, age_in_years = FALSE){
 
     testcd_data = testcd_data %>%
       convert_blanks_to_na() %>%
-      mutate(RESULTS = as.character(STRESN),
-             UNITS = as.character(STRESU))
+      mutate(TESTCD = as.character(TESTCD),
+             LOC = as.character(LOC),
+             METHOD = as.character(METHOD),
+             SPEC = as.character(SPEC),
+             STRESC = as.character(STRESC),
+             STRESN = as.character(STRESN),
+             STRESU = as.character(STRESU),
+             MODIFY = as.character(MODIFY),
+             ORRES = as.character(ORRES),
+             ORRESU = as.character(ORRESU),
+             RESULTS = STRESN,
+             UNITS = STRESU)
 
     testcd_data[which(is.na(testcd_data$RESULTS)), "RESULTS"] =
-      as.character(testcd_data[which(is.na(testcd_data$RESULTS)), "STRESC"])
+      testcd_data[which(is.na(testcd_data$RESULTS)), "STRESC"]
 
     modify_index = which(is.na(testcd_data$RESULTS))
 
     testcd_data[modify_index, "RESULTS"] =
-      as.character(testcd_data[modify_index, "MODIFY"])
+      testcd_data[modify_index, "MODIFY"]
 
     orres_index = which(is.na(testcd_data$RESULTS))
 
     testcd_data[orres_index, "RESULTS"] =
-      as.character(testcd_data[orres_index, "ORRES"])
+      testcd_data[orres_index, "ORRES"]
 
-    testcd_data[modify_index, "UNITS"] <-
-      as.character(testcd_data[modify_index, "ORRESU"])
+    testcd_data[modify_index, "UNITS"] =
+      testcd_data[modify_index, "ORRESU"]
 
     suppressWarnings({
       testcd = testcd_data %>%
@@ -133,22 +171,36 @@ check_data <- function(data, age_in_years = FALSE){
     testcd[which(is.infinite(testcd$min)), "min"] = NA
     testcd[which(is.infinite(testcd$max)), "max"] = NA
 
-    return_list = append(return_list, list(testcd= testcd))
+    return_list = append(return_list, list(testcd = testcd))
 
-    if(any(testcd_data$TESTCD == "INTP")){ ## add other outcomes for DS, RS -----------
+    if(any(testcd_data$TESTCD == "INTP") &
+       all(c("VISITDY", "EPOCH") %in% names(data))){
       outcome_data = testcd_data %>%
         filter(TESTCD == "INTP",
                VISITDY < 7 | EPOCH == "BASELINE")
 
       outcome = outcome_data %>%
         count(STUDYID) %>%
-        rename("n_PF_INTP_<VISITDY_7" = "n")
+        rename("n_INTP_<DAY7" = "n")
+
+      return_list = append(return_list, list(outcome = outcome))
+    } else if(any(testcd_data$TESTCD == "WHOMAL01") &
+              all(c("VISITDY", "EPOCH") %in% names(data))){
+      outcome_data = testcd_data %>%
+        filter(TESTCD == "WHOMAL01",
+               STRESC == "ACPR",
+               VISITDY < 2 | EPOCH == "BASELINE")
+
+      outcome = outcome_data %>%
+        count(STUDYID) %>%
+        rename("n_WHOMAL01_<DAY2" = "n")
 
       return_list = append(return_list, list(outcome = outcome))
     }
   }
 
-  missingness = sapply(data, function(x) filter(data, is.na(x)) %>% nrow()/nrow(data)) %>%
+  missingness = sapply(data,
+                       function(x) filter(data, is.na(x)) %>% nrow()/nrow(data)) %>%
     round(3)
 
   missingness_table = tibble(
@@ -157,10 +209,11 @@ check_data <- function(data, age_in_years = FALSE){
     )
 
   missingness_plot = ggplot(
-    missingness_table, aes(x = reorder(column, -proportion_missing), y = proportion_missing)
+    missingness_table, aes(x = reorder(column, -proportion_missing),
+                           y = proportion_missing)
     ) +
-    geom_segment(mapping = aes(y = 0, yend = proportion_missing), colour = "#14B1E7",
-                 linewidth = 1.2) +
+    geom_segment(mapping = aes(y = 0, yend = proportion_missing),
+                 colour = "#14B1E7", linewidth = 1.2) +
     geom_point(colour = "#E31B23", size = 3) +
     theme_minimal() +
     labs(x = "Column", y = "Proportion of Column Missing") +
