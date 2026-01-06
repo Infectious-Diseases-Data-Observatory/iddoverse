@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/RhysPeploe/iddoverse/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
 
 R. Peploe (2023), 'Welcome to the iddoverse: An R package for converting
 IDDO-SDTM data to analyse datasets', Infectious Disease Data

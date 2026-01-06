@@ -7,9 +7,12 @@ similar to the Analysis Data Model (ADaM).
 
 Useful links:
 
-- <https://github.com/RhysPeploe/iddoverse>
+- <https://github.com/Infectious-Diseases-Data-Observatory/iddoverse>
 
-- Report bugs at <https://github.com/RhysPeploe/iddoverse/issues>
+- <https://infectious-diseases-data-observatory.github.io/iddoverse/>
+
+- Report bugs at
+  <https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues>
 
 ## Author
 

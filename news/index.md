@@ -9,11 +9,14 @@
 ## iddoverse 0.7.0
 
 - Merge pull request
-  [\#28](https://github.com/RhysPeploe/iddoverse/issues/28), large
-  overhaul of functions to move to fewer, multi-domain functions
+  [\#28](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues/28),
+  large overhaul of functions to move to fewer, multi-domain functions
 - removal of single domain functions
-- issues [\#11](https://github.com/RhysPeploe/iddoverse/issues/11) and
-  [\#23](https://github.com/RhysPeploe/iddoverse/issues/23) resolved
+- issues
+  [\#11](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues/11)
+  and
+  [\#23](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues/23)
+  resolved
 
 ## iddoverse 0.6.2
 
@@ -78,12 +81,12 @@
 
 - Units have been including alongside all variable which having a
   –ORRESU or –STRESU is possible (issue
-  [\#18](https://github.com/RhysPeploe/iddoverse/issues/18)). Units are
-  now matched with the equivalent result so STRESU will be used if
-  STRESC or STRESN are and likewise if MODIFY or ORRES are reported in
-  the output, ORRESU will be the units
+  [\#18](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues/18)).
+  Units are now matched with the equivalent result so STRESU will be
+  used if STRESC or STRESN are and likewise if MODIFY or ORRES are
+  reported in the output, ORRESU will be the units
 - Error in DERIVE_ANTHRO when there is no under 5s, issue
-  [\#19](https://github.com/RhysPeploe/iddoverse/issues/19)
+  [\#19](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues/19)
 - Removed SPECIES from MB domains
 
 ## iddoverse 0.2.2

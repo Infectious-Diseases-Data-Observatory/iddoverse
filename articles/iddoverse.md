@@ -86,7 +86,7 @@ SDTM domains, such as the MB domain, can have up to 3 columns for the
 results and a variety of over 20 timing variables, while this preserves
 the intricacies in the trial data, it also creates complexity for
 analysis.
-[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/prepare_domain.md)
+[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
 takes a single IDDO-SDTM domain, amalgamates the data so that there is
 one ‘best choice’ result and timing variable, then pivots the rows by
 the best choice time variable (`TIME`, `TIME_SOURCE`), the study id
@@ -96,7 +96,7 @@ with the associated result, providing a condensed dataset which is more
 digestible can be easily merged with other data.
 
 In
-[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/prepare_domain.md),
+[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md),
 the first parameter is the two letter domain code followed by the domain
 data frame.
 
@@ -221,7 +221,7 @@ separable so the first row is taken by default
 ([`first()`](https://dplyr.tidyverse.org/reference/nth.html) function
 used). This can be changed to another function using `values_fn`. The
 number of rows affected will be reported by in the console when running
-[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/prepare_domain.md)
+[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
 by default, unless `print_messages` is set to `FALSE`.
 
 Once one domain has been transformed, the consistent keys (`STUDYID`,
@@ -262,7 +262,7 @@ left_join(
 
 The package also contains functions to create standardised analysis
 datasets, these start with `create_`. These scripts use the
-[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/prepare_domain.md)
+[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
 function multiple times to extract specific variables from the domains
 they reside in. The choice of which variables to include are based on
 subject matter expertise. The purpose of these tables is to provide most
@@ -275,7 +275,7 @@ However, these standardised tables do provide useful key information
 with minimal user input, ideal for those who are not experienced R or
 programming users.
 
-[`create_participant_table()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/create_participant_table.md)
+[`create_participant_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_participant_table.md)
 creates a one row per participant analysis table along with several
 participant characteristic variables and baseline test information.
 
@@ -297,7 +297,7 @@ create_participant_table(dm_domain = DM_RPTESTB,
 #> #   PREGIND_NA <chr>
 ```
 
-[`create_malaria_pcr_table()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/create_malaria_pcr_table.md)
+[`create_malaria_pcr_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_malaria_pcr_table.md)
 creates a one row per person, per timepoint table combining the
 polymerase chain reaction (PCR) test information, drawing from both the
 Pharmacogenomics Genetics (PF) and Disease Response and Clinical
@@ -404,11 +404,11 @@ check_data(DM_RPTESTB)
 
 ## Miscellaneous Functions
 
-[`table_variables()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/table_variables.md)
+[`table_variables()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/table_variables.md)
 is a simple function to tabulate the variables in a domain. Not all
 domains are currently covered in this function but most are. This
 function may be useful when deciding which variables to include in the
-[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/worlddatr/reference/prepare_domain.md)
+[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
 output.
 
 ``` r

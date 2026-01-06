@@ -2,4 +2,4 @@
 
 ### All vignettes
 
-- [iddoverse](https://infectious-diseases-data-observatory.github.io/worlddatr/articles/iddoverse.md):
+- [iddoverse](https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.md):
