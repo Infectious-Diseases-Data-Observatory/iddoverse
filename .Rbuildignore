@@ -5,3 +5,6 @@
 ^data-raw$
 ^paper$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
