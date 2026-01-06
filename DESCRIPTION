@@ -19,9 +19,9 @@ Suggests:
     testthat (>= 3.0.0),
     tibble
 Config/testthat/edition: 3
-URL: https://github.com/RhysPeploe/iddoverse,
-    https://infectious-diseases-data-observatory.github.io/worlddatr/
-BugReports: https://github.com/RhysPeploe/iddoverse/issues
+URL: https://github.com/Infectious-Diseases-Data-Observatory/iddoverse,
+    https://infectious-diseases-data-observatory.github.io/iddoverse/
+BugReports: https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues
 Imports: 
     admiral,
     admiraldev,
