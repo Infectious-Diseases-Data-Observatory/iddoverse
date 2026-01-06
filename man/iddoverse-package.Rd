@@ -13,7 +13,6 @@ Functions to convert IDDO-curated SDTM domains into analysis datasets, similar t
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/Infectious-Diseases-Data-Observatory/iddoverse}
   \item \url{https://infectious-diseases-data-observatory.github.io/iddoverse/}
   \item Report bugs at \url{https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues}
 }
