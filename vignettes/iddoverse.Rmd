@@ -19,10 +19,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Purpose
-
-Creating analysis ready datasets ('analysis datasets') in R, using the data from the Infectious Diseases Data Observatory (IDDO) repository.
-
 Data requesters can use this package to support the transformation of datasets from the storage data format used by IDDO, SDTM (Study Data Tabulation Model) to analysis datasets. The package is intended for epidemiologists, statisticians and data scientists with a diverse range of programming ability, but with some familiarity with R software. Advanced knowledge of the SDTM ontology is not required. This package intends to minimise the time spent on data manipulation, whilst also ensuring reproducibility and increases the accessibility of the SDTM format. All functions come with documentation and examples which can be viewed using the `?` command.
 
 ## Installing the Package
