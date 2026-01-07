@@ -9,49 +9,40 @@
 
 <!-- badges: end -->
 
-The `iddoverse` contains R functions to convert IDDO-curated SDTM 
-domains into analysis ready datasets ('analysis datasets'). These reusable
+## Purpose
+
+To create analysis ready datasets ('analysis datasets') for researchers 
+using data stored in the Infectious Diseases Data Observatory (IDDO) respoitory.
+
+These reusable
 functions aim to provide a toolbox for researchers to modify the
 analysis dataset to their study-specific needs, speeding up the time it
 takes to create analysable data.
 
-This package takes inspiration from the `pharmaverse`, specifically the
-[`admiral`](https://github.com/pharmaverse/admiral) R package, however,
-IDDO-SDTM formats are not strictly compliant with standards required by
-pharmacutical companies and the target audience of the `iddoverse` are 
-researchers who do not have a working knowledge of SDTM, unlike the `pharmaverse`.
-
-    IDDO - Infectious Disease Data Observatory
-    SDTM - Study Data Tabulation Model, an internation data storage model from CDISC which is used by IDDO.
-
 ## Installation
 
 You can install the development version of `iddoverse` from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/) with the following code in the R console:
 
 ``` r
-# install.packages("devtools") #if you have not previously installed 'devtools' on your machine
+# if you have not previously installed 'devtools' on your machine
+# install.packages("devtools")
 devtools::install_github("Infectious-Diseases-Data-Observatory/iddoverse")
 library(iddoverse)
 ```
 
-We recommend updating the install regularly as the package is developing
+We recommend re-installing regularly as the package is developing
 constantly. Versions starting with ‘0.’
 should be expected to change without notification.
 
-It is best to remove the package and reinstall the current version:
-
-``` r
-detach("package:iddoverse", unload = TRUE)
-
-devtools::install_github("Infectious-Diseases-Data-Observatory/iddoverse")
-library(iddoverse)
-```
-
 ## Why is this useful?
 
-The package will assist researchers manpiulate their datasets transferred from IDDO,
- minimising the time spent on data transformation before analysis can begin. 
+The package assists researchers to transform their datasets (transferred from IDDO),
+minimising the time spent on data transformation before analysis can begin. These functions specifically work on
+SDTM (Study Data Tabulation Model) data stored by IDDO.
+
+Functions are documented and provide examples. A [vignette](https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.html)
+provides a demostration/tutorial of the functions and data in the package.
 
 ## Citation
 
