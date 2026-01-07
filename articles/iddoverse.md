@@ -1,10 +1,5 @@
 # iddoverse
 
-## Purpose
-
-Creating analysis ready datasets (‘analysis datasets’) in R, using the
-data from the Infectious Diseases Data Observatory (IDDO) repository.
-
 Data requesters can use this package to support the transformation of
 datasets from the storage data format used by IDDO, SDTM (Study Data
 Tabulation Model) to analysis datasets. The package is intended for
