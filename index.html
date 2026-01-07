@@ -62,30 +62,28 @@
 
 
 <!-- badges: end -->
-<p>The <code>iddoverse</code> contains R functions to convert IDDO-curated SDTM domains into analysis ready datasets (‘analysis datasets’). These reusable functions aim to provide a toolbox for researchers to modify the analysis dataset to their study-specific needs, speeding up the time it takes to create analysable data.</p>
-<p>This package takes inspiration from the <code>pharmaverse</code>, specifically the <a href="https://github.com/pharmaverse/admiral" class="external-link"><code>admiral</code></a> R package, however, IDDO-SDTM formats are not strictly compliant with standards required by pharmacutical companies and the target audience of the <code>iddoverse</code> are researchers who do not have a working knowledge of SDTM, unlike the <code>pharmaverse</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>IDDO <span class="sc">-</span> Infectious Disease Data Observatory</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>SDTM <span class="sc">-</span> Study Data Tabulation Model, an internation data storage model from CDISC which is used by IDDO.</span></code></pre></div>
+<div class="section level2">
+<h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
+</h2>
+<p>To create analysis ready datasets (‘analysis datasets’) for researchers using data stored in the Infectious Diseases Data Observatory (IDDO) respoitory.</p>
+<p>These reusable functions aim to provide a toolbox for researchers to modify the analysis dataset to their study-specific needs, speeding up the time it takes to create analysable data.</p>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <code>iddoverse</code> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools") #if you have not previously installed 'devtools' on your machine</span></span>
+<p>You can install the development version of <code>iddoverse</code> from <a href="https://github.com/" class="external-link">GitHub</a> with the following code in the R console:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># if you have not previously installed 'devtools' on your machine</span></span>
+<span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Infectious-Diseases-Data-Observatory/iddoverse"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://infectious-diseases-data-observatory.github.io/iddoverse/">iddoverse</a></span><span class="op">)</span></span></code></pre></div>
-<p>We recommend updating the install regularly as the package is developing constantly. Versions starting with ‘0.’ should be expected to change without notification.</p>
-<p>It is best to remove the package and reinstall the current version:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/detach.html" class="external-link">detach</a></span><span class="op">(</span><span class="st">"package:iddoverse"</span>, unload <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Infectious-Diseases-Data-Observatory/iddoverse"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://infectious-diseases-data-observatory.github.io/iddoverse/">iddoverse</a></span><span class="op">)</span></span></code></pre></div>
+<p>We recommend re-installing regularly as the package is developing constantly. Versions starting with ‘0.’ should be expected to change without notification.</p>
 </div>
 <div class="section level2">
 <h2 id="why-is-this-useful">Why is this useful?<a class="anchor" aria-label="anchor" href="#why-is-this-useful"></a>
 </h2>
-<p>The package will assist researchers manpiulate their datasets transferred from IDDO, minimising the time spent on data transformation before analysis can begin.</p>
+<p>The package assists researchers to transform their datasets (transferred from IDDO), minimising the time spent on data transformation before analysis can begin. These functions specifically work on SDTM (Study Data Tabulation Model) data stored by IDDO.</p>
+<p>Functions are documented and provide examples. A <a href="https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.html">vignette</a> provides a demostration/tutorial of the functions and data in the package.</p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
