@@ -5,6 +5,8 @@
 #' two letter domain name as well as the domain data file.
 #'
 #' @param domain Character. The two letter domain name of the data.
+#'      Domain options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP",
+#'      "PF", "AU", "PC", "SA", "HO", "ER", "PO"
 #' @param data Domain data frame.
 #' @param include_LOC Boolean. Should the location (--LOC) be included in the
 #'   output. Default is FALSE.
@@ -67,6 +69,8 @@ prepare_domain <- function(domain, data,
 
   domain <- str_to_upper(domain)
 
+  assert_data_frame(data, required_vars = exprs(STUDYID, USUBJID))
+
   variables_include <- str_to_upper(variables_include)
 
   timing_variables <- timing_variables[which(timing_variables %in% names(data))]
@@ -84,6 +88,8 @@ prepare_domain <- function(domain, data,
   if(domain %in% special_domains){
     data <- data %>%
       convert_blanks_to_na()
+
+
 
     if(length(variables_include) > 0){
       data <- data %>%
