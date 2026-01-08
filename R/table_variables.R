@@ -59,6 +59,8 @@ table_variables <- function(domain, data, by_STUDYID = FALSE) {
       warn(str_c(domain, " domain not included in table_variables() function."))
     }
   } else {
+    assert_data_frame(data, required_vars = exprs(STUDYID))
+
     if (domain == "DM") {
       return(colnames(data))
     } else if (domain == "LB") {

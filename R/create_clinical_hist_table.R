@@ -39,6 +39,8 @@ create_clinical_hist_table <- function(dm_domain, sa_domain,
                                          "SAHR", "SADY", "SASTDY", "VISITDY", "VISITNUM",
                                          "VISIT", "EPOCH", "SAEVLINT", "SAEVINTX"),
                                        values_funct = first){
+  assert_data_frame(sa_domain, required_vars = exprs(SACAT))
+
   data_dm <- prepare_domain("dm", dm_domain, variables_include = c("STUDYID", "USUBJID"))
 
   data_sa <- sa_domain %>%
