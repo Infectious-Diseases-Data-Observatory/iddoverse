@@ -6,6 +6,8 @@
 
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/iddoverse)](https://CRAN.R-project.org/package=iddoverse)
+[![R-CMD-check.yaml](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/actions/workflows/check-standard.yaml)
+[![test-coverage.yaml](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/actions/workflows/test-coverage.yaml)
 
 <!-- badges: end -->
 
