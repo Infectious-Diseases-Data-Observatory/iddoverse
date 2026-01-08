@@ -15,8 +15,8 @@ table_variables(domain, data, by_STUDYID = FALSE)
 - domain:
 
   Character. The two letter code for the domain which matches the data.
-  Character string. Domains included: "DM", "LB", "RP", "MB", "MP",
-  "SA", "IN", "VS", "DS", "RS", "PO", "SC", "HO", "ER" & "DD".
+  Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS",
+  "DS", "RS", "PO", "SC", "HO", "ER", "DD", "PF", "AU", "PC", "PE".
 
 - data:
 

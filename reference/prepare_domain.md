@@ -25,7 +25,9 @@ prepare_domain(
 
 - domain:
 
-  Character. The two letter domain name of the data.
+  Character. The two letter domain name of the data. Domain options:
+  "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF", "AU",
+  "PC", "SA", "HO", "ER", "PO"
 
 - data:
 
