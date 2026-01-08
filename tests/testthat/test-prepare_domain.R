@@ -4,12 +4,12 @@ test_that("findings domain: STRESN → STRESC → MODIFY → ORRES precedence, T
     USUBJID = c("S1", "S2", "S3", "S4"),
     LBTESTCD = c("HGB", "ALT", "ALT", "HGB"),
     LBSTDY = c("1", "2", "3", "4"),
-    LBORRES = c("fourteen", "sechs", "0", NA_character_),
-    LBORRESU = c("U_ORRES", "U_ORRES", "U_ORRES", NA_character_),
-    LBMODIFY = c("14_mod", "six", NA_character_, NA_character_),
-    LBSTRESN = c(14, NA_real_, NA_real_, NA_real_),
-    LBSTRESU = c("U", NA_character_, NA_character_, NA_character_),
-    LBSTRESC = c("14_char", NA_character_, NA_character_, NA_character_)
+    LBORRES = c("fourteen", "sechs", "0", ""),
+    LBORRESU = c("U_ORRES", "U_ORRES", "U_ORRES", ""),
+    LBMODIFY = c("14_mod", "six", NA_character_, ""),
+    LBSTRESN = c(14, NA_real_, NA_real_, ""),
+    LBSTRESU = c("U", NA_character_, NA_character_, ""),
+    LBSTRESC = c("14_char", NA_character_, NA_character_, "")
   )
 
   out <- prepare_domain("LB", lb, print_messages = FALSE)
@@ -28,7 +28,7 @@ test_that("findings domain: STRESN → STRESC → MODIFY → ORRES precedence, T
   expect_equal(out$TIME_SOURCE[1], "STDY")
 })
 
-test_that("include_LOC/include_METHOD produce expected column-name patterns when both present", {
+test_that("include_LOC/include_METHOD produce expected column-name patterns", {
   lb <- tibble::tibble(
     STUDYID = "ST1", USUBJID = "S1",
     LBTESTCD = "HGB",
@@ -38,19 +38,28 @@ test_that("include_LOC/include_METHOD produce expected column-name patterns when
     LBLOC = "L1", LBMETHOD = "M1"
   )
 
-  out <- prepare_domain("LB", lb, include_LOC = TRUE, include_METHOD = TRUE, print_messages = FALSE)
+  out_none <- prepare_domain("LB", lb, include_LOC = FALSE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_loc <- prepare_domain("LB", lb, include_LOC = TRUE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_method <- prepare_domain("LB", lb, include_LOC = FALSE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_both <- prepare_domain("LB", lb, include_LOC = TRUE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
 
   # When both included, names_glue = "{TESTCD}_{LOC}_{METHOD}_{UNITS}_{.value}"
   # After removing _RESULTS we expect column "HGB_L1_M1_U"
-  expect_true("HGB_L1_M1_U" %in% colnames(out))
-  expect_equal(as.character(out$HGB_L1_M1_U[1]), "7")
+  expect_true("HGB_L1_M1_U" %in% colnames(out_both))
+  expect_true("HGB_L1_U" %in% colnames(out_loc))
+  expect_true("HGB_M1_U" %in% colnames(out_method))
+  expect_true("HGB_U" %in% colnames(out_none))
+
+  expect_equal(as.character(out_both$HGB_L1_M1_U[1]), "7")
+  expect_equal(as.character(out_loc$HGB_L1_U[1]), "7")
+  expect_equal(as.character(out_method$HGB_M1_U[1]), "7")
+  expect_equal(as.character(out_none$HGB_U[1]), "7")
 })
 
 test_that("include_LOC warns and is reset to FALSE if domain does not have LOC", {
   lb <- tibble::tibble(
     STUDYID = "ST1", USUBJID = "S1",
-    LBTESTCD = "HGB",
-    LBSTDY = "1",
+    LBTESTCD = "HGB", LBSTDY = "1",
     LBSTRESN = 7, LBSTRESU = "U",
     LBORRES = "seven", LBORRESU = "units"
   )
@@ -61,16 +70,42 @@ test_that("include_LOC warns and is reset to FALSE if domain does not have LOC",
   expect_false(any(grepl("_L", colnames(out)) & grepl("_U", colnames(out))))
 })
 
-test_that("variables_include filters to requested TESTCDs before pivot", {
+test_that("include_METHOD warns and is reset to FALSE if domain does not have METHOD", {
   lb <- tibble::tibble(
-    STUDYID = "ST1", USUBJID = c("S1","S1"),
-    LBTESTCD = c("HGB","ALT"),
-    LBSTDY = c("1","1"),
-    LBSTRESN = c(10, 99), LBSTRESU = c("U","U"),
-    LBORRES = c("ten", "ninty-nine"), LBORRESU = "units"
+    STUDYID = "ST1", USUBJID = "S1",
+    LBTESTCD = "HGB", LBSTDY = "1",
+    LBSTRESN = 7, LBSTRESU = "U",
+    LBORRES = "seven", LBORRESU = "units"
   )
 
-  out <- prepare_domain("LB", lb, variables_include = c("HGB"), print_messages = FALSE)
+  expect_warning(out <- prepare_domain("LB", lb, include_METHOD = TRUE, print_messages = FALSE),
+                 regexp = "does not have a method", ignore.case = TRUE)
+  # no METHOD token present in column names
+  expect_false(any(grepl("_M", colnames(out)) & grepl("_U", colnames(out))))
+})
+
+test_that("spaces in generated column names are replaced with underscores", {
+  lb <- tibble::tibble(
+    STUDYID = "S", USUBJID = "P1",
+    LBTESTCD = "TEST", LBSTDY = "1",
+    LBSTRESN = 5, LBSTRESU = "per litre",
+    LBORRES = "five", LBORRESU = "pL"
+  )
+  out <- prepare_domain("LB", lb, variables_include = c("TEST"), print_messages = FALSE)
+  # generated column should use underscore rather than space
+  expect_true(any(grepl("per_litre", colnames(out))))
+})
+
+test_that("variables_include filters to requested TESTCDs before pivot", {
+  lb <- tibble::tibble(
+    STUDYID = "ST1", USUBJID = c("S1","S1", "S2"),
+    LBTESTCD = c("HGB","ALT", "HGB"),
+    LBSTDY = c("1","1", "1"),
+    LBSTRESN = c(10, 99, 22), LBSTRESU = c("U","U", "U"),
+    LBORRES = c("ten", "ninty-nine", "twenty two"), LBORRESU = "units"
+  )
+
+  out <- prepare_domain("LB", lb, variables_include = c("hgB"), print_messages = FALSE)
 
   # ALT should be filtered out before pivot
   expect_false(any(grepl("^ALT", colnames(out))))
@@ -143,16 +178,18 @@ test_that("event domain: EVENT chosen from DECOD/MODIFY/TERM and PRESP/OCCUR def
 
 test_that("DS domain returns STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT columns", {
   ds <- tibble::tibble(
-    STUDYID = "S", USUBJID = "P1",
-    DSTERM = "treatment completed",
-    DSDECOD = "TREATED",
-    DSSTDY = "10"
+    STUDYID = "S", USUBJID = c("A","B","C"),
+    DSTERM = c("t1","t2","t3"),
+    DSMODIFY = c(NA, "MOD", NA),
+    DSDECOD = c(NA, NA, "DEC"),
+    DSSTDY = 28
   )
 
   out <- prepare_domain("DS", ds, print_messages = FALSE)
   expect_true(all(c("STUDYID", "USUBJID", "TIME", "TIME_SOURCE", "EVENT") %in% colnames(out)))
-  # TIME_SOURCE prefix replaced
   expect_equal(out$TIME_SOURCE[1], "STDY")
+  expect_true("MOD" %in% out$EVENT)
+  expect_true("DEC" %in% out$EVENT)
 })
 
 test_that("special domain DM: convert blanks to NA and variables_include selection works", {
@@ -185,3 +222,12 @@ test_that("check print_messages parameter option", {
   expect_output(prepare_domain("SA", sa, variables_include = c("FEVER"), print_messages = TRUE),
                  regexp = "Number of rows where values_fn has been used to pick record")
 })
+
+test_that("prepare_domain errors when required STUDYID or USUBJID missing", {
+  df_missing <- tibble::tibble(USUBJID = "P1") # STUDYID missing
+  expect_error(prepare_domain("LB", df_missing), regexp = "STUDYID|USUBJID", ignore.case = TRUE)
+
+  df_missing2 <- tibble::tibble(STUDYID = "S1") # USUBJID missing
+  expect_error(prepare_domain("LB", df_missing2), regexp = "STUDYID|USUBJID", ignore.case = TRUE)
+})
+
