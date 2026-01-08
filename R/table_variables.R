@@ -1,12 +1,13 @@
 #' Tabulate function to display variables in a given domain
 #'
-#' Uses table() to display the variables contained within an SDTM
-#' formatted data frame. Additionally can be split by STUDYID to display the
-#' options across multiple studies.
+#' Uses table() to display the variables contained within an SDTM formatted data
+#' frame. Additionally can be split by STUDYID to display the options across
+#' multiple studies.
 #'
-#' @param domain Character. The two letter code for the domain which matches the data.
-#'   Character string. Domains included: "DM", "LB", "RP", "MB", "MP", "SA",
-#'   "IN", "VS", "DS", "RS", "PO", "SC", "HO", "ER" & "DD".
+#' @param domain Character. The two letter code for the domain which matches the
+#'   data.
+#'   Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS",
+#'   "DS", "RS", "PO", "SC", "HO", "ER", "DD", "PF", "AU", "PC", "PE".
 #' @param data Domain data frame.
 #' @param by_STUDYID Boolean. Split data by STUDYID if TRUE. Default is FALSE.
 #'
@@ -36,25 +37,33 @@ table_variables <- function(domain, data, by_STUDYID = FALSE) {
     } else if (domain == "MP") {
       return(table(data$MPLOC, useNA = "ifany"))
     } else if (domain == "SA") {
-      return(table(str_to_upper(data$SATERM), useNA = "ifany"))  ###
+      return(table(str_to_upper(data$SATERM), useNA = "ifany"))
     } else if (domain == "IN") {
-      return(table(str_to_upper(data$INTRT), useNA = "ifany"))   ###
+      return(table(str_to_upper(data$INTRT), useNA = "ifany"))
     } else if (domain == "VS") {
       return(table(data$VSTESTCD, useNA = "ifany"))
     } else if (domain == "DS") {
-      return(table(data$DSDECOD, useNA = "ifany"))               ###
+      return(table(data$DSDECOD, useNA = "ifany"))
     } else if (domain == "RS") {
       return(table(data$RSTESTCD, useNA = "ifany"))
     } else if (domain == "PO") {
-      return(table(str_to_upper(data$POTERM), useNA = "ifany"))  ###
+      return(table(str_to_upper(data$POTERM), useNA = "ifany"))
     } else if (domain == "SC") {
       return(table(data$SCTESTCD, useNA = "ifany"))
     } else if (domain == "HO") {
-      return(table(data$HOTERM, useNA = "ifany"))                ###
+      return(table(data$HOTERM, useNA = "ifany"))
     } else if (domain == "ER") {
-      return(table(data$ERTERM, useNA = "ifany"))                ###
+      return(table(data$ERTERM, useNA = "ifany"))
     } else if (domain == "DD") {
-      return(table(data$DDTEST, useNA = "ifany"))
+      return(table(data$DDTESTCD, useNA = "ifany"))
+    } else if (domain == "PF") {
+      return(table(data$PFTESTCD, useNA = "ifany"))
+    } else if (domain == "AU") {
+      return(table(data$AUTESTCD, useNA = "ifany"))
+    } else if (domain == "PC") {
+      return(table(data$PCTESTCD, useNA = "ifany"))
+    } else if (domain == "PE") {
+      return(table(data$PETESTCD, useNA = "ifany"))
     } else{
       warn(str_c(domain, " domain not included in table_variables() function."))
     }
@@ -86,11 +95,19 @@ table_variables <- function(domain, data, by_STUDYID = FALSE) {
     } else if (domain == "SC") {
       return(table(data$STUDYID, data$SCTESTCD, useNA = "ifany"))
     } else if (domain == "HO") {
-      return(table(data$STUDYID, data$HOTERM, useNA = "ifany"))                ###
+      return(table(data$STUDYID, data$HOTERM, useNA = "ifany"))
     } else if (domain == "ER") {
-      return(table(data$STUDYID, data$ERTERM, useNA = "ifany"))                ###
+      return(table(data$STUDYID, data$ERTERM, useNA = "ifany"))
     } else if (domain == "DD") {
       return(table(data$STUDYID, data$DDTEST, useNA = "ifany"))
+    }  else if (domain == "PF") {
+      return(table(data$STUDYID, data$PFTESTCD, useNA = "ifany"))
+    } else if (domain == "AU") {
+      return(table(data$STUDYID, data$AUTESTCD, useNA = "ifany"))
+    } else if (domain == "PC") {
+      return(table(data$STUDYID, data$PCTESTCD, useNA = "ifany"))
+    } else if (domain == "PE") {
+      return(table(data$STUDYID, data$PETESTCD, useNA = "ifany"))
     } else{
       warn(str_c(domain, " domain not included in table_variables() function."))
     }

@@ -7,9 +7,10 @@
 table_variables(domain, data, by_STUDYID = FALSE)
 }
 \arguments{
-\item{domain}{Character. The two letter code for the domain which matches the data.
-Character string. Domains included: "DM", "LB", "RP", "MB", "MP", "SA",
-"IN", "VS", "DS", "RS", "PO", "SC", "HO", "ER" & "DD".}
+\item{domain}{Character. The two letter code for the domain which matches the
+data.
+Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS",
+"DS", "RS", "PO", "SC", "HO", "ER", "DD", "PF", "AU", "PC", "PE".}
 
 \item{data}{Domain data frame.}
 
@@ -21,9 +22,9 @@ For all other domains, a table class object listing the variables under
 --TESTCD or INTRT, MPLOC, DSDECOD; where -- is the two letter domain name.
 }
 \description{
-Uses table() to display the variables contained within an SDTM
-formatted data frame. Additionally can be split by STUDYID to display the
-options across multiple studies.
+Uses table() to display the variables contained within an SDTM formatted data
+frame. Additionally can be split by STUDYID to display the options across
+multiple studies.
 }
 \examples{
 table_variables("LB", LB_RPTESTB)
