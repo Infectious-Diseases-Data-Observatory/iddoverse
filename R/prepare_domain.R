@@ -89,8 +89,6 @@ prepare_domain <- function(domain, data,
     data <- data %>%
       convert_blanks_to_na()
 
-
-
     if(length(variables_include) > 0){
       data <- data %>%
         select(STUDYID, USUBJID, any_of(variables_include))
