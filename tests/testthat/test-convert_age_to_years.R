@@ -1,7 +1,8 @@
 test_that("convert_age_to_years: basic conversions", {
   df <- tibble::tibble(
     USUBJID = c("P1", "P2", "P3", "P4"),
-    AGE = c(365, 104, 24, 30.7),    # 365 days -> 1 year; 104 weeks -> floor(104/52)=2; 24 months -> floor(24/12)=2; 30.7 years -> floor(30.7)=30
+    AGE = c(365, 104, 24, 30.7),
+    # 365 days -> 1 year; 104 weeks -> floor(104/52)=2; 24 months -> floor(24/12)=2; 30.7 years -> floor(30.7)=30
     AGEU = c("DAYS", "WEEKS", "MONTHS", "YEARS")
   )
 
