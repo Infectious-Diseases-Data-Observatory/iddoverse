@@ -1,37 +1,3 @@
-make_lb <- function() {
-  tibble::tibble(
-    STUDYID = c("S1","S1","S2","S2","S2", NA),
-    USUBJID = paste0("P", seq_len(6)),
-    LBTESTCD = c("HGB","HGB","ALT","ALT","ALT", NA),
-    LBORRES = c(10,11,25,26,27, NA)
-  )
-}
-
-make_vs <- function() {
-  tibble::tibble(
-    STUDYID = c("S1","S2","S2"),
-    USUBJID = c("A","B","C"),
-    VSTESTCD = c("SYSBP","DIABP","SYSBP"),
-    VSTEST = c("Systolic","Diastolic","Systolic")
-  )
-}
-
-make_sa <- function() {
-  tibble::tibble(
-    STUDYID = c("S1","S1","S2"),
-    USUBJID = c("A","B","C"),
-    SATERM = c("fever","Fever","rash")
-  )
-}
-
-make_ho <- function() {
-  tibble::tibble(
-    STUDYID = c("S1","S2"),
-    USUBJID = c("A","B"),
-    HOTERM = c("headache","headache")
-  )
-}
-
 test_that("DM domain returns column names", {
   dm <- tibble::tibble(STUDYID = "S", USUBJID = "P1", AGE = 10, SEX = "M")
 
