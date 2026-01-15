@@ -18,7 +18,7 @@ using data stored in the Infectious Diseases Data Observatory (IDDO) respoitory.
 These reusable
 functions aim to provide a toolbox for researchers to modify the
 analysis dataset to their study-specific needs, speeding up the time it
-takes to create analysable data.
+takes to create analysable datasets.
 
 ## Installation
 
@@ -26,7 +26,7 @@ You can install the development version of `iddoverse` from
 [GitHub](https://github.com/) with the following code in the R console:
 
 ``` r
-# if you have not previously installed 'devtools' on your machine
+# uncomment below line if you have not installed 'devtools' on your machine
 # install.packages("devtools")
 devtools::install_github("Infectious-Diseases-Data-Observatory/iddoverse")
 library(iddoverse)
@@ -40,9 +40,10 @@ should be expected to change without notification.
 
 The package assists researchers to transform their datasets (transferred from IDDO),
 minimising the time spent on data transformation before analysis can begin. These functions specifically work on
-SDTM (Study Data Tabulation Model) data stored by IDDO.
+SDTM (Study Data Tabulation Model) data stored by IDDO. MAPPER data from IDDO is not supported
+in this package.
 
-Functions are documented and provide examples. A [vignette](https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.html)
+Functions are documented and have example code. A [vignette](https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.html)
 provides a demostration/tutorial of the functions and data in the package.
 
 ## Citation
