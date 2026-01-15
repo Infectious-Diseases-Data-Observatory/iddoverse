@@ -10,16 +10,17 @@
 Source:
 [`inst/CITATION`](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
 
-R. Peploe (2023), 'Welcome to the iddoverse: An R package for converting
-IDDO-SDTM data to analyse datasets', Infectious Disease Data
-Observatory, University of Oxford. Available:
+R. Peploe, et.al (2026), 'Welcome to the iddoverse: An R package for
+converting IDDO-SDTM data to analyse datasets', Infectious Disease Data
+Observatory, University of Oxford, Oxford, UK. Available:
 https://github.com/Infectious-Diseases-Data-Observatory/iddoverse
 
-    @Misc{,
-      title = {iddoverse: An R package for converting IDDO-SDTM data to analysis datasets},
-      author = {Rhys Peploe},
+    @Article{,
+      journal = {Journal of Open Sourse Software},
+      title = {Welcome to the iddoverse: An R package for converting IDDO-SDTM data into analysis datasets},
+      author = {Peploe R and {et.al}},
       institution = {Infectious Disease Data Observatory (IDDO), University of Oxford, Oxford, UK},
-      year = {2023},
+      year = {2026},
       url = {https://github.com/Infectious-Diseases-Data-Observatory/iddoverse},
-      note = {Package Version 0.8.1},
+      note = {Package Version 0.8.2},
     }

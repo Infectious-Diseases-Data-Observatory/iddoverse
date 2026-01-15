@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">iddoverse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,16 +64,15 @@
 
     
     
-<p>Data requesters can use this package to support the transformation of
-datasets from the storage data format used by IDDO, SDTM (Study Data
-Tabulation Model) to analysis datasets. The package is intended for
-epidemiologists, statisticians and data scientists with a diverse range
-of programming ability, but with some familiarity with R software.
-Advanced knowledge of the SDTM ontology is not required. This package
-intends to minimise the time spent on data manipulation, whilst also
-ensuring reproducibility and increases the accessibility of the SDTM
-format. All functions come with documentation and examples which can be
-viewed using the <code>?</code> command.</p>
+<p>This package can be used to support the transformation of datasets
+from the storage data format used by IDDO to analysis datasets. The
+package is intended for epidemiologists, statisticians and data
+scientists with a diverse range of programming ability, but with some
+familiarity with R software. This package intends to minimise the time
+spent on data manipulation, whilst also encouraging reproducibility and
+increasing the accessibility of the data format used by IDDO. All
+functions come with documentation and examples which can be viewed using
+the <code>?</code> command.</p>
 <div class="section level2">
 <h2 id="installing-the-package">Installing the Package<a class="anchor" aria-label="anchor" href="#installing-the-package"></a>
 </h2>
@@ -86,17 +85,18 @@ viewed using the <code>?</code> command.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+<h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h2>
-<p>Most of the data stored by IDDO uses the SDTM format, so when the
-data is transferred to data requesters, there will be several datasets,
-each with a specific purpose. These datasets are referred to as domains
-and each have a two letter code (i.e. DM - demographics, MB -
-microbiology, VS - vital signs).</p>
+<p>Most of the data stored by IDDO uses the study data tabulation model
+(SDTM) format. SDTM features several datasets each with a specific
+purpose such as participant demographic information or laboratory test
+results. These datasets are referred to as domains and each have a two
+letter code (i.e. DM - demographics, MB - microbiology, VS - vital
+signs).</p>
 <p>Within the package, there are several synthetic, example domains that
 can be used to gain familiarity with the IDDO-SDTM data. Each domain
 starts with the two letter domain code followed by
-<code>_RPTESTB</code></p>
+<code>_RPTESTB</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># demographics (DM) domain</span></span>
 <span><span class="va">DM_RPTESTB</span></span>
@@ -136,15 +136,22 @@ starts with the two letter domain code followed by
 <span><span class="co">#&gt; <span style="color: #949494;">#   EPOCH &lt;chr&gt;, MBDTC &lt;chr&gt;, MBDY &lt;dbl&gt;, MBTPT &lt;lgl&gt;, MBTPTNUM &lt;lgl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   MBELTM &lt;lgl&gt;, MBTPTREF &lt;lgl&gt;, MBSTRF &lt;lgl&gt;, MBEVINTX &lt;lgl&gt;, MBSTRTPT &lt;lgl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   MBSTTPT &lt;lgl&gt;, MBCDSTDY &lt;lgl&gt;, MBRPOC &lt;lgl&gt;</span></span></span></code></pre></div>
+<p><code>DM_RPTESTB</code> contains demographic information such as age,
+sex and study treatment arm; there is one row per participant. Whereas,
+<code>MB_RPTESTB</code> shows each microbiology test result from the
+study with multiple rows per person, per day. SDTM domains, such as the
+MB domain, can have up to 4 columns for the results and a variety of
+over 20 timing variables, while this preserves the intricacies in the
+trial data, it also creates complexity for analysis.</p>
 </div>
 <div class="section level2">
-<h2 id="prepare_domain">
-<code>prepare_domain()</code><a class="anchor" aria-label="anchor" href="#prepare_domain"></a>
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
 </h2>
-<p>SDTM domains, such as the MB domain, can have up to 3 columns for the
-results and a variety of over 20 timing variables, while this preserves
-the intricacies in the trial data, it also creates complexity for
-analysis. <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> takes a single IDDO-SDTM domain,
+<div class="section level3">
+<h3 id="prepare_domain">
+<code>prepare_domain()</code><a class="anchor" aria-label="anchor" href="#prepare_domain"></a>
+</h3>
+<p><code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> takes a single IDDO-SDTM domain,
 amalgamates the data so that there is one ‘best choice’ result and
 timing variable, then pivots the rows by the best choice time variable
 (<code>TIME</code>, <code>TIME_SOURCE</code>), the study id
@@ -181,11 +188,11 @@ the second will be used unless that is also empty, and so on. For
 example, <code>MBSTRESN</code> (standardised numeric result) is
 initially used as the best choice result variable, where rows have an
 empty <code>MBSTRESN</code>, <code>MBSTRESC</code> (standardised
-character result) will be used, if there are still empty rows
+character result) will be used. If there are still empty rows,
 <code>MBMODIFY</code> (modified original result) and finally
 <code>MBORRES</code> (original result from data contributor) will be
 used to populate the output.</p>
-<p>With the best choice timing variable, there is a default hierarchy
+<p>With the best choice timing variable, there is a default hierarchy,
 though users are encouraged to specify the list of timing variables
 which are most relevant to the study and objectives they have. For
 example, a researcher may only want planned visit days as the timing
@@ -262,16 +269,17 @@ appear in the column name (i.e. <code>WEIGHT_NA_kg</code>).</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: WEIGHT_NA_kg &lt;chr&gt;</span></span></span></code></pre></div>
 <p>When the function pivots the data, they may be occasions where two
 rows for the same test/finding/event have the same STUDYID, USUBJID,
-TIME value, TIME_SOURCE, in this scenario, the rows are not uniquely
-separable so the first row is taken by default (<code><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first()</a></code>
-function used). This can be changed to another function using
-<code>values_fn</code>. The number of rows affected will be reported by
-in the console when running <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> by default,
-unless <code>print_messages</code> is set to <code>FALSE</code>.</p>
+TIME value &amp; TIME_SOURCE, in this scenario, the rows are not
+uniquely separable so the first row is taken by default (the
+<code><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">first()</a></code> function used). This can be changed to another
+function using the <code>values_fn</code> parameter. The number of rows
+affected will be reported in the console when running
+<code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> by default, unless
+<code>print_messages</code> is set to <code>FALSE</code>.</p>
 <p>Once one domain has been transformed, the consistent keys
 (<code>STUDYID</code>, <code>USUBJID</code>, <code>TIME</code>,
-<code>TIME_SOURCE</code>) enabling easy merging with other prepared
-domains, allowing for a customised analysis dataset can be built.</p>
+<code>TIME_SOURCE</code>) enable easy merging with other prepared
+domains, allowing for a customised analysis dataset to be built.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="st">"MB"</span>, <span class="va">MB_RPTESTB</span>, timing_variables <span class="op">=</span> <span class="st">"VISIT"</span><span class="op">)</span>,</span>
@@ -300,22 +308,23 @@ domains, allowing for a customised analysis dataset can be built.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 more variables: HEIGHT_NA_cm &lt;chr&gt;, TEMP_AXILLA_C &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   TEMP_ORAL_CAVITY_C &lt;chr&gt;, WEIGHT_NA_kg &lt;chr&gt;</span></span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="standardised-tables-for-analysis">Standardised Tables for Analysis<a class="anchor" aria-label="anchor" href="#standardised-tables-for-analysis"></a>
-</h2>
+<div class="section level3">
+<h3 id="standardised-tables-for-analysis">Standardised Tables for Analysis<a class="anchor" aria-label="anchor" href="#standardised-tables-for-analysis"></a>
+</h3>
 <p>The package also contains functions to create standardised analysis
-datasets, these start with <code>create_</code>. These scripts use the
+datasets, these start with <code>create_</code>. These functions use the
 <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> function multiple times to extract
 specific variables from the domains they reside in. The choice of which
-variables to include are based on subject matter expertise. The purpose
-of these tables is to provide most of the key information for an
-analysis, such as the information typically presented in Table 1 of
-clinical trials. A key limitation is that these functions cannot address
-every need of researchers and neither would it be possible to make an
-all-encompassing solution due to the large variability in the dataset
-within and across diseases. However, these standardised tables do
-provide useful key information with minimal user input, ideal for those
-who are not experienced R or programming users.</p>
+variables to include are based on subject matter expertise, and we
+encourage suggestions to improve current tables or to design new tables.
+The purpose of these tables is to provide most of the key information
+for an analysis, such as the information typically presented in Table 1
+of clinical trials. A key limitation is that these functions cannot
+address every need of researchers and neither would it be possible to
+make an all-encompassing solution due to the large variability in the
+dataset within and across diseases. However, these standardised tables
+do provide useful key information with minimal user input, ideal for
+those who are not experienced programming users.</p>
 <p><code><a href="../reference/create_participant_table.html">create_participant_table()</a></code> creates a one row per
 participant analysis table along with several participant characteristic
 variables and baseline test information.</p>
@@ -351,10 +360,13 @@ Disease Response and Clinical Classification (RS) domains.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001 46    DY          RECRUDESCENCE LATE PARASITOLOGICAL FAIL…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_002 50    DY          INDETERMINATE ACPR                      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_003 43    DY          REINFECTION   ACPR</span></span></code></pre></div>
+<p>A variety of other table functions exist too, see the <a href="https://infectious-diseases-data-observatory.github.io/iddoverse/reference/index.html">reference
+page</a> for a list of all functions and data in the
+<code>iddoverse</code>.</p>
 </div>
-<div class="section level2">
-<h2 id="data-checks-summaries">Data Checks &amp; Summaries<a class="anchor" aria-label="anchor" href="#data-checks-summaries"></a>
-</h2>
+<div class="section level3">
+<h3 id="data-checks-summaries">Data Checks &amp; Summaries<a class="anchor" aria-label="anchor" href="#data-checks-summaries"></a>
+</h3>
 <p><code>iddoverse</code> also contains functions to check and summarise
 the IDDO-SDTM data for the user, this supports with exploratory data
 analysis and can inform the choice of parameter options within
@@ -371,9 +383,9 @@ present. The possible outputs are:</p>
 <code>SEX</code>.</li>
 <li>
 <code>$age</code>: summarises the number of unique
-<code>USUBJIDs</code>, the minimum and maximum ages in years, the number
-of missing ages, number of participant under 6 months old, under 18
-years old and over 90 years old.</li>
+<code>USUBJIDs</code>, the minimum &amp; maximum ages in years, the
+number of missing ages, number of participant under 6 months old, under
+18 years old and over 90 years old.</li>
 <li>
 <code>$testcd</code>: Creates a table groupped by
 <code>STUDYID</code> and <code>TESTCD</code> (the code for a specific
@@ -382,10 +394,11 @@ results, and the number of unique units, locations, methods and
 specimens (<code>SPEC</code>).</li>
 <li>
 <code>$outcome</code>: Reports the number of rows where outcome
-events occurred within the first 7 planned study days.</li>
+events occurred earlier than expected, suggesting anomalies in the
+outcome data</li>
 <li>
 <code>$missingness</code>: The proportion of missing data in each
-variable, accompanied with a plot visualisaing the information.</li>
+variable, accompanied with a plot visualising the information.</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/check_data.html">check_data</a></span><span class="op">(</span><span class="va">DM_RPTESTB</span><span class="op">)</span></span></code></pre></div>
@@ -443,9 +456,9 @@ variable, accompanied with a plot visualisaing the information.</li>
 <span><span class="co">#&gt;    LBDTC     LBDY LBEVINTX </span></span>
 <span><span class="co">#&gt;      0.1      0.1      1.0</span></span></code></pre>
 </div>
-<div class="section level2">
-<h2 id="miscellaneous-functions">Miscellaneous Functions<a class="anchor" aria-label="anchor" href="#miscellaneous-functions"></a>
-</h2>
+<div class="section level3">
+<h3 id="miscellaneous-functions">Miscellaneous Functions<a class="anchor" aria-label="anchor" href="#miscellaneous-functions"></a>
+</h3>
 <p><code><a href="../reference/table_variables.html">table_variables()</a></code> is a simple function to tabulate the
 variables in a domain. Not all domains are currently covered in this
 function but most are. This function may be useful when deciding which
@@ -455,6 +468,28 @@ variables to include in the <code><a href="../reference/prepare_domain.html">pre
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    BMI HEIGHT   TEMP WEIGHT </span></span>
 <span><span class="co">#&gt;      3      3      9      3</span></span></code></pre></div>
+<p><code><a href="../reference/convert_age_to_years.html">convert_age_to_years()</a></code> simplifies the <code>AGE</code>
+and <code>AGEU</code> information to <code>AGE_YEARS</code> by
+converting the various units (days, weeks, months) to years. This is
+used within <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> and <code><a href="../reference/check_data.html">check_data()</a></code>
+(if <code>age_in_years = FALSE</code>)</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">DM_RPTESTB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">STUDYID</span>, <span class="va">DOMAIN</span>, <span class="va">USUBJID</span>, <span class="va">AGE</span>, <span class="va">AGEU</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
+<span><span class="co">#&gt;   STUDYID DOMAIN USUBJID       AGE AGEU  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB DM     RPTESTB_001    67 YEARS </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB DM     RPTESTB_002    18 YEARS </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB DM     RPTESTB_003    48 MONTHS</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/convert_age_to_years.html">convert_age_to_years</a></span><span class="op">(</span><span class="va">DM_RPTESTB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">STUDYID</span>, <span class="va">DOMAIN</span>, <span class="va">USUBJID</span>, <span class="va">AGE</span>, <span class="va">AGEU</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
+<span><span class="co">#&gt;   STUDYID DOMAIN USUBJID     AGE_YEARS</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB DM     RPTESTB_001        67</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB DM     RPTESTB_002        18</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB DM     RPTESTB_003         4</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="other-resources">Other Resources<a class="anchor" aria-label="anchor" href="#other-resources"></a>

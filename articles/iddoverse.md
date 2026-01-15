@@ -1,15 +1,13 @@
 # iddoverse
 
-Data requesters can use this package to support the transformation of
-datasets from the storage data format used by IDDO, SDTM (Study Data
-Tabulation Model) to analysis datasets. The package is intended for
-epidemiologists, statisticians and data scientists with a diverse range
-of programming ability, but with some familiarity with R software.
-Advanced knowledge of the SDTM ontology is not required. This package
-intends to minimise the time spent on data manipulation, whilst also
-ensuring reproducibility and increases the accessibility of the SDTM
-format. All functions come with documentation and examples which can be
-viewed using the `?` command.
+This package can be used to support the transformation of datasets from
+the storage data format used by IDDO to analysis datasets. The package
+is intended for epidemiologists, statisticians and data scientists with
+a diverse range of programming ability, but with some familiarity with R
+software. This package intends to minimise the time spent on data
+manipulation, whilst also encouraging reproducibility and increasing the
+accessibility of the data format used by IDDO. All functions come with
+documentation and examples which can be viewed using the `?` command.
 
 ## Installing the Package
 
@@ -22,17 +20,18 @@ library(iddoverse)
 library(dplyr)
 ```
 
-## Getting Started
+## Data
 
-Most of the data stored by IDDO uses the SDTM format, so when the data
-is transferred to data requesters, there will be several datasets, each
-with a specific purpose. These datasets are referred to as domains and
-each have a two letter code (i.e. DM - demographics, MB - microbiology,
-VS - vital signs).
+Most of the data stored by IDDO uses the study data tabulation model
+(SDTM) format. SDTM features several datasets each with a specific
+purpose such as participant demographic information or laboratory test
+results. These datasets are referred to as domains and each have a two
+letter code (i.e. DM - demographics, MB - microbiology, VS - vital
+signs).
 
 Within the package, there are several synthetic, example domains that
 can be used to gain familiarity with the IDDO-SDTM data. Each domain
-starts with the two letter domain code followed by `_RPTESTB`
+starts with the two letter domain code followed by `_RPTESTB`.
 
 ``` r
 # demographics (DM) domain
@@ -75,12 +74,18 @@ MB_RPTESTB
 #> #   MBSTTPT <lgl>, MBCDSTDY <lgl>, MBRPOC <lgl>
 ```
 
-## `prepare_domain()`
+`DM_RPTESTB` contains demographic information such as age, sex and study
+treatment arm; there is one row per participant. Whereas, `MB_RPTESTB`
+shows each microbiology test result from the study with multiple rows
+per person, per day. SDTM domains, such as the MB domain, can have up to
+4 columns for the results and a variety of over 20 timing variables,
+while this preserves the intricacies in the trial data, it also creates
+complexity for analysis.
 
-SDTM domains, such as the MB domain, can have up to 3 columns for the
-results and a variety of over 20 timing variables, while this preserves
-the intricacies in the trial data, it also creates complexity for
-analysis.
+## Functions
+
+### `prepare_domain()`
+
 [`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
 takes a single IDDO-SDTM domain, amalgamates the data so that there is
 one ‘best choice’ result and timing variable, then pivots the rows by
@@ -123,12 +128,12 @@ given row, if the first variable in the hierarchy list is not present,
 the second will be used unless that is also empty, and so on. For
 example, `MBSTRESN` (standardised numeric result) is initially used as
 the best choice result variable, where rows have an empty `MBSTRESN`,
-`MBSTRESC` (standardised character result) will be used, if there are
-still empty rows `MBMODIFY` (modified original result) and finally
+`MBSTRESC` (standardised character result) will be used. If there are
+still empty rows, `MBMODIFY` (modified original result) and finally
 `MBORRES` (original result from data contributor) will be used to
 populate the output.
 
-With the best choice timing variable, there is a default hierarchy
+With the best choice timing variable, there is a default hierarchy,
 though users are encouraged to specify the list of timing variables
 which are most relevant to the study and objectives they have. For
 example, a researcher may only want planned visit days as the timing
@@ -211,17 +216,18 @@ prepare_domain("vs",
 
 When the function pivots the data, they may be occasions where two rows
 for the same test/finding/event have the same STUDYID, USUBJID, TIME
-value, TIME_SOURCE, in this scenario, the rows are not uniquely
-separable so the first row is taken by default
-([`first()`](https://dplyr.tidyverse.org/reference/nth.html) function
-used). This can be changed to another function using `values_fn`. The
-number of rows affected will be reported by in the console when running
+value & TIME_SOURCE, in this scenario, the rows are not uniquely
+separable so the first row is taken by default (the
+[`first()`](https://dplyr.tidyverse.org/reference/nth.html) function
+used). This can be changed to another function using the `values_fn`
+parameter. The number of rows affected will be reported in the console
+when running
 [`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
 by default, unless `print_messages` is set to `FALSE`.
 
 Once one domain has been transformed, the consistent keys (`STUDYID`,
-`USUBJID`, `TIME`, `TIME_SOURCE`) enabling easy merging with other
-prepared domains, allowing for a customised analysis dataset can be
+`USUBJID`, `TIME`, `TIME_SOURCE`) enable easy merging with other
+prepared domains, allowing for a customised analysis dataset to be
 built.
 
 ``` r
@@ -253,22 +259,23 @@ left_join(
 #> #   TEMP_ORAL_CAVITY_C <chr>, WEIGHT_NA_kg <chr>
 ```
 
-## Standardised Tables for Analysis
+### Standardised Tables for Analysis
 
 The package also contains functions to create standardised analysis
-datasets, these start with `create_`. These scripts use the
+datasets, these start with `create_`. These functions use the
 [`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
 function multiple times to extract specific variables from the domains
 they reside in. The choice of which variables to include are based on
-subject matter expertise. The purpose of these tables is to provide most
-of the key information for an analysis, such as the information
-typically presented in Table 1 of clinical trials. A key limitation is
-that these functions cannot address every need of researchers and
-neither would it be possible to make an all-encompassing solution due to
-the large variability in the dataset within and across diseases.
-However, these standardised tables do provide useful key information
-with minimal user input, ideal for those who are not experienced R or
-programming users.
+subject matter expertise, and we encourage suggestions to improve
+current tables or to design new tables. The purpose of these tables is
+to provide most of the key information for an analysis, such as the
+information typically presented in Table 1 of clinical trials. A key
+limitation is that these functions cannot address every need of
+researchers and neither would it be possible to make an all-encompassing
+solution due to the large variability in the dataset within and across
+diseases. However, these standardised tables do provide useful key
+information with minimal user input, ideal for those who are not
+experienced programming users.
 
 [`create_participant_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_participant_table.md)
 creates a one row per participant analysis table along with several
@@ -312,7 +319,11 @@ create_malaria_pcr_table(pf_domain = PF_RPTESTB,
 #> 3 RPTESTB RPTESTB_003 43    DY          REINFECTION   ACPR
 ```
 
-## Data Checks & Summaries
+A variety of other table functions exist too, see the [reference
+page](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/index.html)
+for a list of all functions and data in the `iddoverse`.
+
+### Data Checks & Summaries
 
 `iddoverse` also contains functions to check and summarise the IDDO-SDTM
 data for the user, this supports with exploratory data analysis and can
@@ -323,7 +334,7 @@ present. The possible outputs are:
 
 - `$studyid`: table of the number of rows per `STUDYID`.
 - `$sex`: table of the number of rows per `SEX`.
-- `$age`: summarises the number of unique `USUBJIDs`, the minimum and
+- `$age`: summarises the number of unique `USUBJIDs`, the minimum &
   maximum ages in years, the number of missing ages, number of
   participant under 6 months old, under 18 years old and over 90 years
   old.
@@ -332,9 +343,9 @@ present. The possible outputs are:
   quantiles for numeric results, and the number of unique units,
   locations, methods and specimens (`SPEC`).
 - `$outcome`: Reports the number of rows where outcome events occurred
-  within the first 7 planned study days.
+  earlier than expected, suggesting anomalies in the outcome data
 - `$missingness`: The proportion of missing data in each variable,
-  accompanied with a plot visualisaing the information.
+  accompanied with a plot visualising the information.
 
 ``` r
 check_data(DM_RPTESTB)
@@ -397,7 +408,7 @@ check_data(DM_RPTESTB)
     #>    LBDTC     LBDY LBEVINTX 
     #>      0.1      0.1      1.0
 
-## Miscellaneous Functions
+### Miscellaneous Functions
 
 [`table_variables()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/table_variables.md)
 is a simple function to tabulate the variables in a domain. Not all
@@ -411,6 +422,32 @@ table_variables("vS", VS_RPTESTB)
 #> 
 #>    BMI HEIGHT   TEMP WEIGHT 
 #>      3      3      9      3
+```
+
+[`convert_age_to_years()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/convert_age_to_years.md)
+simplifies the `AGE` and `AGEU` information to `AGE_YEARS` by converting
+the various units (days, weeks, months) to years. This is used within
+[`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
+and
+[`check_data()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/check_data.md)
+(if `age_in_years = FALSE`)
+
+``` r
+DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU)
+#> # A tibble: 3 × 5
+#>   STUDYID DOMAIN USUBJID       AGE AGEU  
+#>   <chr>   <chr>  <chr>       <dbl> <chr> 
+#> 1 RPTESTB DM     RPTESTB_001    67 YEARS 
+#> 2 RPTESTB DM     RPTESTB_002    18 YEARS 
+#> 3 RPTESTB DM     RPTESTB_003    48 MONTHS
+
+convert_age_to_years(DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU))
+#> # A tibble: 3 × 4
+#>   STUDYID DOMAIN USUBJID     AGE_YEARS
+#>   <chr>   <chr>  <chr>           <dbl>
+#> 1 RPTESTB DM     RPTESTB_001        67
+#> 2 RPTESTB DM     RPTESTB_002        18
+#> 3 RPTESTB DM     RPTESTB_003         4
 ```
 
 ## Other Resources

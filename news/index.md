@@ -1,9 +1,15 @@
 # Changelog
 
+## iddoverse 0.8.2
+
+- Additional unit tests in prepare_domain & check_data
+- Redrafted vignette
+- Redrafted paper based on updated journal guidelines
+
 ## iddoverse 0.8.1
 
 - Drafted and deployed vignette and website
-- Add check for required columns in some functions
+- Add check for required columns in functions
 - Redrafted paper
 - Improved check_data() outputs and mechanisms
 
