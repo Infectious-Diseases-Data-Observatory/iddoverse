@@ -176,7 +176,7 @@ test_that("event domain: EVENT chosen from DECOD/MODIFY/TERM and PRESP/OCCUR def
   expect_equal(as.character(fev_occur[2]), "N")
 })
 
-test_that("DS domain returns STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT columns", {
+test_that("DS domain returns STUDYID, USUBJID, TIME, TIME_SOURCE, DISPOSITION columns", {
   ds <- tibble::tibble(
     STUDYID = "S", USUBJID = c("A","B","C"),
     DSTERM = c("t1","t2","t3"),
@@ -186,10 +186,10 @@ test_that("DS domain returns STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT columns"
   )
 
   out <- prepare_domain("DS", ds, print_messages = FALSE)
-  expect_true(all(c("STUDYID", "USUBJID", "TIME", "TIME_SOURCE", "EVENT") %in% colnames(out)))
+  expect_true(all(c("STUDYID", "USUBJID", "TIME", "TIME_SOURCE", "DISPOSITION") %in% colnames(out)))
   expect_equal(out$TIME_SOURCE[1], "STDY")
-  expect_true("MOD" %in% out$EVENT)
-  expect_true("DEC" %in% out$EVENT)
+  expect_true("MOD" %in% out$DISPOSITION)
+  expect_true("DEC" %in% out$DISPOSITION)
 })
 
 test_that("special domain DM: convert blanks to NA and variables_include selection works", {

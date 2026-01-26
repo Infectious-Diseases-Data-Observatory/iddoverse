@@ -9,11 +9,12 @@ test_that("AGEU -> AGE_DAYS conversion", {
   )
 
   # run function
-  out <- derive_anthro_scores(df)
+  out <- derive_anthro_scores(df, age_in_years = TRUE)
 
   # Should return only rows that pass the <5yrs filter.
-  expect_true(nrow(out) == 4)
-  expect_false("P5" %in% out$USUBJID)
+  expect_true(nrow(out) == 5)
+  expect_true("P5" %in% out$USUBJID)
+  expect_true(is.na(out[5, "HAZ"]))
   # AGE_DAYS is removed in returned data
   expect_false("AGE_DAYS" %in% colnames(out))
 })
@@ -76,7 +77,8 @@ test_that("rows with NA AGE are excluded (AGE_DAYS becomes NA and filter removes
 
   # "Valid" should be included; "NA_age" should be excluded because AGE is NA and AGE_DAYS is NA -> filter fails
   expect_true("Valid" %in% out$USUBJID)
-  expect_false("NA_age" %in% out$USUBJID)
+  expect_true("NA_age" %in% out$USUBJID)
+  expect_true(is.na(out[which(out$USUBJID == "NA_age"), "WAZ_FLAG"]))
 })
 
 
