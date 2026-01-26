@@ -6,7 +6,7 @@
 #'
 #' @param domain Character. The two letter domain name of the data.
 #'      Domain options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP",
-#'      "PF", "AU", "PC", "SA", "HO", "ER", "PO"
+#'      "PF", "AU", "PC", "SA", "HO", "ER", "PO", "DS
 #' @param data Domain data frame.
 #' @param include_LOC Boolean. Should the location (--LOC) be included in the
 #'   output. Default is FALSE.
@@ -65,7 +65,9 @@ prepare_domain <- function(domain, data,
   findings_domains <- c("LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF",
                         "AU", "PC") # "MS"
 
-  event_domains <- c("SA", "HO", "ER", "PO") # "DS"
+  event_domains <- c("SA", "HO", "ER", "PO")
+
+  # "DS" dealt with unique
 
   domain <- str_to_upper(domain)
 
@@ -307,6 +309,7 @@ prepare_domain <- function(domain, data,
       )
 
     colnames(data) <- gsub("_EVENT", "", colnames(data))
+    colnames(data) <- gsub("_OCCUR", "_OCCURRENCE", colnames(data))
 
     data = data %>%
       clean_names(case = "all_caps")
@@ -320,22 +323,22 @@ prepare_domain <- function(domain, data,
       mutate(across(
         any_of(timing_variables),
         function(x) as.character(x))) %>%
-      mutate(EVENT = as.character(NA),
+      mutate(DISPOSITION = as.character(NA),
              TIME = as.character(NA),
              TIME_SOURCE = as.character(NA))
 
     if(str_c(domain, "DECOD") %in% names(data)){
-      data[, "EVENT"] <-
+      data[, "DISPOSITION"] <-
         data[, str_c(domain, "DECOD")]
     }
 
     if(str_c(domain, "MODIFY") %in% names(data)){
-      data[which(is.na(data$EVENT)), "EVENT"] <-
-        data[which(is.na(data$EVENT)), str_c(domain, "MODIFY")]
+      data[which(is.na(data$DISPOSITION)), "DISPOSITION"] <-
+        data[which(is.na(data$DISPOSITION)), str_c(domain, "MODIFY")]
     }
 
-    data[which(is.na(data$EVENT)), "EVENT"] <-
-      data[which(is.na(data$EVENT)), str_c(domain, "TERM")]
+    data[which(is.na(data$DISPOSITION)), "DISPOSITION"] <-
+      data[which(is.na(data$DISPOSITION)), str_c(domain, "TERM")]
 
     for(i in 1:length(timing_variables)){
       data[which(is.na(data$TIME)), "TIME"] <-
@@ -356,7 +359,7 @@ prepare_domain <- function(domain, data,
     }
 
     data <- data %>%
-      select(STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT)
+      select(STUDYID, USUBJID, TIME, TIME_SOURCE, DISPOSITION)
   }
 
   if("TIME_SOURCE" %in% names(data)){
