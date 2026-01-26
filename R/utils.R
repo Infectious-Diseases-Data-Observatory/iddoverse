@@ -16,6 +16,7 @@ globalVariables(c(
   "LOC",
   "METHOD",
   "EVENT",
+  "DISPOSITION",
   "PRESP",
   "OCCUR",
   "SACAT",
