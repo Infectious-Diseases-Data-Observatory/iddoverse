@@ -5,6 +5,8 @@
 - Additional unit tests in prepare_domain & check_data
 - Redrafted vignette
 - Redrafted paper based on updated journal guidelines
+- Changes to derive_anthro_scores so all data is retained in output not
+  just the under 5s
 
 ## iddoverse 0.8.1
 
