@@ -23,19 +23,21 @@ affiliations:
 
 # Summary
 
-Study Data Tabulation Model (SDTM) developed by the Clinical Data Interchange Standards Consortium (CDISC) is an internationally used, standardised format 
-designed for data storage and provides a coherent framework for harmonising data from multiple clinical trials [@cdisc]. 
-The Infectious Diseases Data Observatory (IDDO), a group that has championed open-access scientific resources in the context of poverty 
-related infectious diseases, has developed a repository to collate data from clinical trials for infectious diseases using SDTM. 
-Under SDTM, data from trials are stored across several datasets in a long format linked by unique participant or study 
-identification key. Generating analysis ready datasets (‘analysis datasets’) requires several complex transformations of the SDTM 
-across different domains, which necessitates further time and resource for the end-users.
+Study Data Tabulation Model (SDTM) developed by the Clinical Data Interchange Standards Consortium (CDISC) is an internationally used, 
+standardised format designed for data storage and provides a coherent framework for harmonising data from multiple clinical trials 
+[@cdisc]. The Infectious Diseases Data Observatory (IDDO), a group that has championed open-access 
+scientific resources in the context of poverty related infectious diseases, has developed a repository to collate individual participant 
+data from clinical trials for several infectious diseases and storing them using the SDTM format. Under SDTM, data from trials are stored
+across several datasets in a long format linked by unique participant or study identification key. Generating analysis ready datasets 
+(‘analysis datasets’) requires several complex transformations of the SDTM across different domains, which necessitates further time and
+resource for the end-users. 
 
-The `iddoverse` package provides a reproducible suite of functions which allows users to transform datasets from SDTM to analysis datasets and 
-is intended for epidemiologists, statisticians and data scientists with a diverse range of programming ability, but with some familiarity with 
-R software [@r_core]. Advanced knowledge of the SDTM ontology is not required which removes hurdles for data requesters, especially those in 
-Low- and Middle- Income Countries (LMICs), where SDTM training and expertise is harder to access. Consequently, the time spent on 
-data manipulation will be reduced, expediting the research, whilst also ensuring reproducibility and increasing the accessibility of the SDTM format.
+The iddoverse package provides a reproducible suite of functions which allows users to transform datasets from SDTM to analysis datasets 
+and is intended for epidemiologists, statisticians and data scientists with a diverse range of programming ability, but with some 
+familiarity with R software [@r_core]. Advanced knowledge of the SDTM ontology is not required which removes hurdles for data requesters, 
+especially those in Low- and Middle- Income Countries (LMICs), where SDTM training and expertise is harder to access. Consequently, the time 
+spent on data manipulation will be reduced, expediting the research, whilst also ensuring reproducibility and increasing the accessibility of 
+the SDTM format. 
 
 # Statement of need
 
@@ -60,11 +62,12 @@ transforms the IDDO-SDTM data and removes some knowledge requirements to using t
 people who do not have a working knowledge of SDTM and is also open source. The purpose of this package is not for pharmaceutical 
 regulatory submission, so the output is more flexible for performing statistical analysis on than those developed for regulatory purposes.
 
-# Using the iddoverse package
+# Synthetic Data
 
 MB_RPTESTB (below) is an example microbiology (MB) domain which is included in the package and contains 14 plasmodium falciparum tests from 
-3 individuals and 39 columns. SDTM domains, such as the MB domain, can have up to 3 columns for the results and a variety of over 20 timing variables, 
-while this preserves the intricacies in the trial data, it also creates complexity for analysis.
+3 individuals and 39 columns. SDTM domains, such as the MB domain, can have up to 4 columns for the results and a variety of over 20 timing variables, 
+while this preserves the intricacies in the trial data, it also creates complexity for analysis. The multiple result columns represent the original data 
+in the clinical study (`MBORRES` in example), modified result (`MBMODIFY`) and standardised results in character and numeric form (`MBSTRESC` & `MBSTRESN`).
 
 ```r
 > library(iddoverse)
@@ -97,6 +100,15 @@ while this preserves the intricacies in the trial data, it also creates complexi
 #   MBTPTNUM <lgl>, MBELTM <lgl>, MBTPTREF <lgl>, MBSTRF <lgl>,
 #   MBEVINTX <lgl>, MBSTRTPT <lgl>, MBSTTPT <lgl>, MBCDSTDY <lgl>, …
 ```
+
+# Functions
+
+In order to reduce the dimensionality of the IDDO-SDTM data and create a analysable dataset, the multiple
+result and timing variables are amalgamated into one. 
+
+# Usage
+
+
 
 The core function within the `iddoverse` package is `prepare_domain()` which takes a single IDDO-SDTM 
 domain, amalgamates the data so that there is one 'best choice' result and timing
@@ -146,35 +158,13 @@ can inform the choice of parameter options within `prepare_domain`. Additionally
 certain variables. Synthetic data, as seen in the example code, have been packaged within `iddoverse` to provide IDDO-SDTM examples for documentation and can be used to gain
 familiarity or test the user's code whilst awaiting the data access to be granted.
 
-```r
-> check_data(DM_RPTESTB)
-$studyid
-# A tibble: 1 × 2
-  STUDYID     n
-  <chr>   <int>
-1 RPTESTB     3
-
-$age
-# A tibble: 1 × 7
-  n_USUBJID AGE_min AGE_max n_missing_AGE n_AGE_under_6M n_AGE_under_18Y
-      <int>   <dbl>   <dbl>         <int>          <int>           <int>
-1         3       4      67             0              0               1
-# ℹ 1 more variable: n_AGE_over_90Y <int>
-
-$missingness
-STUDYID  DOMAIN USUBJID  SUBJID RFSTDTC  DTHDTC   DTHFL  SITEID   INVID 
-  0.000   0.000   0.000   0.000   0.000   0.667   0.667   0.000   1.000 
- INVNAM BRTHDTC     AGE  AGETXT     SEX    RACE  ETHNIC   ARMCD     ARM 
-  1.000   1.000   0.000   1.000   0.000   0.000   0.000   0.000   0.000 
-COUNTRY   DMDTC    DMDY 
-  0.000   0.000   0.000 
-```
-
 In conclusion, the `iddoverse` R package provides users of the IDDO data repository a variety of functions and example datasets to assist their research 
 by speeding up data pre-processing. The package also increases the accessibility of the repository and will allow more people to confidently use the IDDO-SDTM 
 data, whilst minimising duplicated effort of researchers having to code solutions to manipulate the data and allowing analysts to modify the output. 
 Creating a range of standardised analysis datasets from custom-SDTM implementation is shown to be possible and `iddoverse` provides a user-friendly, 
 replicable framework for other organisations whom to do not use SDTM for pharmaceutical regulatory submission.
+
+[@patel] [@pisani_lessons; @pisani_sharing] [@icon; @quanticate; @iddi]
 
 # Acknowledgements
 
