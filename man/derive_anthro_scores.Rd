@@ -10,6 +10,10 @@ derive_anthro_scores(data, age_in_years = TRUE)
 \item{data}{data frame that contains the AGE_YEARS, WEIGHT & HEIGHT
 variables, typically held in the Demographics (DM) and Vital Signs (VS)
 domains. Domains should have prepare_domain applied beforehand.}
+
+\item{age_in_years}{Boolean. Is the AGE column in years. Default is FALSE,
+and function will call \code{convert_age_to_years} if FALSE, otherwise will not
+convert age.}
 }
 \value{
 data frame with only only 5 year olds included and additional columns
