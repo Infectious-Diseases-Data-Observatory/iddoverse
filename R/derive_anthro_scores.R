@@ -27,7 +27,16 @@
 #'
 #' derive_anthro_scores(data)
 #'
-derive_anthro_scores <- function(data) {
+derive_anthro_scores <- function(data, age_in_years = TRUE) {
+  if(age_in_years == FALSE){
+    assert_data_frame(data, required_vars = exprs(AGE, AGEU))
+
+    data = data %>%
+      convert_age_to_years()
+  }
+
+  assert_data_frame(data, required_vars = exprs(STUDYID, USUBJID, AGE_YEARS))
+
   data_anthro <- data %>%
     mutate(AGE_DAYS = floor(AGE_YEARS * 365.25)) %>%
     filter(AGE_YEARS < 5 | AGE_DAYS < 1826)
@@ -58,6 +67,8 @@ derive_anthro_scores <- function(data) {
       ) %>%
       select(-AGE_DAYS)
 
-    return(bind_anthro)
+    data_combined <- left_join(data, bind_anthro)
+
+    return(data_combined)
   }
 }
