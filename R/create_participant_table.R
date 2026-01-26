@@ -29,7 +29,7 @@ create_participant_table <- function(dm_domain,
                                      sc_domain = NULL,
                                      vs_domain = NULL){
   data <- prepare_domain("dm", dm_domain,
-                         variables_include = c("STUDYID", "USUBJID",
+                         variables_include = c("STUDYID", "USUBJID", "AGEU",
                                                "AGE", "SEX","RFSTDTC",
                                                "RACE", "ETHNIC", "ARMCD", "COUNTRY",
                                                "SITEID", "DTHFL", "DTHDY", "DTHHR"))
@@ -123,6 +123,15 @@ create_participant_table <- function(dm_domain,
           ungroup()
         )
 
+  }
+
+  if("HEIGHT_cm" %in% names(data) &
+     "WEIGHT_kg" %in% names(data) &
+     "SEX" %in% names(data) &
+     "AGE_YEARS" %in% names(data)){
+
+    data = data %>%
+      derive_anthro_scores()
   }
 
   data <- data %>%
