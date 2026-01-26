@@ -4,13 +4,20 @@
 \alias{create_malaria_pcr_table}
 \title{Create table of malaria specific PCR data}
 \usage{
-create_malaria_pcr_table(pf_domain, rs_domain, values_funct = first)
+create_malaria_pcr_table(
+  pf_domain,
+  rs_domain,
+  ds_domain = NULL,
+  values_funct = first
+)
 }
 \arguments{
 \item{pf_domain}{A pharmacogenomics genetics/PF domain data frame}
 
 \item{rs_domain}{A disease response and clinical classification/RS domain
 data frame.}
+
+\item{ds_domain}{A disposition/DS domain data frame}
 
 \item{values_funct}{Function. The function which will determine which data row is used
 in the output, in the event there are multiple rows for the same subject

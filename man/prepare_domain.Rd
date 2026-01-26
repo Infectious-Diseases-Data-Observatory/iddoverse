@@ -20,7 +20,7 @@ prepare_domain(
 \arguments{
 \item{domain}{Character. The two letter domain name of the data.
 Domain options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP",
-"PF", "AU", "PC", "SA", "HO", "ER", "PO"}
+"PF", "AU", "PC", "SA", "HO", "ER", "PO", "DS}
 
 \item{data}{Domain data frame.}
 
