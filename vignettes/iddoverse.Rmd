@@ -111,7 +111,7 @@ create_participant_table(dm_domain = DM_RPTESTB,
                          vs_domain = VS_RPTESTB)
 ```
 
-`create_malaria_pcr_table()` creates a one row per person, per timepoint table combining the polymerase chain reaction (PCR) test information, drawing from both the Pharmacogenomics Genetics (PF) and Disease Response and Clinical Classification (RS) domains.
+`create_malaria_pcr_table()` creates a one row per person, per timepoint table combining the polymerase chain reaction (PCR) test information, drawing from the Pharmacogenomics Genetics (PF), Disease Response and Clinical Classification (RS) and disposition (DS) domains.
 
 ```{r}
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
@@ -156,6 +156,9 @@ convert_age_to_years(DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU))
 ## Other Resources
 
 -   Paper: ['Welcome to the iddoverse: An R package for converting IDDO-SDTM data into analysis datasets'](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/tree/main/paper)
--   [IDDO Wiki](https://wiki.iddo.org/en/Data-Engineering)
-    -   [IDDO's Introduction to SDTM Videos](https://wiki.iddo.org/en/Data-Engineering/Resources-For-Users/Intro-And-Background/SDTM-videos)
+-   [IDDO Wiki](https://wiki.iddo.org/en/Data-Engineering) - requires registration on [IDDO Website](https://www.iddo.org/user/login) 
     -   [IDDO-SDTM Implementation Manual](https://wiki.iddo.org/en/Data-Engineering/IDDO-SDTM-Implementation-Manual)
+-   [Video: IDDO's Introduction to SDTM](https://www.youtube.com/watch?v=tv54h1SYuMk)
+-   [Video: PRESP & OCCUR](https://www.youtube.com/watch?v=gUColPOnpgQ)
+-   [Video: Frequently Used Timing Variables](https://www.youtube.com/watch?v=wpzYbVN_--s)
+-   [IDDO Website](https://www.iddo.org/)
