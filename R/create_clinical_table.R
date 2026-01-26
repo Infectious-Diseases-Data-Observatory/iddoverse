@@ -29,7 +29,7 @@
 create_clinical_table <- function(dm_domain, mb_domain = NULL, mp_domain = NULL,
                                   sa_domain = NULL, vs_domain = NULL,
                                   values_funct = first){
-  data <- prepare_domain("dm", dm_domain, variables_include = c("STUDYID", "USUBJID"))
+  data <- prepare_domain("dm", dm_domain, variables_include = "")
 
   if(!is.null(mb_domain)){
     data <- data %>%
