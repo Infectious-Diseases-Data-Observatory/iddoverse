@@ -100,13 +100,16 @@ study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ETHNIC, ARMCD, COUNTRY, SITEID, DTHFL, `BMI_kg/m2`, HEIGHT_cm, WEIGHT_kg)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 14</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID      AGE SEX   RFSTDTC RACE  ETHNIC ARMCD COUNTRY SITEID DTHFL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_0…    67 F     2023/01 White Briti… PBO   UK      OXFORD Y    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_0…    18 F     2023/01 White Irish  TRT   UK      OXFORD <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_0…    48 M     2023/02 White Briti… TRT   UK      OXFORD <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: `BMI_kg/m2` &lt;chr&gt;, HEIGHT_cm &lt;chr&gt;, WEIGHT_kg &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID     AGE_YEARS SEX   RFSTDTC RACE  ETHNIC  ARMCD COUNTRY SITEID</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001        67 F     2023/01 White British PBO   UK      OXFORD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_002        18 F     2023/01 White Irish   TRT   UK      OXFORD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_003         4 M     2023/02 White British TRT   UK      OXFORD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: DTHFL &lt;chr&gt;, `BMI_kg/m2` &lt;chr&gt;, HEIGHT_cm &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   WEIGHT_kg &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

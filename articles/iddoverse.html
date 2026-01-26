@@ -336,18 +336,22 @@ variables and baseline test information.</p>
 <span><span class="co">#&gt; Joining with `by = join_by(STUDYID, USUBJID)`</span></span>
 <span><span class="co">#&gt; [1] "Number of rows where values_fn has been used to pick record in the RP domain: 0"</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(STUDYID, USUBJID)`</span></span>
+<span><span class="co">#&gt; Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,</span></span>
+<span><span class="co">#&gt; ETHNIC, ARMCD, COUNTRY, SITEID, DTHFL, `BMI_kg/m2`, HEIGHT_cm, WEIGHT_kg,</span></span>
+<span><span class="co">#&gt; PREGIND_NA)`</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 15</span></span></span>
-<span><span class="co">#&gt;   STUDYID USUBJID      AGE SEX   RFSTDTC RACE  ETHNIC ARMCD COUNTRY SITEID DTHFL</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_0…    67 F     2023/01 White Briti… PBO   UK      OXFORD Y    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_0…    18 F     2023/01 White Irish  TRT   UK      OXFORD <span style="color: #BB0000;">NA</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_0…    48 M     2023/02 White Briti… TRT   UK      OXFORD <span style="color: #BB0000;">NA</span>   </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 more variables: `BMI_kg/m2` &lt;chr&gt;, HEIGHT_cm &lt;chr&gt;, WEIGHT_kg &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   PREGIND_NA &lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   STUDYID USUBJID     AGE_YEARS SEX   RFSTDTC RACE  ETHNIC  ARMCD COUNTRY SITEID</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001        67 F     2023/01 White British PBO   UK      OXFORD</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_002        18 F     2023/01 White Irish   TRT   UK      OXFORD</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_003         4 M     2023/02 White British TRT   UK      OXFORD</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: DTHFL &lt;chr&gt;, `BMI_kg/m2` &lt;chr&gt;, HEIGHT_cm &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   WEIGHT_kg &lt;chr&gt;, PREGIND_NA &lt;chr&gt;</span></span></span></code></pre></div>
 <p><code><a href="../reference/create_malaria_pcr_table.html">create_malaria_pcr_table()</a></code> creates a one row per person,
 per timepoint table combining the polymerase chain reaction (PCR) test
-information, drawing from both the Pharmacogenomics Genetics (PF) and
-Disease Response and Clinical Classification (RS) domains.</p>
+information, drawing from the Pharmacogenomics Genetics (PF), Disease
+Response and Clinical Classification (RS) and disposition (DS)
+domains.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_malaria_pcr_table.html">create_malaria_pcr_table</a></span><span class="op">(</span>pf_domain <span class="op">=</span> <span class="va">PF_RPTESTB</span>,</span>
 <span>                         rs_domain <span class="op">=</span> <span class="va">RS_RPTESTB</span><span class="op">)</span></span>
@@ -500,14 +504,21 @@ to the iddoverse: An R package for converting IDDO-SDTM data into
 analysis datasets’</a>
 </li>
 <li>
-<a href="https://wiki.iddo.org/en/Data-Engineering" class="external-link">IDDO Wiki</a>
+<a href="https://wiki.iddo.org/en/Data-Engineering" class="external-link">IDDO Wiki</a> -
+requires registration on <a href="https://www.iddo.org/user/login" class="external-link">IDDO
+Website</a>
 <ul>
-<li><a href="https://wiki.iddo.org/en/Data-Engineering/Resources-For-Users/Intro-And-Background/SDTM-videos" class="external-link">IDDO’s
-Introduction to SDTM Videos</a></li>
 <li><a href="https://wiki.iddo.org/en/Data-Engineering/IDDO-SDTM-Implementation-Manual" class="external-link">IDDO-SDTM
 Implementation Manual</a></li>
 </ul>
 </li>
+<li><a href="https://www.youtube.com/watch?v=tv54h1SYuMk" class="external-link">Video: IDDO’s
+Introduction to SDTM</a></li>
+<li><a href="https://www.youtube.com/watch?v=gUColPOnpgQ" class="external-link">Video: PRESP
+&amp; OCCUR</a></li>
+<li><a href="https://www.youtube.com/watch?v=wpzYbVN_--s" class="external-link">Video:
+Frequently Used Timing Variables</a></li>
+<li><a href="https://www.iddo.org/" class="external-link">IDDO Website</a></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

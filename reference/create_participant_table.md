@@ -58,12 +58,15 @@ create_participant_table(dm_domain = DM_RPTESTB,
 #> Joining with `by = join_by(STUDYID, USUBJID)`
 #> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
+#> Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,
+#> ETHNIC, ARMCD, COUNTRY, SITEID, DTHFL, `BMI_kg/m2`, HEIGHT_cm, WEIGHT_kg)`
 #> # A tibble: 3 × 14
-#>   STUDYID USUBJID      AGE SEX   RFSTDTC RACE  ETHNIC ARMCD COUNTRY SITEID DTHFL
-#>   <chr>   <chr>      <dbl> <chr> <chr>   <chr> <chr>  <chr> <chr>   <chr>  <chr>
-#> 1 RPTESTB RPTESTB_0…    67 F     2023/01 White Briti… PBO   UK      OXFORD Y    
-#> 2 RPTESTB RPTESTB_0…    18 F     2023/01 White Irish  TRT   UK      OXFORD NA   
-#> 3 RPTESTB RPTESTB_0…    48 M     2023/02 White Briti… TRT   UK      OXFORD NA   
-#> # ℹ 3 more variables: `BMI_kg/m2` <chr>, HEIGHT_cm <chr>, WEIGHT_kg <chr>
+#>   STUDYID USUBJID     AGE_YEARS SEX   RFSTDTC RACE  ETHNIC  ARMCD COUNTRY SITEID
+#>   <chr>   <chr>           <dbl> <chr> <chr>   <chr> <chr>   <chr> <chr>   <chr> 
+#> 1 RPTESTB RPTESTB_001        67 F     2023/01 White British PBO   UK      OXFORD
+#> 2 RPTESTB RPTESTB_002        18 F     2023/01 White Irish   TRT   UK      OXFORD
+#> 3 RPTESTB RPTESTB_003         4 M     2023/02 White British TRT   UK      OXFORD
+#> # ℹ 4 more variables: DTHFL <chr>, `BMI_kg/m2` <chr>, HEIGHT_cm <chr>,
+#> #   WEIGHT_kg <chr>
 
 ```

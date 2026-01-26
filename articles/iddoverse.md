@@ -289,21 +289,24 @@ create_participant_table(dm_domain = DM_RPTESTB,
 #> Joining with `by = join_by(STUDYID, USUBJID)`
 #> [1] "Number of rows where values_fn has been used to pick record in the RP domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
+#> Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,
+#> ETHNIC, ARMCD, COUNTRY, SITEID, DTHFL, `BMI_kg/m2`, HEIGHT_cm, WEIGHT_kg,
+#> PREGIND_NA)`
 #> # A tibble: 3 × 15
-#>   STUDYID USUBJID      AGE SEX   RFSTDTC RACE  ETHNIC ARMCD COUNTRY SITEID DTHFL
-#>   <chr>   <chr>      <dbl> <chr> <chr>   <chr> <chr>  <chr> <chr>   <chr>  <chr>
-#> 1 RPTESTB RPTESTB_0…    67 F     2023/01 White Briti… PBO   UK      OXFORD Y    
-#> 2 RPTESTB RPTESTB_0…    18 F     2023/01 White Irish  TRT   UK      OXFORD NA   
-#> 3 RPTESTB RPTESTB_0…    48 M     2023/02 White Briti… TRT   UK      OXFORD NA   
-#> # ℹ 4 more variables: `BMI_kg/m2` <chr>, HEIGHT_cm <chr>, WEIGHT_kg <chr>,
-#> #   PREGIND_NA <chr>
+#>   STUDYID USUBJID     AGE_YEARS SEX   RFSTDTC RACE  ETHNIC  ARMCD COUNTRY SITEID
+#>   <chr>   <chr>           <dbl> <chr> <chr>   <chr> <chr>   <chr> <chr>   <chr> 
+#> 1 RPTESTB RPTESTB_001        67 F     2023/01 White British PBO   UK      OXFORD
+#> 2 RPTESTB RPTESTB_002        18 F     2023/01 White Irish   TRT   UK      OXFORD
+#> 3 RPTESTB RPTESTB_003         4 M     2023/02 White British TRT   UK      OXFORD
+#> # ℹ 5 more variables: DTHFL <chr>, `BMI_kg/m2` <chr>, HEIGHT_cm <chr>,
+#> #   WEIGHT_kg <chr>, PREGIND_NA <chr>
 ```
 
 [`create_malaria_pcr_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_malaria_pcr_table.md)
 creates a one row per person, per timepoint table combining the
-polymerase chain reaction (PCR) test information, drawing from both the
-Pharmacogenomics Genetics (PF) and Disease Response and Clinical
-Classification (RS) domains.
+polymerase chain reaction (PCR) test information, drawing from the
+Pharmacogenomics Genetics (PF), Disease Response and Clinical
+Classification (RS) and disposition (DS) domains.
 
 ``` r
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
@@ -455,8 +458,13 @@ convert_age_to_years(DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU))
 - Paper: [‘Welcome to the iddoverse: An R package for converting
   IDDO-SDTM data into analysis
   datasets’](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/tree/main/paper)
-- [IDDO Wiki](https://wiki.iddo.org/en/Data-Engineering)
-  - [IDDO’s Introduction to SDTM
-    Videos](https://wiki.iddo.org/en/Data-Engineering/Resources-For-Users/Intro-And-Background/SDTM-videos)
+- [IDDO Wiki](https://wiki.iddo.org/en/Data-Engineering) - requires
+  registration on [IDDO Website](https://www.iddo.org/user/login)
   - [IDDO-SDTM Implementation
     Manual](https://wiki.iddo.org/en/Data-Engineering/IDDO-SDTM-Implementation-Manual)
+- [Video: IDDO’s Introduction to
+  SDTM](https://www.youtube.com/watch?v=tv54h1SYuMk)
+- [Video: PRESP & OCCUR](https://www.youtube.com/watch?v=gUColPOnpgQ)
+- [Video: Frequently Used Timing
+  Variables](https://www.youtube.com/watch?v=wpzYbVN_--s)
+- [IDDO Website](https://www.iddo.org/)

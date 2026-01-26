@@ -7,7 +7,12 @@ single dataset.
 ## Usage
 
 ``` r
-create_malaria_pcr_table(pf_domain, rs_domain, values_funct = first)
+create_malaria_pcr_table(
+  pf_domain,
+  rs_domain,
+  ds_domain = NULL,
+  values_funct = first
+)
 ```
 
 ## Arguments
@@ -19,6 +24,10 @@ create_malaria_pcr_table(pf_domain, rs_domain, values_funct = first)
 - rs_domain:
 
   A disease response and clinical classification/RS domain data frame.
+
+- ds_domain:
+
+  A disposition/DS domain data frame
 
 - values_funct:
 

@@ -59,9 +59,9 @@ create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB)
 #> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
 #> # A tibble: 1 × 6
-#>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCUR
-#>   <chr>   <chr>       <chr> <chr>       <chr>       <chr>      
-#> 1 RPTESTB RPTESTB_001 -18   STDY        N           Y          
+#>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE
+#>   <chr>   <chr>       <chr> <chr>       <chr>       <chr>           
+#> 1 RPTESTB RPTESTB_001 -18   STDY        N           Y               
 
 # Change which timing_variables are used to summarise the data
 create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
@@ -69,7 +69,7 @@ create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
 #> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
 #> # A tibble: 1 × 6
-#>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCUR
-#>   <chr>   <chr>       <chr> <chr>       <chr>       <chr>      
-#> 1 RPTESTB RPTESTB_001 1     VISITDY     N           Y          
+#>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE
+#>   <chr>   <chr>       <chr> <chr>       <chr>       <chr>           
+#> 1 RPTESTB RPTESTB_001 1     VISITDY     N           Y               
 ```

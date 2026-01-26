@@ -75,5 +75,5 @@ create_clinical_table(dm_domain = DM_RPTESTB,
 #>  8 RPTESTB RPTESTB_003 5     DY          NA          NA        37.1   NA       
 #>  9 RPTESTB RPTESTB_003 3     VISITNUM    NA          NA        37.7   NA       
 #> 10 RPTESTB RPTESTB_001 -18   STDY        NA          NA        NA     NA       
-#> # ℹ 2 more variables: FEVER_PRESP <chr>, FEVER_OCCUR <chr>
+#> # ℹ 2 more variables: FEVER_PRESP <chr>, FEVER_OCCURRENCE <chr>
 ```
