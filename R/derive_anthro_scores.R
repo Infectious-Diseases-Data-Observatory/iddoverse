@@ -10,6 +10,9 @@
 #' @param data data frame that contains the AGE_YEARS, WEIGHT & HEIGHT
 #'   variables, typically held in the Demographics (DM) and Vital Signs (VS)
 #'   domains. Domains should have prepare_domain applied beforehand.
+#' @param age_in_years Boolean. Is the AGE column in years. Default is FALSE,
+#' and function will call `convert_age_to_years` if FALSE, otherwise will not
+#' convert age.
 #'
 #' @return data frame with only only 5 year olds included and additional columns
 #'   for WAZ, HAZ and WHZ scores, along with flags for each.

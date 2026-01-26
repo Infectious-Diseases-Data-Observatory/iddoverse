@@ -4,7 +4,7 @@
 \alias{derive_anthro_scores}
 \title{Calculate WHO growth standards using the anthro() package.}
 \usage{
-derive_anthro_scores(data)
+derive_anthro_scores(data, age_in_years = TRUE)
 }
 \arguments{
 \item{data}{data frame that contains the AGE_YEARS, WEIGHT & HEIGHT
