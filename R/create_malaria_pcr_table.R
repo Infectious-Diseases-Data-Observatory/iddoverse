@@ -6,6 +6,7 @@
 #' @param pf_domain A pharmacogenomics genetics/PF domain data frame
 #' @param rs_domain A disease response and clinical classification/RS domain
 #'   data frame.
+#' @param ds_domain A disposition/DS domain data frame
 #' @param values_funct Function. The function which will determine which data row is used
 #'   in the output, in the event there are multiple rows for the same subject
 #'   with the same time points (as listed in timing_variables). Default is
@@ -20,7 +21,7 @@
 #' @examples
 #' create_malaria_pcr_table(PF_RPTESTB, RS_RPTESTB)
 #'
-create_malaria_pcr_table <- function(pf_domain, rs_domain,
+create_malaria_pcr_table <- function(pf_domain, rs_domain, ds_domain = NULL,
                                      values_funct = first){
 
 
@@ -31,7 +32,15 @@ create_malaria_pcr_table <- function(pf_domain, rs_domain,
   data_rs <- prepare_domain("RS", rs_domain, variables_include = "WHOMAL01",
                             values_fn = values_funct)
 
-  return(full_join(data_pf, data_rs))
+  data <- full_join(data_pf, data_rs)
+
+  if(!is.null(ds_domain)){
+    data_ds <- prepare_domain("DS", ds_domain, values_fn = values_funct)
+
+    data <- full_join(data, data_ds)
+  }
+
+  return(data)
 }
 
 
