@@ -158,7 +158,7 @@ timing variable, then pivots the rows by the best choice time variable
 (<code>STUDYID</code>) and participant number (<code>USUBJID</code>).
 The different events/findings/tests then become columns and the dataset
 is populated with the associated result, providing a condensed dataset
-which is more digestible can be easily merged with other data.</p>
+which is more digestible and can be easily merged with other data.</p>
 <p>In <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code>, the first parameter is the two
 letter domain code followed by the domain data frame.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -350,8 +350,8 @@ variables and baseline test information.</p>
 <p><code><a href="../reference/create_malaria_pcr_table.html">create_malaria_pcr_table()</a></code> creates a one row per person,
 per timepoint table combining the polymerase chain reaction (PCR) test
 information, drawing from the Pharmacogenomics Genetics (PF), Disease
-Response and Clinical Classification (RS) and disposition (DS)
-domains.</p>
+Response and Clinical Classification (RS) and (optionally) disposition
+(DS) domains.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_malaria_pcr_table.html">create_malaria_pcr_table</a></span><span class="op">(</span>pf_domain <span class="op">=</span> <span class="va">PF_RPTESTB</span>,</span>
 <span>                         rs_domain <span class="op">=</span> <span class="va">RS_RPTESTB</span><span class="op">)</span></span>
@@ -478,7 +478,8 @@ converting the various units (days, weeks, months) to years. This is
 used within <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> and <code><a href="../reference/check_data.html">check_data()</a></code>
 (if <code>age_in_years = FALSE</code>)</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">DM_RPTESTB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">STUDYID</span>, <span class="va">DOMAIN</span>, <span class="va">USUBJID</span>, <span class="va">AGE</span>, <span class="va">AGEU</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">age_df</span> <span class="op">&lt;-</span> <span class="va">DM_RPTESTB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">STUDYID</span>, <span class="va">DOMAIN</span>, <span class="va">USUBJID</span>, <span class="va">AGE</span>, <span class="va">AGEU</span><span class="op">)</span></span>
+<span><span class="va">age_df</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
 <span><span class="co">#&gt;   STUDYID DOMAIN USUBJID       AGE AGEU  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
@@ -486,7 +487,7 @@ used within <code><a href="../reference/prepare_domain.html">prepare_domain()</a
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB DM     RPTESTB_002    18 YEARS </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB DM     RPTESTB_003    48 MONTHS</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/convert_age_to_years.html">convert_age_to_years</a></span><span class="op">(</span><span class="va">DM_RPTESTB</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">STUDYID</span>, <span class="va">DOMAIN</span>, <span class="va">USUBJID</span>, <span class="va">AGE</span>, <span class="va">AGEU</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/convert_age_to_years.html">convert_age_to_years</a></span><span class="op">(</span><span class="va">age_df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
 <span><span class="co">#&gt;   STUDYID DOMAIN USUBJID     AGE_YEARS</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>

@@ -93,7 +93,7 @@ the best choice time variable (`TIME`, `TIME_SOURCE`), the study id
 (`STUDYID`) and participant number (`USUBJID`). The different
 events/findings/tests then become columns and the dataset is populated
 with the associated result, providing a condensed dataset which is more
-digestible can be easily merged with other data.
+digestible and can be easily merged with other data.
 
 In
 [`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md),
@@ -306,7 +306,7 @@ create_participant_table(dm_domain = DM_RPTESTB,
 creates a one row per person, per timepoint table combining the
 polymerase chain reaction (PCR) test information, drawing from the
 Pharmacogenomics Genetics (PF), Disease Response and Clinical
-Classification (RS) and disposition (DS) domains.
+Classification (RS) and (optionally) disposition (DS) domains.
 
 ``` r
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
@@ -436,7 +436,8 @@ and
 (if `age_in_years = FALSE`)
 
 ``` r
-DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU)
+age_df <- DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU)
+age_df
 #> # A tibble: 3 × 5
 #>   STUDYID DOMAIN USUBJID       AGE AGEU  
 #>   <chr>   <chr>  <chr>       <dbl> <chr> 
@@ -444,7 +445,7 @@ DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU)
 #> 2 RPTESTB DM     RPTESTB_002    18 YEARS 
 #> 3 RPTESTB DM     RPTESTB_003    48 MONTHS
 
-convert_age_to_years(DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU))
+convert_age_to_years(age_df)
 #> # A tibble: 3 × 4
 #>   STUDYID DOMAIN USUBJID     AGE_YEARS
 #>   <chr>   <chr>  <chr>           <dbl>

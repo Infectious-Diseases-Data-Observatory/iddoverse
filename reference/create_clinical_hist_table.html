@@ -46,7 +46,6 @@ refers to events that occurred before the study start.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_clinical_hist_table</span><span class="op">(</span></span>
-<span>  <span class="va">dm_domain</span>,</span>
 <span>  <span class="va">sa_domain</span>,</span>
 <span>  timing_variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SAHR"</span>, <span class="st">"SADY"</span>, <span class="st">"SASTDY"</span>, <span class="st">"VISITDY"</span>, <span class="st">"VISITNUM"</span>, <span class="st">"VISIT"</span>, <span class="st">"EPOCH"</span>,</span>
 <span>    <span class="st">"SAEVLINT"</span>, <span class="st">"SAEVINTX"</span><span class="op">)</span>,</span>
@@ -58,11 +57,7 @@ refers to events that occurred before the study start.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-dm-domain">dm_domain<a class="anchor" aria-label="anchor" href="#arg-dm-domain"></a></dt>
-<dd><p>A demographics/DM domain data frame.</p></dd>
-
-
-<dt id="arg-sa-domain">sa_domain<a class="anchor" aria-label="anchor" href="#arg-sa-domain"></a></dt>
+<dl><dt id="arg-sa-domain">sa_domain<a class="anchor" aria-label="anchor" href="#arg-sa-domain"></a></dt>
 <dd><p>A clinical and adverse events/SA domain data frame.</p></dd>
 
 
@@ -94,9 +89,8 @@ timing_variables will impact the number of rows affected.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">create_clinical_hist_table</span><span class="op">(</span><span class="va">DM_RPTESTB</span>, <span class="va">SA_RPTESTB</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">create_clinical_hist_table</span><span class="op">(</span><span class="va">SA_RPTESTB</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
@@ -105,12 +99,7 @@ timing_variables will impact the number of rows affected.</p></dd>
 <span class="r-in"><span><span class="co"># Change which timing_variables are used to summarise the data</span></span></span>
 <span class="r-in"><span><span class="fu">create_clinical_hist_table</span><span class="op">(</span><span class="va">DM_RPTESTB</span>, <span class="va">SA_RPTESTB</span>,</span></span>
 <span class="r-in"><span>                           timing_variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VISITDY"</span>, <span class="st">"EPOCH"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID)`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001 1     VISITDY     N           Y               </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB, timing_variables = c("VISITDY",     "EPOCH")):</span> Required variable `SACAT` is missing in `sa_domain`</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
