@@ -35,6 +35,8 @@ create_participant_table <- function(dm_domain,
                                                "SITEID", "DTHFL", "DTHDY", "DTHHR"))
 
   if(!is.null(sc_domain)){
+    assert_data_frame(sc_domain, required_vars = exprs(SCDY, VISITDY, EPOCH))
+
     data <- data %>%
       left_join(
         prepare_domain("sc", sc_domain,
@@ -53,6 +55,8 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(vs_domain)){
+    assert_data_frame(vs_domain, required_vars = exprs(VSDY, VISITDY, EPOCH))
+
     data <- data %>%
       left_join(
         prepare_domain("vs", vs_domain,
@@ -71,6 +75,8 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(lb_domain)){
+    assert_data_frame(lb_domain, required_vars = exprs(LBDY, VISITDY, EPOCH))
+
     data <- data %>%
       left_join(
         prepare_domain("lb", lb_domain,
@@ -89,6 +95,8 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(mb_domain)){
+    assert_data_frame(mb_domain, required_vars = exprs(MBDY, VISITDY, EPOCH))
+
     data <- data %>%
       left_join(
         prepare_domain("mb", mb_domain,
@@ -107,6 +115,8 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(rp_domain)){
+    assert_data_frame(rp_domain, required_vars = exprs(RPDY, VISITDY, EPOCH))
+
     data <- data %>%
       left_join(
         prepare_domain("rp", rp_domain,
