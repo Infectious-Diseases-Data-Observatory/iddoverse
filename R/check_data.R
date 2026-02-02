@@ -220,7 +220,7 @@ check_data <- function(data, age_in_years = FALSE){
     coord_flip() +
     scale_x_discrete(limits = rev) +
     geom_text(mapping = aes(label = column, y = proportion_missing + 0.08),
-              size = 3.5, colour = "#435C6D") +
+              size = 3.2, colour = "#435C6D") +
     theme(axis.text.y = element_blank(),
           axis.text.x = element_text(colour = "#435C6D"),
           axis.title = element_text(colour = "#435C6D")) +
