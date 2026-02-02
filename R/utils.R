@@ -31,6 +31,11 @@ globalVariables(c(
   "EPOCH",
   "column",
   "proportion_missing",
+  "SCDY",
+  "VSDY",
+  "MBDY",
+  "LBDY",
+  "RPDY",
 
   #--------- SUM PARA
   ".",
