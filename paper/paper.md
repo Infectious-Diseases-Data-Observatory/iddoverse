@@ -12,7 +12,21 @@ authors:
 - name: Rhys Peploe 
   orcid: "0009-0001-1669-3716" 
   affiliation: 1, 2
-- name: everyone else (to do later)
+- name: James Wilson
+  affiliation: 1, 2
+- name: Jennifer Lee
+  orcid: "0000-0002-0391-4575"
+  affiliation: 1, 2
+- name: Samantha Strudwick
+  affiliation: 1, 2
+- name: Hannah Jauncey
+  affiliation: 1, 2
+- name: James A Watson
+  orcid: "0000-0001-5524-0325"
+  affiliation: 1, 2
+- name: Prabin Dahal
+  orcid: "0000-0002-2158-846X"
+  affiliation: 1, 2
 bibliography: paper.bib
 affiliations:
 - name: Infectious Diseases Data Observatory (IDDO), Oxford, United Kingdom
