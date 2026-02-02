@@ -52,7 +52,7 @@ MB_RPTESTB
 
 ### `prepare_domain()`
 
-`prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible can be easily merged with other data.
+`prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible and can be easily merged with other data.
 
 In `prepare_domain()`, the first parameter is the two letter domain code followed by the domain data frame.
 
@@ -111,7 +111,7 @@ create_participant_table(dm_domain = DM_RPTESTB,
                          vs_domain = VS_RPTESTB)
 ```
 
-`create_malaria_pcr_table()` creates a one row per person, per timepoint table combining the polymerase chain reaction (PCR) test information, drawing from the Pharmacogenomics Genetics (PF), Disease Response and Clinical Classification (RS) and disposition (DS) domains.
+`create_malaria_pcr_table()` creates a one row per person, per timepoint table combining the polymerase chain reaction (PCR) test information, drawing from the Pharmacogenomics Genetics (PF), Disease Response and Clinical Classification (RS) and (optionally) disposition (DS) domains.
 
 ```{r}
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
@@ -148,9 +148,10 @@ table_variables("vS", VS_RPTESTB)
 `convert_age_to_years()` simplifies the `AGE` and `AGEU` information to `AGE_YEARS` by converting the various units (days, weeks, months) to years. This is used within `prepare_domain()` and `check_data()` (if `age_in_years = FALSE`)
 
 ```{r}
-DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU)
+age_df <- DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU)
+age_df
 
-convert_age_to_years(DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU))
+convert_age_to_years(age_df)
 ```
 
 ## Other Resources
