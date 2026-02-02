@@ -5,7 +5,6 @@
 \title{Creates table of medical history features}
 \usage{
 create_clinical_hist_table(
-  dm_domain,
   sa_domain,
   timing_variables = c("SAHR", "SADY", "SASTDY", "VISITDY", "VISITNUM", "VISIT", "EPOCH",
     "SAEVLINT", "SAEVINTX"),
@@ -13,8 +12,6 @@ create_clinical_hist_table(
 )
 }
 \arguments{
-\item{dm_domain}{A demographics/DM domain data frame.}
-
 \item{sa_domain}{A clinical and adverse events/SA domain data frame.}
 
 \item{timing_variables}{Character list. List of timing variables which are to be used to
@@ -44,7 +41,7 @@ dataset with various historic clinical information summarised. Historic
 refers to events that occurred before the study start.
 }
 \examples{
-create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB)
+create_clinical_hist_table(SA_RPTESTB)
 
 # Change which timing_variables are used to summarise the data
 create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
