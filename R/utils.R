@@ -30,18 +30,6 @@ globalVariables(c(
   "VISITDY",
   "EPOCH",
   "column",
-  "proportion_missing",
-  "SCDY",
-  "VSDY",
-  "MBDY",
-  "LBDY",
-  "RPDY",
-
-  #--------- SUM PARA
-  ".",
-  "TPARA",
-  "POS_IND_CHAR",
-  "POS_IND_NUM"
-  #---------
+  "proportion_missing"
   ))
 
