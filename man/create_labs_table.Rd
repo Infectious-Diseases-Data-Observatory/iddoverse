@@ -9,8 +9,7 @@ create_labs_table(
   variables = c("ALB", "ALT", "AST", "BILI", "CREAT", "CD4", "G6PD", "HCT", "HGB",
     "HGBMET", "INTLK6", "K", "PLAT", "SODIUM", "WBC"),
   include_method = FALSE,
-  timing_variables = c("LBHR", "LBDY", "LBSTDY", "VISITDY", "VISITNUM", "VISIT", "EPOCH",
-    "LBEVLINT", "LBEVINTX"),
+  timing_variables = c("LBHR", "LBDY", "LBSTDY", "LBCDSTDY", "VISITDY", "EPOCH"),
   values_funct = first
 )
 }
@@ -25,8 +24,7 @@ all variables.}
 
 \item{timing_variables}{Character list. List of timing variables which are to
 be used to separate time points, this is hierarchical so the order is taken
-into account. Default is: LBHR, LBDY, LBSTDY, VISITDY, VISITNUM, VISIT,
-EPOCH, LBEVLINT, LBEVINTX.
+into account. Default is: LBHR, LBDY, LBSTDY, LBCDSTDY, VISITDY, EPOCH.
 
 (using default for example) Each row will be initially summarised based on
 the --HR (study hour) variable, if that is missing then the --DY (study

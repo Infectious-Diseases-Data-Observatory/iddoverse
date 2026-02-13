@@ -6,8 +6,7 @@
 \usage{
 create_clinical_hist_table(
   sa_domain,
-  timing_variables = c("SAHR", "SADY", "SASTDY", "VISITDY", "VISITNUM", "VISIT", "EPOCH",
-    "SAEVLINT", "SAEVINTX"),
+  timing_variables = c("SAHR", "SADY", "SASTDY", "SACDSTDY", "VISITDY", "EPOCH"),
   values_funct = first
 )
 }
@@ -16,8 +15,7 @@ create_clinical_hist_table(
 
 \item{timing_variables}{Character list. List of timing variables which are to be used to
 separate time points, this is hierarchical so the order is taken into
-account. Default is: SAHR, SADY, SASTDY, VISITDY, VISITNUM, VISIT, EPOCH,
-SAEVLINT, SAEVINTX.
+account. Default is: SAHR, SADY, SASTDY, SACDSTDY, VISITDY, EPOCH.
 
 (using default for example) Each row will be initially summarised based on
 the --HR (study hour) variable, if that is missing then the --DY (study
@@ -44,7 +42,7 @@ refers to events that occurred before the study start.
 create_clinical_hist_table(SA_RPTESTB)
 
 # Change which timing_variables are used to summarise the data
-create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
+create_clinical_hist_table(SA_RPTESTB,
                            timing_variables = c("VISITDY", "EPOCH"))
 
 }
