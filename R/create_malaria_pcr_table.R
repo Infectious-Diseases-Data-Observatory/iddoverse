@@ -25,17 +25,17 @@ create_malaria_pcr_table <- function(pf_domain, rs_domain, ds_domain = NULL,
                                      values_funct = first){
 
 
-  data_pf <- prepare_domain("PF", pf_domain, variables_include = "INTP",
+  data_pf <- prepare_domain(pf_domain, "PF",  variables_include = "INTP",
                             values_fn = values_funct)
 
 
-  data_rs <- prepare_domain("RS", rs_domain, variables_include = "WHOMAL01",
+  data_rs <- prepare_domain(rs_domain, "RS", variables_include = "WHOMAL01",
                             values_fn = values_funct)
 
   data <- full_join(data_pf, data_rs)
 
   if(!is.null(ds_domain)){
-    data_ds <- prepare_domain("DS", ds_domain, values_fn = values_funct)
+    data_ds <- prepare_domain(ds_domain, "DS", values_fn = values_funct)
 
     data <- full_join(data, data_ds)
   }
