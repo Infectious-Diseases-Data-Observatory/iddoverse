@@ -24,8 +24,8 @@
 #' @examples
 #' # Merge the DM (AGE_YEARS, SEX) and VS (WEIGHT, HEIGHT) domains together
 #' data = merge(
-#'   prepare_domain("dm", DM_RPTESTB),
-#'   prepare_domain("vs", VS_RPTESTB)
+#'   prepare_domain(DM_RPTESTB, "dm"),
+#'   prepare_domain(VS_RPTESTB, "vs")
 #'   )
 #'
 #' derive_anthro_scores(data)

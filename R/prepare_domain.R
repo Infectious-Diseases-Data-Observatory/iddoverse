@@ -4,10 +4,10 @@
 #' into a more analysable format. Function works on one domain and requires the
 #' two letter domain name as well as the domain data file.
 #'
+#' @param data Domain data frame.
 #' @param domain Character. The two letter domain name of the data.
 #'      Domain options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP",
 #'      "PF", "AU", "PC", "SA", "HO", "ER", "PO", "DS
-#' @param data Domain data frame.
 #' @param include_LOC Boolean. Should the location (--LOC) be included in the
 #'   output. Default is FALSE.
 #' @param include_METHOD Boolean. Should the method (--METHOD) be included in
@@ -16,8 +16,7 @@
 #'   output. Default is to include all available variables.
 #' @param timing_variables Character list. List of timing variables which are to
 #'   be used to separate time points, this is hierarchical so the order is taken
-#'   into account. Default is: --HR, --DY, --STDY, VISITDY, VISITNUM, VISIT,
-#'   EPOCH, --EVLINT, --EVINTX.
+#'   into account. Default is: --HR, --DY, --STDY, --CDSTDY, VISITDY, EPOCH.
 #'
 #'   (using default for example) Each row will be initially summarised based on
 #'   the --HR (study hour) variable, if that is missing then the --DY (study
@@ -40,25 +39,25 @@
 #'
 #' @examples
 #'
-#' prepare_domain("DM", DM_RPTESTB)
+#' prepare_domain(DM_RPTESTB, "DM")
 #'
 #' # Select just ARMCD, AGE & SEX
-#' prepare_domain("DM", DM_RPTESTB, variables_include = c("ARMCD", "AGE", "SEX"))
+#' prepare_domain(DM_RPTESTB, "DM", variables_include = c("ARMCD", "AGE", "SEX"))
 #'
 #' # Change which timing_variables are used to summarise the data
-#' prepare_domain("lb", LB_RPTESTB, timing_variables = c("VISITNUM", "VISITDY"))
+#' prepare_domain(LB_RPTESTB, "lb", timing_variables = c("VISITNUM", "VISITDY"))
 #'
 #' # Include location in the output and change the values_fn to select the last result
-#' prepare_domain("vs", VS_RPTESTB, include_LOC = TRUE, values_fn = dplyr::last)
+#' prepare_domain(VS_RPTESTB, "vs", include_LOC = TRUE, values_fn = dplyr::last)
 #'
-prepare_domain <- function(domain, data,
+prepare_domain <- function(data, domain,
                            include_LOC = FALSE,
                            include_METHOD = FALSE,
                            variables_include = c(),
                            timing_variables = c(
                              str_c(domain, "HR"), str_c(domain, "DY"),
-                             str_c(domain, "STDY"), "VISITDY", "VISITNUM",
-                             "VISIT", "EPOCH", str_c(domain, "EVLINT"), str_c(domain, "EVINTX")),
+                             str_c(domain, "STDY"), str_c(domain, "CDSTDY"),
+                             "VISITDY", "EPOCH"),
                            values_fn = first, print_messages = TRUE){
   special_domains <- c("DM")
 

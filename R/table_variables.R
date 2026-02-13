@@ -4,11 +4,11 @@
 #' frame. Additionally can be split by STUDYID to display the options across
 #' multiple studies.
 #'
+#' @param data Domain data frame.
 #' @param domain Character. The two letter code for the domain which matches the
 #'   data.
 #'   Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS",
 #'   "DS", "RS", "PO", "SC", "HO", "ER", "DD", "PF", "AU", "PC", "PE".
-#' @param data Domain data frame.
 #' @param by_STUDYID Boolean. Split data by STUDYID if TRUE. Default is FALSE.
 #'
 #' @return For Demographics (DM) domain, a character list with the column names.
@@ -18,11 +18,11 @@
 #' @export
 #'
 #' @examples
-#' table_variables("LB", LB_RPTESTB)
+#' table_variables(LB_RPTESTB, "LB")
 #'
-#' table_variables("VS", VS_RPTESTB, by_STUDYID = TRUE)
+#' table_variables(VS_RPTESTB, "VS", by_STUDYID = TRUE)
 #'
-table_variables <- function(domain, data, by_STUDYID = FALSE) {
+table_variables <- function(data, domain, by_STUDYID = FALSE) {
   domain <- str_to_upper(domain)
 
   if (by_STUDYID == FALSE) {
