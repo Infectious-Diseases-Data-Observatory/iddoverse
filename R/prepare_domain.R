@@ -286,7 +286,7 @@ prepare_domain <- function(data, domain,
     }
 
     value_fun_check <- data %>%
-      group_by(STUDYID, USUBJID, TIME, TIME_SOURCE) %>%
+      group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, EVENT) %>%
       dplyr::summarise(n = dplyr::n()) %>%
       ungroup() %>%
       filter(n > 1)
