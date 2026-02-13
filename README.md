@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 
- <img src="man/figures/iddoverse_hexsticker.png" align="right" height="120"/>
+ <img src="man/figures/iddoverse_hexsticker_solid.png" align="right" height="120"/>
 
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/iddoverse)](https://CRAN.R-project.org/package=iddoverse)
@@ -10,6 +10,8 @@
 [![test-coverage.yaml](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/actions/workflows/test-coverage.yaml)
 
 <!-- badges: end -->
+
+<br>
 
 ## Purpose
 
