@@ -76,9 +76,9 @@ test_that("replicate malaria pcr table to verify output", {
   )
 
   out_table <- create_malaria_pcr_table(pf_domain = pf, rs_domain = rs, ds_domain = ds)
-  out_prepare <- prepare_domain(pf, "pf") %>%
-    full_join(prepare_domain(rs, "rs")) %>%
-    full_join(prepare_domain(ds, "ds"))
+  out_prepare <- prepare_domain(pf, "pf", print_messages = FALSE) %>%
+    full_join(prepare_domain(rs, "rs", print_messages = FALSE)) %>%
+    full_join(prepare_domain(ds, "ds", print_messages = FALSE))
 
   expect_identical(out_table, out_prepare)
 })
