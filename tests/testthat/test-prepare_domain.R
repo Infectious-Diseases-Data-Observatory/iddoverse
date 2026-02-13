@@ -12,7 +12,7 @@ test_that("findings domain: STRESN → STRESC → MODIFY → ORRES precedence, T
     LBSTRESC = c("14_char", NA_character_, NA_character_, "")
   )
 
-  out <- prepare_domain("LB", lb, print_messages = FALSE)
+  out <- prepare_domain(lb, "LB", print_messages = FALSE)
 
   # id cols present
   expect_true(all(c("STUDYID", "USUBJID", "TIME", "TIME_SOURCE") %in% colnames(out)))
@@ -38,10 +38,10 @@ test_that("include_LOC/include_METHOD produce expected column-name patterns", {
     LBLOC = "L1", LBMETHOD = "M1"
   )
 
-  out_none <- prepare_domain("LB", lb, include_LOC = FALSE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
-  out_loc <- prepare_domain("LB", lb, include_LOC = TRUE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
-  out_method <- prepare_domain("LB", lb, include_LOC = FALSE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
-  out_both <- prepare_domain("LB", lb, include_LOC = TRUE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_none <- prepare_domain(lb, "LB", include_LOC = FALSE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_loc <- prepare_domain(lb, "LB", include_LOC = TRUE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_method <- prepare_domain(lb, "LB", include_LOC = FALSE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_both <- prepare_domain(lb, "LB", include_LOC = TRUE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
 
   # When both included, names_glue = "{TESTCD}_{LOC}_{METHOD}_{UNITS}_{.value}"
   # After removing _RESULTS we expect column "HGB_L1_M1_U"
@@ -64,7 +64,7 @@ test_that("include_LOC warns and is reset to FALSE if domain does not have LOC",
     LBORRES = "seven", LBORRESU = "units"
   )
 
-  expect_warning(out <- prepare_domain("LB", lb, include_LOC = TRUE, print_messages = FALSE),
+  expect_warning(out <- prepare_domain(lb, "LB", include_LOC = TRUE, print_messages = FALSE),
                  regexp = "does not have a location", ignore.case = TRUE)
   # no LOC in output column names
   expect_false(any(grepl("_L", colnames(out)) & grepl("_U", colnames(out))))
@@ -78,7 +78,7 @@ test_that("include_METHOD warns and is reset to FALSE if domain does not have ME
     LBORRES = "seven", LBORRESU = "units"
   )
 
-  expect_warning(out <- prepare_domain("LB", lb, include_METHOD = TRUE, print_messages = FALSE),
+  expect_warning(out <- prepare_domain(lb, "LB", include_METHOD = TRUE, print_messages = FALSE),
                  regexp = "does not have a method", ignore.case = TRUE)
   # no METHOD token present in column names
   expect_false(any(grepl("_M", colnames(out)) & grepl("_U", colnames(out))))
@@ -91,7 +91,7 @@ test_that("spaces in generated column names are replaced with underscores", {
     LBSTRESN = 5, LBSTRESU = "per litre",
     LBORRES = "five", LBORRESU = "pL"
   )
-  out <- prepare_domain("LB", lb, variables_include = c("TEST"), print_messages = FALSE)
+  out <- prepare_domain(lb, "LB", variables_include = c("TEST"), print_messages = FALSE)
   # generated column should use underscore rather than space
   expect_true(any(grepl("per_litre", colnames(out))))
 })
@@ -105,7 +105,7 @@ test_that("variables_include filters to requested TESTCDs before pivot", {
     LBORRES = c("ten", "ninty-nine", "twenty two"), LBORRESU = "units"
   )
 
-  out <- prepare_domain("LB", lb, variables_include = c("hgB"), print_messages = FALSE)
+  out <- prepare_domain(lb, "LB", variables_include = c("hgB"), print_messages = FALSE)
 
   # ALT should be filtered out before pivot
   expect_false(any(grepl("^ALT", colnames(out))))
@@ -122,12 +122,12 @@ test_that("values_fn controls which duplicate record is chosen", {
   )
 
   # By default values_fn = first -> expect 10
-  out_first <- prepare_domain("LB", lb, values_fn = dplyr::first, print_messages = FALSE)
+  out_first <- prepare_domain(lb, "LB", values_fn = dplyr::first, print_messages = FALSE)
   col_first <- grep("^HGB", colnames(out_first), value = TRUE)
   expect_equal(as.character(out_first[[col_first]][1]), "10")
 
   # Using last() should pick 11
-  out_last <- prepare_domain("LB", lb, values_fn = dplyr::last, print_messages = FALSE)
+  out_last <- prepare_domain(lb, "LB", values_fn = dplyr::last, print_messages = FALSE)
   col_last <- grep("^HGB", colnames(out_last), value = TRUE)
   expect_equal(as.character(out_last[[col_last]][1]), "11")
 })
@@ -143,7 +143,7 @@ test_that("timing_variables argument is filtered to present variables and used t
   )
 
   # provide timing_variables where first entry does not exist; prepare_domain should ignore missing ones
-  out <- prepare_domain("LB", lb, timing_variables = c("LBHR", "LBSTDY", "VISIT"), print_messages = FALSE)
+  out <- prepare_domain(lb, "LB", timing_variables = c("LBHR", "LBSTDY", "VISIT"), print_messages = FALSE)
   expect_equal(out$TIME[1], "5")
   expect_equal(out$TIME[2], "DAY 5")
   expect_equal(out$TIME_SOURCE[1], "STDY") # LBSTDY -> STDY after replacement
@@ -162,7 +162,7 @@ test_that("event domain: EVENT chosen from DECOD/MODIFY/TERM and PRESP/OCCUR def
     SAOCCUR = c(NA_character_, "N")
   )
 
-  out <- prepare_domain("SA", sa, variables_include = c("FEVER"), print_messages = FALSE) # variables_include used by event_domains path
+  out <- prepare_domain(sa, "SA", variables_include = c("FEVER"), print_messages = FALSE) # variables_include used by event_domains path
 
   expect_true(all(c("STUDYID", "USUBJID", "TIME", "TIME_SOURCE") %in% colnames(out)))
   # Pivoted columns like FEVER_PRESP and FEVER_OCCUR should exist (clean_names -> all caps)
@@ -185,7 +185,7 @@ test_that("DS domain returns STUDYID, USUBJID, TIME, TIME_SOURCE, DISPOSITION co
     DSSTDY = 28
   )
 
-  out <- prepare_domain("DS", ds, print_messages = FALSE)
+  out <- prepare_domain(ds, "DS", print_messages = FALSE)
   expect_true(all(c("STUDYID", "USUBJID", "TIME", "TIME_SOURCE", "DISPOSITION") %in% colnames(out)))
   expect_equal(out$TIME_SOURCE[1], "STDY")
   expect_true("MOD" %in% out$DISPOSITION)
@@ -199,7 +199,7 @@ test_that("special domain DM: convert blanks to NA and variables_include selecti
     ARMCD = c("A", "")
   )
 
-  out <- prepare_domain("DM", dm, variables_include = c("ARMCD", "BIRTHDT"), print_messages = FALSE)
+  out <- prepare_domain(dm, "DM", variables_include = c("ARMCD", "BIRTHDT"), print_messages = FALSE)
   # blanks converted to NA
   expect_true(is.na(out$ARMCD[2]))
   # only STUDYID, USUBJID and requested variables included
@@ -219,15 +219,15 @@ test_that("check print_messages parameter option", {
     SAOCCUR = c(NA_character_, "N")
   )
 
-  expect_output(prepare_domain("SA", sa, variables_include = c("FEVER"), print_messages = TRUE),
+  expect_output(prepare_domain(sa, "SA", variables_include = c("FEVER"), print_messages = TRUE),
                  regexp = "Number of rows where values_fn has been used to pick record")
 })
 
 test_that("prepare_domain errors when required STUDYID or USUBJID missing", {
   df_missing <- tibble::tibble(USUBJID = "P1") # STUDYID missing
-  expect_error(prepare_domain("LB", df_missing), regexp = "STUDYID|USUBJID", ignore.case = TRUE)
+  expect_error(prepare_domain(df_missing, "LB"), regexp = "STUDYID|USUBJID", ignore.case = TRUE)
 
   df_missing2 <- tibble::tibble(STUDYID = "S1") # USUBJID missing
-  expect_error(prepare_domain("LB", df_missing2), regexp = "STUDYID|USUBJID", ignore.case = TRUE)
+  expect_error(prepare_domain(df_missing2, "LB"), regexp = "STUDYID|USUBJID", ignore.case = TRUE)
 })
 

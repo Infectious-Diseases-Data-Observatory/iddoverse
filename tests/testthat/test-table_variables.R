@@ -1,7 +1,7 @@
 test_that("DM domain returns column names", {
   dm <- tibble::tibble(STUDYID = "S", USUBJID = "P1", AGE = 10, SEX = "M")
 
-  res <- table_variables("DM", dm, by_STUDYID = FALSE)
+  res <- table_variables(dm, "DM", by_STUDYID = FALSE)
 
   expect_equal(res, colnames(dm))
 })
@@ -14,7 +14,7 @@ test_that("LB domain without by_STUDYID returns a table of LBTESTCD including NA
     LBORRES = c(10,11,25,26,27, NA)
   )
 
-  res <- table_variables("LB", lb, by_STUDYID = FALSE)
+  res <- table_variables(lb, "LB", by_STUDYID = FALSE)
 
   expect_s3_class(res, "table")
 
@@ -37,7 +37,7 @@ test_that("LB domain with by_STUDYID returns a contingency table STUDYID x LBTES
     LBORRES = c(10,11,25,26,27, NA)
   )
 
-  res <- table_variables("LB", lb, by_STUDYID = TRUE)
+  res <- table_variables(lb, "LB", by_STUDYID = TRUE)
 
   expect_s3_class(res, "table")
 
@@ -60,13 +60,13 @@ test_that("VS domain behaves similarly to LB", {
     VSTEST = c("Systolic","Diastolic","Systolic")
   )
 
-  res_no_split <- table_variables("VS", vs, by_STUDYID = FALSE)
+  res_no_split <- table_variables(vs, "VS", by_STUDYID = FALSE)
 
   expect_s3_class(res_no_split, "table")
 
   expect_equal(as.integer(res_no_split["SYSBP"]), 2L)
 
-  res_split <- table_variables("VS", vs, by_STUDYID = TRUE)
+  res_split <- table_variables(vs, "VS", by_STUDYID = TRUE)
 
   expect_s3_class(res_split, "table")
 
@@ -82,7 +82,7 @@ test_that("domains that uppercase text (SA/IN/PO) count case-insensitively and b
   )
 
   # non-split should uppercase and group 'fever'/'Fever' together
-  res_sa <- table_variables("SA", sa, by_STUDYID = FALSE)
+  res_sa <- table_variables(sa, "SA", by_STUDYID = FALSE)
 
   expect_s3_class(res_sa, "table")
 
@@ -90,7 +90,7 @@ test_that("domains that uppercase text (SA/IN/PO) count case-insensitively and b
   expect_equal(as.integer(res_sa["FEVER"]), 2L)
 
   # split by STUDYID
-  res_sa_split <- table_variables("SA", sa, by_STUDYID = TRUE)
+  res_sa_split <- table_variables(sa, "SA", by_STUDYID = TRUE)
 
   expect_s3_class(res_sa_split, "table")
 
@@ -107,7 +107,7 @@ test_that("NA handling for categorical variables includes NA counts", {
   )
 
   # LB has one NA LBTESTCD
-  res <- table_variables("LB", lb, by_STUDYID = FALSE)
+  res <- table_variables(lb, "LB", by_STUDYID = FALSE)
 
   # find NA entry in names(res)
   na_index <- which(is.na(names(res)))
@@ -118,6 +118,6 @@ test_that("NA handling for categorical variables includes NA counts", {
 test_that("unknown/unsupported domain returns warning", {
   df <- tibble::tibble(STUDYID = "S", USUBJID = "P1")
 
-  expect_warning(table_variables("XX", df, by_STUDYID = FALSE),
+  expect_warning(table_variables(df, "XX", by_STUDYID = FALSE),
                  regexp = "domain not included in table_variables")
 })
