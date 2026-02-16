@@ -9,8 +9,7 @@ create_malaria_parasitemia_table(
   variables = c("PFALCIPA", "PFALCIPS", "PFALCIP", "PVIVAXA", "PVIVAXS", "PVIVAX"),
   include_method = FALSE,
   include_location = FALSE,
-  timing_variables = c("MBHR", "MBDY", "MBSTDY", "VISITDY", "VISITNUM", "VISIT", "EPOCH",
-    "MBEVLINT", "MBEVINTX"),
+  timing_variables = c("MBHR", "MBDY", "MBSTDY", "MBCDSTDY", "VISITDY", "EPOCH"),
   values_funct = first
 )
 }
@@ -28,8 +27,7 @@ all variables.}
 
 \item{timing_variables}{Character list. List of timing variables which are to
 be used to separate time points, this is hierarchical so the order is taken
-into account. Default is: MBHR, MBDY, MBSTDY, VISITDY, VISITNUM, VISIT,
-EPOCH, MBEVLINT, MBEVINTX.
+into account. Default is: MBHR, MBDY, MBSTDY, MBCDSTDY, VISITDY, EPOCH.
 
 (using default for example) Each row will be initially summarised based on
 the --HR (study hour) variable, if that is missing then the --DY (study

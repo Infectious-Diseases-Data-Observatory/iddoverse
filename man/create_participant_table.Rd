@@ -32,7 +32,7 @@ An analysis dataset, one row per participant.
 \description{
 Joins several IDDO-SDTM domains together to create a single dataset with
 participant demographics, characteristics and baseline test results or
-findings. Baseline timing is defined as actual study day (--DY) = 1, planned
+findings. Baseline timing is defined as planned
 study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE.
 }
 \examples{

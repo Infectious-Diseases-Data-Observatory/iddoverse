@@ -54,11 +54,11 @@ MB_RPTESTB
 
 `prepare_domain()` takes a single IDDO-SDTM domain, amalgamates the data so that there is one 'best choice' result and timing variable, then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study id (`STUDYID`) and participant number (`USUBJID`). The different events/findings/tests then become columns and the dataset is populated with the associated result, providing a condensed dataset which is more digestible and can be easily merged with other data.
 
-In `prepare_domain()`, the first parameter is the two letter domain code followed by the domain data frame.
+In `prepare_domain()`, the first parameter is the domain data frame followed by the two letter domain code.
 
 ```{r}
-prepare_domain("mb",
-               MB_RPTESTB)
+prepare_domain(MB_RPTESTB, 
+               "mb")
 ```
 
 These best choices follow a hierarchical list of variables, so for a given row, if the first variable in the hierarchy list is not present, the second will be used unless that is also empty, and so on. For example, `MBSTRESN` (standardised numeric result) is initially used as the best choice result variable, where rows have an empty `MBSTRESN`, `MBSTRESC` (standardised character result) will be used. If there are still empty rows, `MBMODIFY` (modified original result) and finally `MBORRES` (original result from data contributor) will be used to populate the output. 
@@ -66,24 +66,24 @@ These best choices follow a hierarchical list of variables, so for a given row, 
 With the best choice timing variable, there is a default hierarchy, though users are encouraged to specify the list of timing variables which are most relevant to the study and objectives they have. For example, a researcher may only want planned visit days as the timing variable, so they can specify `VISITDY`. The `TIME_SOURCE` changes compared to the previous example as the hierarchy has changed.
 
 ```{r}
-prepare_domain("MB",
-               MB_RPTESTB,
+prepare_domain(MB_RPTESTB,
+               "MB",
                timing_variables = "VISITDY")
 ```
 
 Additional parameters include subsetting the output on the variables of interest, by using `variables_include` to select just weight and temperature in the VS domain example below:
 
 ```{r}
-prepare_domain("vs", 
-               VS_RPTESTB, 
+prepare_domain(VS_RPTESTB,
+               "vs", 
                variables_include = c("TEMP", "WEIGHT"))
 ```
 
 The location (`LOC`) and method (`METHOD`) of a test or finding may be required in the analysis dataset. `include_LOC` and `include_METHOD` can be set to `TRUE` to include them in the column names of the test/finding along with the units, (i.e. `TEMP_AXILLA_C`). If the location or method is `NA`, then `NA` will appear in the column name (i.e. `WEIGHT_NA_kg`).
 
 ```{r}
-prepare_domain("vs", 
-               VS_RPTESTB, 
+prepare_domain(VS_RPTESTB,
+               "vs", 
                variables_include = c("TEMP", "WEIGHT"), 
                include_LOC = TRUE)
 ```
@@ -94,8 +94,8 @@ Once one domain has been transformed, the consistent keys (`STUDYID`, `USUBJID`,
 
 ```{r}
 left_join(
-  prepare_domain("MB", MB_RPTESTB, timing_variables = "VISIT"),
-  prepare_domain("Vs", VS_RPTESTB, timing_variables = "VISIT", include_LOC = TRUE)
+  prepare_domain(MB_RPTESTB, "MB",  timing_variables = "VISIT"),
+  prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_LOC = TRUE)
 )
 ```
 
@@ -103,7 +103,7 @@ left_join(
 
 The package also contains functions to create standardised analysis datasets, these start with `create_`. These functions use the `prepare_domain()` function multiple times to extract specific variables from the domains they reside in. The choice of which variables to include are based on subject matter expertise, and we encourage suggestions to improve current tables or to design new tables. The purpose of these tables is to provide most of the key information for an analysis, such as the information typically presented in Table 1 of clinical trials. A key limitation is that these functions cannot address every need of researchers and neither would it be possible to make an all-encompassing solution due to the large variability in the dataset within and across diseases. However, these standardised tables do provide useful key information with minimal user input, ideal for those who are not experienced programming users.
 
-`create_participant_table()` creates a one row per participant analysis table along with several participant characteristic variables and baseline test information.
+`create_participant_table()` creates a one row per participant analysis table along with several participant characteristic variables and baseline test information. World Health Organisation child growth standards are also derived if age, sex, height and weight are in the dataset; height for age (`HAZ`), weight for age (`WAZ`) and weight for height (`WHZ`) $z$-scores are calculated for participants under the age of 5, with respective flags (i.e. `HAZ_FLAG`) for scores outside a typical range.
 
 ```{r}
 create_participant_table(dm_domain = DM_RPTESTB,
@@ -142,7 +142,7 @@ check_data(LB_RPTESTB)
 `table_variables()` is a simple function to tabulate the variables in a domain. Not all domains are currently covered in this function but most are. This function may be useful when deciding which variables to include in the `prepare_domain()` output.
 
 ```{r}
-table_variables("vS", VS_RPTESTB)
+table_variables(VS_RPTESTB, "vS")
 ```
 
 `convert_age_to_years()` simplifies the `AGE` and `AGEU` information to `AGE_YEARS` by converting the various units (days, weeks, months) to years. This is used within `prepare_domain()` and `check_data()` (if `age_in_years = FALSE`)

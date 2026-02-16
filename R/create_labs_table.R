@@ -10,8 +10,7 @@
 #'   all variables.
 #' @param timing_variables Character list. List of timing variables which are to
 #'   be used to separate time points, this is hierarchical so the order is taken
-#'   into account. Default is: LBHR, LBDY, LBSTDY, VISITDY, VISITNUM, VISIT,
-#'   EPOCH, LBEVLINT, LBEVINTX.
+#'   into account. Default is: LBHR, LBDY, LBSTDY, LBCDSTDY, VISITDY, EPOCH.
 #'
 #'   (using default for example) Each row will be initially summarised based on
 #'   the --HR (study hour) variable, if that is missing then the --DY (study
@@ -43,11 +42,11 @@ create_labs_table <- function(lb_domain,
                                             "INTLK6", "K", "PLAT", "SODIUM", "WBC"),
                               include_method = FALSE,
                               timing_variables = c(
-                                "LBHR", "LBDY", "LBSTDY", "VISITDY", "VISITNUM",
-                                "VISIT", "EPOCH", "LBEVLINT", "LBEVINTX"),
+                                "LBHR", "LBDY", "LBSTDY", "LBCDSTDY", "VISITDY",
+                                "EPOCH"),
                               values_funct = first){
 
-  prepare_domain("LB", lb_domain,
+  prepare_domain(lb_domain, "LB",
                  include_METHOD = include_method,
                  variables_include = variables,
                  timing_variables = timing_variables,

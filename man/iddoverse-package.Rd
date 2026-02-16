@@ -6,8 +6,6 @@
 \alias{iddoverse-package}
 \title{iddoverse: Converting IDDO-SDTM Data To Analysis Datasets}
 \description{
-\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
-
 Functions to convert IDDO-curated SDTM domains into analysis datasets, similar to the Analysis Data Model (ADaM).
 }
 \seealso{

@@ -23,15 +23,17 @@ convert_age_to_years <- function(data) {
 
   if(nrow(data) == 0){
     # skip to end if empty
-    # rlang::warn("Dataset is empty, returning input data")
   } else{
-    if(!any(data$AGEU %in% c("DAYS", "WEEKS", "MONTHS", "YEARS"))){
-      rlang::abort("There exists a non-standard AGEU (age units) which is not DAYS, WEEKS, MONTHS or YEARS. Convert this manually before using convert_age_to_years")
+    if(!any(data$AGEU %in% c("HOURS", "DAYS", "WEEKS", "MONTHS", "YEARS"))){
+      rlang::abort("There exists a non-standard AGEU (age units) which is not HOURS, DAYS, WEEKS, MONTHS or YEARS. Convert this manually before using convert_age_to_years")
     }
 
     for (i in seq(1, nrow(data), 1)) {
       if (is.na(data$AGEU[i])) {
         next
+      } else if(data$AGEU[i] == "HOURS"){
+        data$AGE[i] <- data$AGE[i] / 8766
+        data$AGEU[i] <- "YEARS"
       } else if (data$AGEU[i] == "DAYS") {
         data$AGE[i] <- data$AGE[i] / 365.25
         data$AGEU[i] <- "YEARS"

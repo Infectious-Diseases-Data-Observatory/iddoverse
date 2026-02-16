@@ -2,7 +2,7 @@
 #'
 #' Joins several IDDO-SDTM domains together to create a single dataset with
 #' participant demographics, characteristics and baseline test results or
-#' findings. Baseline timing is defined as actual study day (--DY) = 1, planned
+#' findings. Baseline timing is defined as planned
 #' study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE.
 #'
 #' @param dm_domain A demographics/DM domain data frame.
@@ -28,25 +28,25 @@ create_participant_table <- function(dm_domain,
                                      rp_domain = NULL,
                                      sc_domain = NULL,
                                      vs_domain = NULL){
-  data <- prepare_domain("dm", dm_domain,
+  data <- prepare_domain(dm_domain, "dm",
                          variables_include = c("STUDYID", "USUBJID", "AGEU",
                                                "AGE", "SEX","RFSTDTC",
                                                "RACE", "ETHNIC", "ARMCD", "COUNTRY",
                                                "SITEID", "DTHFL", "DTHDY", "DTHHR"))
 
   if(!is.null(sc_domain)){
-    assert_data_frame(sc_domain, required_vars = exprs(SCDY, VISITDY, EPOCH))
+    assert_data_frame(sc_domain, required_vars = exprs(VISITDY, EPOCH))
 
     data <- data %>%
       left_join(
-        prepare_domain("sc", sc_domain,
+        prepare_domain(sc_domain, "sc",
                        variables_include = c("EDULEVEL", "MARISTAT"),
-                       timing_variables = c("SCDY", "VISITDY", "EPOCH"))%>%
+                       timing_variables = c("VISITDY", "EPOCH"))%>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "DY") |
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
+          arrange(USUBJID, TIME_SOURCE) %>%
           select(-c(TIME, TIME_SOURCE)) %>%
           group_by(USUBJID) %>%
           slice(1) %>%
@@ -55,18 +55,18 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(vs_domain)){
-    assert_data_frame(vs_domain, required_vars = exprs(VSDY, VISITDY, EPOCH))
+    assert_data_frame(vs_domain, required_vars = exprs(VISITDY, EPOCH))
 
     data <- data %>%
       left_join(
-        prepare_domain("vs", vs_domain,
+        prepare_domain(vs_domain, "vs",
                        variables_include = c("HEIGHT", "WEIGHT", "BMI", "MUARMCIR"),
-                       timing_variables = c("VSDY", "VISITDY", "EPOCH")) %>%
+                       timing_variables = c("VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "DY") |
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
+          arrange(USUBJID, TIME_SOURCE) %>%
           select(-c(TIME, TIME_SOURCE)) %>%
           group_by(USUBJID) %>%
           slice(1) %>%
@@ -75,18 +75,18 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(lb_domain)){
-    assert_data_frame(lb_domain, required_vars = exprs(LBDY, VISITDY, EPOCH))
+    assert_data_frame(lb_domain, required_vars = exprs(VISITDY, EPOCH))
 
     data <- data %>%
       left_join(
-        prepare_domain("lb", lb_domain,
+        prepare_domain(lb_domain, "lb",
                        variables_include = c("G6PD"),
-                       timing_variables = c("LBDY", "VISITDY", "EPOCH")) %>%
+                       timing_variables = c("VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "DY") |
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
+          arrange(USUBJID, TIME_SOURCE) %>%
           select(-c(TIME, TIME_SOURCE)) %>%
           group_by(USUBJID) %>%
           slice(1) %>%
@@ -95,18 +95,18 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(mb_domain)){
-    assert_data_frame(mb_domain, required_vars = exprs(MBDY, VISITDY, EPOCH))
+    assert_data_frame(mb_domain, required_vars = exprs(VISITDY, EPOCH))
 
     data <- data %>%
       left_join(
-        prepare_domain("mb", mb_domain,
+        prepare_domain(mb_domain, "mb",
                        variables_include = c("HIV"),
-                       timing_variables = c("MBDY", "VISITDY", "EPOCH")) %>%
+                       timing_variables = c("VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "DY") |
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
+          arrange(USUBJID, TIME_SOURCE) %>%
           select(-c(TIME, TIME_SOURCE)) %>%
           group_by(USUBJID) %>%
           slice(1) %>%
@@ -115,18 +115,18 @@ create_participant_table <- function(dm_domain,
   }
 
   if(!is.null(rp_domain)){
-    assert_data_frame(rp_domain, required_vars = exprs(RPDY, VISITDY, EPOCH))
+    assert_data_frame(rp_domain, required_vars = exprs(VISITDY, EPOCH))
 
     data <- data %>%
       left_join(
-        prepare_domain("rp", rp_domain,
-                               variables_include = c("PREGIND", "EGESTAGE"),
-                               timing_variables = c("RPDY", "VISITDY", "EPOCH")) %>%
+        prepare_domain(rp_domain, "rp",
+                       variables_include = c("PREGIND", "EGESTAGE"),
+                       timing_variables = c("VISITDY", "EPOCH")) %>%
           filter(
-            (TIME == 1 & TIME_SOURCE == "DY") |
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
           ) %>%
+          arrange(USUBJID, TIME_SOURCE) %>%
           select(-c(TIME, TIME_SOURCE)) %>%
           group_by(USUBJID) %>%
           slice(1) %>%

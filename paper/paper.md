@@ -20,6 +20,7 @@ authors:
 - name: Samantha Strudwick
   affiliation: 1, 2
 - name: Hannah Jauncey
+  orcid: "0000-0003-1141-5781"
   affiliation: 1, 2
 - name: James A Watson
   orcid: "0000-0001-5524-0325"
@@ -132,7 +133,7 @@ The different events/findings/tests then become columns and the dataset is popul
 which is more digestible for researchers and can be easily merged with other data. 
 
 ```r
-> prepare_domain("mb", MB_RPTESTB)
+> prepare_domain(MB_RPTESTB, "mb")
 [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 # A tibble: 14 × 5
    STUDYID USUBJID     TIME  TIME_SOURCE `PFALCIPA_10^6/L`

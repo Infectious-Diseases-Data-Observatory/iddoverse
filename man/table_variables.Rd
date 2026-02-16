@@ -4,15 +4,15 @@
 \alias{table_variables}
 \title{Tabulate function to display variables in a given domain}
 \usage{
-table_variables(domain, data, by_STUDYID = FALSE)
+table_variables(data, domain, by_STUDYID = FALSE)
 }
 \arguments{
+\item{data}{Domain data frame.}
+
 \item{domain}{Character. The two letter code for the domain which matches the
 data.
 Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS",
 "DS", "RS", "PO", "SC", "HO", "ER", "DD", "PF", "AU", "PC", "PE".}
-
-\item{data}{Domain data frame.}
 
 \item{by_STUDYID}{Boolean. Split data by STUDYID if TRUE. Default is FALSE.}
 }
@@ -27,8 +27,8 @@ frame. Additionally can be split by STUDYID to display the options across
 multiple studies.
 }
 \examples{
-table_variables("LB", LB_RPTESTB)
+table_variables(LB_RPTESTB, "LB")
 
-table_variables("VS", VS_RPTESTB, by_STUDYID = TRUE)
+table_variables(VS_RPTESTB, "VS", by_STUDYID = TRUE)
 
 }
