@@ -20,6 +20,7 @@ authors:
 - name: Samantha Strudwick
   affiliation: 1, 2
 - name: Hannah Jauncey
+  orcid: "0000-0003-1141-5781"
   affiliation: 1, 2
 - name: James A Watson
   orcid: "0000-0001-5524-0325"
