@@ -4,6 +4,7 @@
 * table_variables: data first, domain second in parameter order to align with tidy principles
 * prepare_domain: default timing changed to HR, DY, STDY, CDSTDY, VISITDY, EPOCH (removed VISIT, VISITNUM, EVLINT, EVLINTX)
 * hexsticker logo includes package name
+* unit tests for all functions
 
 # iddoverse 0.8.2
 * Additional unit tests in prepare_domain & check_data
