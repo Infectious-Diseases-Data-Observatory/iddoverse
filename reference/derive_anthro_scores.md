@@ -39,8 +39,8 @@ years old too, but those subjects will be filtered out.
 ``` r
 # Merge the DM (AGE_YEARS, SEX) and VS (WEIGHT, HEIGHT) domains together
 data = merge(
-  prepare_domain("dm", DM_RPTESTB),
-  prepare_domain("vs", VS_RPTESTB)
+  prepare_domain(DM_RPTESTB, "dm"),
+  prepare_domain(VS_RPTESTB, "vs")
   )
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 
@@ -69,24 +69,24 @@ derive_anthro_scores(data)
 #> 7      NA         4     NA   M White British   TRT TREATMENT      UK 2023/02
 #> 8      NA         4     NA   M White British   TRT TREATMENT      UK 2023/02
 #> 9      NA         4     NA   M White British   TRT TREATMENT      UK 2023/02
-#>   DMDY TIME TIME_SOURCE BMI_kg/m2 HEIGHT_cm TEMP_C WEIGHT_kg   HAZ HAZ_FLAG
-#> 1    1    1          DY      21.5       167   36.2        60    NA       NA
-#> 2    1    3          DY      <NA>      <NA>   37.4      <NA>    NA       NA
-#> 3    1   42          DY      <NA>      <NA>   37.5      <NA>    NA       NA
-#> 4    1    1          DY      20.5       143   37.5        42    NA       NA
-#> 5    1    4          DY      <NA>      <NA>   37.2      <NA>    NA       NA
-#> 6    1   40          DY      <NA>      <NA>   37.9      <NA>    NA       NA
-#> 7    1    2          DY      0.01        84   37.2       9.6 -4.61        0
-#> 8    1    5          DY      <NA>      <NA>   37.1      <NA>    NA       NA
-#> 9    1    3    VISITNUM      <NA>      <NA>   37.7      <NA>    NA       NA
-#>     WAZ WAZ_FLAG  WHZ WHZ_FLAG
-#> 1    NA       NA   NA       NA
-#> 2    NA       NA   NA       NA
-#> 3    NA       NA   NA       NA
-#> 4    NA       NA   NA       NA
-#> 5    NA       NA   NA       NA
-#> 6    NA       NA   NA       NA
-#> 7 -4.11        0 -2.2        0
-#> 8    NA       NA   NA       NA
-#> 9    NA       NA   NA       NA
+#>   DMDY      TIME TIME_SOURCE BMI_kg/m2 HEIGHT_cm TEMP_C WEIGHT_kg   HAZ
+#> 1    1         1          DY      21.5       167   36.2        60    NA
+#> 2    1         3          DY      <NA>      <NA>   37.4      <NA>    NA
+#> 3    1        42          DY      <NA>      <NA>   37.5      <NA>    NA
+#> 4    1         1          DY      20.5       143   37.5        42    NA
+#> 5    1         4          DY      <NA>      <NA>   37.2      <NA>    NA
+#> 6    1        40          DY      <NA>      <NA>   37.9      <NA>    NA
+#> 7    1         2          DY      0.01        84   37.2       9.6 -4.61
+#> 8    1         5          DY      <NA>      <NA>   37.1      <NA>    NA
+#> 9    1 FOLLOW UP       EPOCH      <NA>      <NA>   37.7      <NA>    NA
+#>   HAZ_FLAG   WAZ WAZ_FLAG  WHZ WHZ_FLAG
+#> 1       NA    NA       NA   NA       NA
+#> 2       NA    NA       NA   NA       NA
+#> 3       NA    NA       NA   NA       NA
+#> 4       NA    NA       NA   NA       NA
+#> 5       NA    NA       NA   NA       NA
+#> 6       NA    NA       NA   NA       NA
+#> 7        0 -4.11        0 -2.2        0
+#> 8       NA    NA       NA   NA       NA
+#> 9       NA    NA       NA   NA       NA
 ```

@@ -7,20 +7,20 @@ across multiple studies.
 ## Usage
 
 ``` r
-table_variables(domain, data, by_STUDYID = FALSE)
+table_variables(data, domain, by_STUDYID = FALSE)
 ```
 
 ## Arguments
+
+- data:
+
+  Domain data frame.
 
 - domain:
 
   Character. The two letter code for the domain which matches the data.
   Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS",
   "DS", "RS", "PO", "SC", "HO", "ER", "DD", "PF", "AU", "PC", "PE".
-
-- data:
-
-  Domain data frame.
 
 - by_STUDYID:
 
@@ -35,12 +35,12 @@ For all other domains, a table class object listing the variables under
 ## Examples
 
 ``` r
-table_variables("LB", LB_RPTESTB)
+table_variables(LB_RPTESTB, "LB")
 #> 
 #>  HCG  HGB PLAT 
 #>    1    6    3 
 
-table_variables("VS", VS_RPTESTB, by_STUDYID = TRUE)
+table_variables(VS_RPTESTB, "VS", by_STUDYID = TRUE)
 #>          
 #>           BMI HEIGHT TEMP WEIGHT
 #>   RPTESTB   3      3    9      3

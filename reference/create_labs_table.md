@@ -11,8 +11,7 @@ create_labs_table(
   variables = c("ALB", "ALT", "AST", "BILI", "CREAT", "CD4", "G6PD", "HCT", "HGB",
     "HGBMET", "INTLK6", "K", "PLAT", "SODIUM", "WBC"),
   include_method = FALSE,
-  timing_variables = c("LBHR", "LBDY", "LBSTDY", "VISITDY", "VISITNUM", "VISIT", "EPOCH",
-    "LBEVLINT", "LBEVINTX"),
+  timing_variables = c("LBHR", "LBDY", "LBSTDY", "LBCDSTDY", "VISITDY", "EPOCH"),
   values_funct = first
 )
 ```
@@ -36,8 +35,7 @@ create_labs_table(
 
   Character list. List of timing variables which are to be used to
   separate time points, this is hierarchical so the order is taken into
-  account. Default is: LBHR, LBDY, LBSTDY, VISITDY, VISITNUM, VISIT,
-  EPOCH, LBEVLINT, LBEVINTX.
+  account. Default is: LBHR, LBDY, LBSTDY, LBCDSTDY, VISITDY, EPOCH.
 
   (using default for example) Each row will be initially summarised
   based on the –HR (study hour) variable, if that is missing then the
@@ -64,17 +62,17 @@ An analysis dataset, one row per person, per timepoint.
 create_labs_table(LB_RPTESTB)
 #> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"
 #> # A tibble: 9 × 6
-#>   STUDYID USUBJID     TIME  TIME_SOURCE `HGB_g/L` `PLAT_10^9/L`
-#>   <chr>   <chr>       <chr> <chr>       <chr>     <chr>        
-#> 1 RPTESTB RPTESTB_001 1     DY          95        NA           
-#> 2 RPTESTB RPTESTB_001 3     DY          NA        181          
-#> 3 RPTESTB RPTESTB_001 42    DY          88        NA           
-#> 4 RPTESTB RPTESTB_002 1     DY          101       NA           
-#> 5 RPTESTB RPTESTB_002 4     DY          NA        100          
-#> 6 RPTESTB RPTESTB_002 40    DY          99        NA           
-#> 7 RPTESTB RPTESTB_003 2     DY          98        NA           
-#> 8 RPTESTB RPTESTB_003 5     DY          NA        90           
-#> 9 RPTESTB RPTESTB_003 3     VISITNUM    102       NA           
+#>   STUDYID USUBJID     TIME      TIME_SOURCE `HGB_g/L` `PLAT_10^9/L`
+#>   <chr>   <chr>       <chr>     <chr>       <chr>     <chr>        
+#> 1 RPTESTB RPTESTB_001 1         DY          95        NA           
+#> 2 RPTESTB RPTESTB_001 3         DY          NA        181          
+#> 3 RPTESTB RPTESTB_001 42        DY          88        NA           
+#> 4 RPTESTB RPTESTB_002 1         DY          101       NA           
+#> 5 RPTESTB RPTESTB_002 4         DY          NA        100          
+#> 6 RPTESTB RPTESTB_002 40        DY          99        NA           
+#> 7 RPTESTB RPTESTB_003 2         DY          98        NA           
+#> 8 RPTESTB RPTESTB_003 5         DY          NA        90           
+#> 9 RPTESTB RPTESTB_003 FOLLOW UP EPOCH       102       NA           
 
 # Change which timing_variables are used to summarise the data, select just Hemoglobin
 create_labs_table(LB_RPTESTB,

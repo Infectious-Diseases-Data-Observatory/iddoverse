@@ -8,14 +8,13 @@ requires the two letter domain name as well as the domain data file.
 
 ``` r
 prepare_domain(
-  domain,
   data,
+  domain,
   include_LOC = FALSE,
   include_METHOD = FALSE,
   variables_include = c(),
   timing_variables = c(str_c(domain, "HR"), str_c(domain, "DY"), str_c(domain, "STDY"),
-    "VISITDY", "VISITNUM", "VISIT", "EPOCH", str_c(domain, "EVLINT"), str_c(domain,
-    "EVINTX")),
+    str_c(domain, "CDSTDY"), "VISITDY", "EPOCH"),
   values_fn = first,
   print_messages = TRUE
 )
@@ -23,15 +22,15 @@ prepare_domain(
 
 ## Arguments
 
+- data:
+
+  Domain data frame.
+
 - domain:
 
   Character. The two letter domain name of the data. Domain options:
   "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF", "AU",
   "PC", "SA", "HO", "ER", "PO", "DS
-
-- data:
-
-  Domain data frame.
 
 - include_LOC:
 
@@ -52,8 +51,7 @@ prepare_domain(
 
   Character list. List of timing variables which are to be used to
   separate time points, this is hierarchical so the order is taken into
-  account. Default is: –HR, –DY, –STDY, VISITDY, VISITNUM, VISIT, EPOCH,
-  –EVLINT, –EVINTX.
+  account. Default is: –HR, –DY, –STDY, –CDSTDY, VISITDY, EPOCH.
 
   (using default for example) Each row will be initially summarised
   based on the –HR (study hour) variable, if that is missing then the
@@ -83,7 +81,7 @@ parameters.
 ## Examples
 
 ``` r
-prepare_domain("DM", DM_RPTESTB)
+prepare_domain(DM_RPTESTB, "DM")
 #> # A tibble: 3 × 21
 #>   STUDYID DOMAIN USUBJID SUBJID RFSTDTC DTHDTC DTHFL SITEID INVID INVNAM BRTHDTC
 #>   <chr>   <chr>  <chr>    <dbl> <chr>   <chr>  <chr> <chr>  <lgl> <lgl>  <lgl>  
@@ -95,7 +93,7 @@ prepare_domain("DM", DM_RPTESTB)
 #> #   DMDY <dbl>
 
 # Select just ARMCD, AGE & SEX
-prepare_domain("DM", DM_RPTESTB, variables_include = c("ARMCD", "AGE", "SEX"))
+prepare_domain(DM_RPTESTB, "DM", variables_include = c("ARMCD", "AGE", "SEX"))
 #> # A tibble: 3 × 5
 #>   STUDYID USUBJID     ARMCD   AGE SEX  
 #>   <chr>   <chr>       <chr> <dbl> <chr>
@@ -104,7 +102,7 @@ prepare_domain("DM", DM_RPTESTB, variables_include = c("ARMCD", "AGE", "SEX"))
 #> 3 RPTESTB RPTESTB_003 TRT      48 M    
 
 # Change which timing_variables are used to summarise the data
-prepare_domain("lb", LB_RPTESTB, timing_variables = c("VISITNUM", "VISITDY"))
+prepare_domain(LB_RPTESTB, "lb", timing_variables = c("VISITNUM", "VISITDY"))
 #> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"
 #> # A tibble: 9 × 7
 #>   STUDYID USUBJID     TIME  TIME_SOURCE HCG_NA   `HGB_g/L` `PLAT_10^9/L`
@@ -120,7 +118,7 @@ prepare_domain("lb", LB_RPTESTB, timing_variables = c("VISITNUM", "VISITDY"))
 #> 9 RPTESTB RPTESTB_003 3     VISITNUM    NA       102       NA           
 
 # Include location in the output and change the values_fn to select the last result
-prepare_domain("vs", VS_RPTESTB, include_LOC = TRUE, values_fn = dplyr::last)
+prepare_domain(VS_RPTESTB, "vs", include_LOC = TRUE, values_fn = dplyr::last)
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 9
 #>   STUDYID USUBJID    TIME  TIME_SOURCE `BMI_NA_kg/m2` HEIGHT_NA_cm TEMP_AXILLA_C
@@ -133,6 +131,6 @@ prepare_domain("vs", VS_RPTESTB, include_LOC = TRUE, values_fn = dplyr::last)
 #> 6 RPTESTB RPTESTB_0… 40    DY          NA             NA           NA           
 #> 7 RPTESTB RPTESTB_0… 2     DY          0.01           84           37.2         
 #> 8 RPTESTB RPTESTB_0… 5     DY          NA             NA           37.1         
-#> 9 RPTESTB RPTESTB_0… 3     VISITNUM    NA             NA           37.7         
+#> 9 RPTESTB RPTESTB_0… FOLL… EPOCH       NA             NA           37.7         
 #> # ℹ 2 more variables: TEMP_ORAL_CAVITY_C <chr>, WEIGHT_NA_kg <chr>
 ```

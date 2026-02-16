@@ -9,8 +9,7 @@ Historic refers to events that occurred before the study start.
 ``` r
 create_clinical_hist_table(
   sa_domain,
-  timing_variables = c("SAHR", "SADY", "SASTDY", "VISITDY", "VISITNUM", "VISIT", "EPOCH",
-    "SAEVLINT", "SAEVINTX"),
+  timing_variables = c("SAHR", "SADY", "SASTDY", "SACDSTDY", "VISITDY", "EPOCH"),
   values_funct = first
 )
 ```
@@ -25,8 +24,7 @@ create_clinical_hist_table(
 
   Character list. List of timing variables which are to be used to
   separate time points, this is hierarchical so the order is taken into
-  account. Default is: SAHR, SADY, SASTDY, VISITDY, VISITNUM, VISIT,
-  EPOCH, SAEVLINT, SAEVINTX.
+  account. Default is: SAHR, SADY, SASTDY, SACDSTDY, VISITDY, EPOCH.
 
   (using default for example) Each row will be initially summarised
   based on the –HR (study hour) variable, if that is missing then the
@@ -58,7 +56,11 @@ create_clinical_hist_table(SA_RPTESTB)
 #> 1 RPTESTB RPTESTB_001 -18   STDY        N           Y               
 
 # Change which timing_variables are used to summarise the data
-create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB,
+create_clinical_hist_table(SA_RPTESTB,
                            timing_variables = c("VISITDY", "EPOCH"))
-#> Error in create_clinical_hist_table(DM_RPTESTB, SA_RPTESTB, timing_variables = c("VISITDY",     "EPOCH")): Required variable `SACAT` is missing in `sa_domain`
+#> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
+#> # A tibble: 1 × 6
+#>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE
+#>   <chr>   <chr>       <chr> <chr>       <chr>       <chr>           
+#> 1 RPTESTB RPTESTB_001 1     VISITDY     N           Y               
 ```

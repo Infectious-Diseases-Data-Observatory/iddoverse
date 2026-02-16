@@ -97,12 +97,12 @@ digestible and can be easily merged with other data.
 
 In
 [`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md),
-the first parameter is the two letter domain code followed by the domain
-data frame.
+the first parameter is the domain data frame followed by the two letter
+domain code.
 
 ``` r
-prepare_domain("mb",
-               MB_RPTESTB)
+prepare_domain(MB_RPTESTB, 
+               "mb")
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 #> # A tibble: 14 × 5
 #>    STUDYID USUBJID     TIME  TIME_SOURCE `PFALCIPA_10^6/L`
@@ -141,8 +141,8 @@ variable, so they can specify `VISITDY`. The `TIME_SOURCE` changes
 compared to the previous example as the hierarchy has changed.
 
 ``` r
-prepare_domain("MB",
-               MB_RPTESTB,
+prepare_domain(MB_RPTESTB,
+               "MB",
                timing_variables = "VISITDY")
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 #> # A tibble: 14 × 5
@@ -169,22 +169,22 @@ interest, by using `variables_include` to select just weight and
 temperature in the VS domain example below:
 
 ``` r
-prepare_domain("vs", 
-               VS_RPTESTB, 
+prepare_domain(VS_RPTESTB,
+               "vs", 
                variables_include = c("TEMP", "WEIGHT"))
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 6
-#>   STUDYID USUBJID     TIME  TIME_SOURCE TEMP_C WEIGHT_kg
-#>   <chr>   <chr>       <chr> <chr>       <chr>  <chr>    
-#> 1 RPTESTB RPTESTB_001 1     DY          36.2   60       
-#> 2 RPTESTB RPTESTB_001 3     DY          37.4   NA       
-#> 3 RPTESTB RPTESTB_001 42    DY          37.5   NA       
-#> 4 RPTESTB RPTESTB_002 1     DY          37.5   42       
-#> 5 RPTESTB RPTESTB_002 4     DY          37.2   NA       
-#> 6 RPTESTB RPTESTB_002 40    DY          37.9   NA       
-#> 7 RPTESTB RPTESTB_003 2     DY          37.2   9.6      
-#> 8 RPTESTB RPTESTB_003 5     DY          37.1   NA       
-#> 9 RPTESTB RPTESTB_003 3     VISITNUM    37.7   NA
+#>   STUDYID USUBJID     TIME      TIME_SOURCE TEMP_C WEIGHT_kg
+#>   <chr>   <chr>       <chr>     <chr>       <chr>  <chr>    
+#> 1 RPTESTB RPTESTB_001 1         DY          36.2   60       
+#> 2 RPTESTB RPTESTB_001 3         DY          37.4   NA       
+#> 3 RPTESTB RPTESTB_001 42        DY          37.5   NA       
+#> 4 RPTESTB RPTESTB_002 1         DY          37.5   42       
+#> 5 RPTESTB RPTESTB_002 4         DY          37.2   NA       
+#> 6 RPTESTB RPTESTB_002 40        DY          37.9   NA       
+#> 7 RPTESTB RPTESTB_003 2         DY          37.2   9.6      
+#> 8 RPTESTB RPTESTB_003 5         DY          37.1   NA       
+#> 9 RPTESTB RPTESTB_003 FOLLOW UP EPOCH       37.7   NA
 ```
 
 The location (`LOC`) and method (`METHOD`) of a test or finding may be
@@ -194,23 +194,23 @@ along with the units, (i.e. `TEMP_AXILLA_C`). If the location or method
 is `NA`, then `NA` will appear in the column name (i.e. `WEIGHT_NA_kg`).
 
 ``` r
-prepare_domain("vs", 
-               VS_RPTESTB, 
+prepare_domain(VS_RPTESTB,
+               "vs", 
                variables_include = c("TEMP", "WEIGHT"), 
                include_LOC = TRUE)
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 7
-#>   STUDYID USUBJID     TIME  TIME_SOURCE TEMP_AXILLA_C TEMP_ORAL_CAVITY_C
-#>   <chr>   <chr>       <chr> <chr>       <chr>         <chr>             
-#> 1 RPTESTB RPTESTB_001 1     DY          36.2          NA                
-#> 2 RPTESTB RPTESTB_001 3     DY          37.4          NA                
-#> 3 RPTESTB RPTESTB_001 42    DY          37.5          NA                
-#> 4 RPTESTB RPTESTB_002 1     DY          NA            37.5              
-#> 5 RPTESTB RPTESTB_002 4     DY          NA            37.2              
-#> 6 RPTESTB RPTESTB_002 40    DY          NA            37.9              
-#> 7 RPTESTB RPTESTB_003 2     DY          37.2          NA                
-#> 8 RPTESTB RPTESTB_003 5     DY          37.1          NA                
-#> 9 RPTESTB RPTESTB_003 3     VISITNUM    37.7          NA                
+#>   STUDYID USUBJID     TIME      TIME_SOURCE TEMP_AXILLA_C TEMP_ORAL_CAVITY_C
+#>   <chr>   <chr>       <chr>     <chr>       <chr>         <chr>             
+#> 1 RPTESTB RPTESTB_001 1         DY          36.2          NA                
+#> 2 RPTESTB RPTESTB_001 3         DY          37.4          NA                
+#> 3 RPTESTB RPTESTB_001 42        DY          37.5          NA                
+#> 4 RPTESTB RPTESTB_002 1         DY          NA            37.5              
+#> 5 RPTESTB RPTESTB_002 4         DY          NA            37.2              
+#> 6 RPTESTB RPTESTB_002 40        DY          NA            37.9              
+#> 7 RPTESTB RPTESTB_003 2         DY          37.2          NA                
+#> 8 RPTESTB RPTESTB_003 5         DY          37.1          NA                
+#> 9 RPTESTB RPTESTB_003 FOLLOW UP EPOCH       37.7          NA                
 #> # ℹ 1 more variable: WEIGHT_NA_kg <chr>
 ```
 
@@ -232,8 +232,8 @@ built.
 
 ``` r
 left_join(
-  prepare_domain("MB", MB_RPTESTB, timing_variables = "VISIT"),
-  prepare_domain("Vs", VS_RPTESTB, timing_variables = "VISIT", include_LOC = TRUE)
+  prepare_domain(MB_RPTESTB, "MB",  timing_variables = "VISIT"),
+  prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_LOC = TRUE)
 )
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
@@ -280,6 +280,11 @@ experienced programming users.
 [`create_participant_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_participant_table.md)
 creates a one row per participant analysis table along with several
 participant characteristic variables and baseline test information.
+World Health Organisation child growth standards are also derived if
+age, sex, height and weight are in the dataset; height for age (`HAZ`),
+weight for age (`WAZ`) and weight for height (`WHZ`) $z$-scores are
+calculated for participants under the age of 5, with respective flags
+(i.e. `HAZ_FLAG`) for scores outside a typical range.
 
 ``` r
 create_participant_table(dm_domain = DM_RPTESTB,
@@ -292,14 +297,15 @@ create_participant_table(dm_domain = DM_RPTESTB,
 #> Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,
 #> ETHNIC, ARMCD, COUNTRY, SITEID, DTHFL, `BMI_kg/m2`, HEIGHT_cm, WEIGHT_kg,
 #> PREGIND_NA)`
-#> # A tibble: 3 × 15
+#> # A tibble: 3 × 21
 #>   STUDYID USUBJID     AGE_YEARS SEX   RFSTDTC RACE  ETHNIC  ARMCD COUNTRY SITEID
 #>   <chr>   <chr>           <dbl> <chr> <chr>   <chr> <chr>   <chr> <chr>   <chr> 
 #> 1 RPTESTB RPTESTB_001        67 F     2023/01 White British PBO   UK      OXFORD
 #> 2 RPTESTB RPTESTB_002        18 F     2023/01 White Irish   TRT   UK      OXFORD
 #> 3 RPTESTB RPTESTB_003         4 M     2023/02 White British TRT   UK      OXFORD
-#> # ℹ 5 more variables: DTHFL <chr>, `BMI_kg/m2` <chr>, HEIGHT_cm <chr>,
-#> #   WEIGHT_kg <chr>, PREGIND_NA <chr>
+#> # ℹ 11 more variables: DTHFL <chr>, `BMI_kg/m2` <chr>, HEIGHT_cm <chr>,
+#> #   WEIGHT_kg <chr>, PREGIND_NA <chr>, HAZ <dbl>, HAZ_FLAG <int>, WAZ <dbl>,
+#> #   WAZ_FLAG <int>, WHZ <dbl>, WHZ_FLAG <int>
 ```
 
 [`create_malaria_pcr_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_malaria_pcr_table.md)
@@ -421,7 +427,7 @@ function may be useful when deciding which variables to include in the
 output.
 
 ``` r
-table_variables("vS", VS_RPTESTB)
+table_variables(VS_RPTESTB, "vS")
 #> 
 #>    BMI HEIGHT   TEMP WEIGHT 
 #>      3      3      9      3

@@ -3,7 +3,7 @@
 frame. Additionally can be split by STUDYID to display the options across
 multiple studies."><meta property="og:description" content="Uses table() to display the variables contained within an SDTM formatted data
 frame. Additionally can be split by STUDYID to display the options across
-multiple studies."><meta property="og:image" content="https://infectious-diseases-data-observatory.github.io/iddoverse/logo.png"></head><body>
+multiple studies."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -32,7 +32,8 @@ multiple studies."><meta property="og:image" content="https://infectious-disease
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Tabulate function to display variables in a given domain</h1>
+
+      <h1>Tabulate function to display variables in a given domain</h1>
       <small class="dont-index">Source: <a href="https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/R/table_variables.R" class="external-link"><code>R/table_variables.R</code></a></small>
       <div class="d-none name"><code>table_variables.Rd</code></div>
     </div>
@@ -45,22 +46,22 @@ multiple studies.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">table_variables</span><span class="op">(</span><span class="va">domain</span>, <span class="va">data</span>, by_STUDYID <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">table_variables</span><span class="op">(</span><span class="va">data</span>, <span class="va">domain</span>, by_STUDYID <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-domain">domain<a class="anchor" aria-label="anchor" href="#arg-domain"></a></dt>
+<dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
+<dd><p>Domain data frame.</p></dd>
+
+
+<dt id="arg-domain">domain<a class="anchor" aria-label="anchor" href="#arg-domain"></a></dt>
 <dd><p>Character. The two letter code for the domain which matches the
 data.
 Domains included: "DM", "LB", "RP", "MB", "MP", "SA", "IN", "VS",
 "DS", "RS", "PO", "SC", "HO", "ER", "DD", "PF", "AU", "PC", "PE".</p></dd>
-
-
-<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>Domain data frame.</p></dd>
 
 
 <dt id="arg-by-studyid">by_STUDYID<a class="anchor" aria-label="anchor" href="#arg-by-studyid"></a></dt>
@@ -76,12 +77,12 @@ For all other domains, a table class object listing the variables under
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">table_variables</span><span class="op">(</span><span class="st">"LB"</span>, <span class="va">LB_RPTESTB</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">table_variables</span><span class="op">(</span><span class="va">LB_RPTESTB</span>, <span class="st">"LB"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  HCG  HGB PLAT </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1    6    3 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">table_variables</span><span class="op">(</span><span class="st">"VS"</span>, <span class="va">VS_RPTESTB</span>, by_STUDYID <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">table_variables</span><span class="op">(</span><span class="va">VS_RPTESTB</span>, <span class="st">"VS"</span>, by_STUDYID <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           BMI HEIGHT TEMP WEIGHT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   RPTESTB   3      3    9      3</span>

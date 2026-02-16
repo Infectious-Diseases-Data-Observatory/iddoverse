@@ -23,5 +23,5 @@ https://github.com/Infectious-Diseases-Data-Observatory/iddoverse
       institution = {Infectious Disease Data Observatory (IDDO), University of Oxford, Oxford, UK},
       year = {2026},
       url = {https://github.com/Infectious-Diseases-Data-Observatory/iddoverse},
-      note = {Package Version 0.8.2},
+      note = {Package Version 0.9.0},
     }

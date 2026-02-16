@@ -63,17 +63,17 @@ create_clinical_table(dm_domain = DM_RPTESTB,
 #> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID, TIME, TIME_SOURCE)`
 #> # A tibble: 10 × 10
-#>    STUDYID USUBJID     TIME  TIME_SOURCE `BMI_kg/m2` HEIGHT_cm TEMP_C WEIGHT_kg
-#>    <chr>   <chr>       <chr> <chr>       <chr>       <chr>     <chr>  <chr>    
-#>  1 RPTESTB RPTESTB_001 1     DY          21.5        167       36.2   60       
-#>  2 RPTESTB RPTESTB_001 3     DY          NA          NA        37.4   NA       
-#>  3 RPTESTB RPTESTB_001 42    DY          NA          NA        37.5   NA       
-#>  4 RPTESTB RPTESTB_002 1     DY          20.5        143       37.5   42       
-#>  5 RPTESTB RPTESTB_002 4     DY          NA          NA        37.2   NA       
-#>  6 RPTESTB RPTESTB_002 40    DY          NA          NA        37.9   NA       
-#>  7 RPTESTB RPTESTB_003 2     DY          0.01        84        37.2   9.6      
-#>  8 RPTESTB RPTESTB_003 5     DY          NA          NA        37.1   NA       
-#>  9 RPTESTB RPTESTB_003 3     VISITNUM    NA          NA        37.7   NA       
-#> 10 RPTESTB RPTESTB_001 -18   STDY        NA          NA        NA     NA       
+#>    STUDYID USUBJID     TIME   TIME_SOURCE `BMI_kg/m2` HEIGHT_cm TEMP_C WEIGHT_kg
+#>    <chr>   <chr>       <chr>  <chr>       <chr>       <chr>     <chr>  <chr>    
+#>  1 RPTESTB RPTESTB_001 1      DY          21.5        167       36.2   60       
+#>  2 RPTESTB RPTESTB_001 3      DY          NA          NA        37.4   NA       
+#>  3 RPTESTB RPTESTB_001 42     DY          NA          NA        37.5   NA       
+#>  4 RPTESTB RPTESTB_002 1      DY          20.5        143       37.5   42       
+#>  5 RPTESTB RPTESTB_002 4      DY          NA          NA        37.2   NA       
+#>  6 RPTESTB RPTESTB_002 40     DY          NA          NA        37.9   NA       
+#>  7 RPTESTB RPTESTB_003 2      DY          0.01        84        37.2   9.6      
+#>  8 RPTESTB RPTESTB_003 5      DY          NA          NA        37.1   NA       
+#>  9 RPTESTB RPTESTB_003 FOLLO… EPOCH       NA          NA        37.7   NA       
+#> 10 RPTESTB RPTESTB_001 -18    STDY        NA          NA        NA     NA       
 #> # ℹ 2 more variables: FEVER_PRESP <chr>, FEVER_OCCURRENCE <chr>
 ```

@@ -2,8 +2,8 @@
 
 Joins several IDDO-SDTM domains together to create a single dataset with
 participant demographics, characteristics and baseline test results or
-findings. Baseline timing is defined as actual study day (–DY) = 1,
-planned study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE.
+findings. Baseline timing is defined as planned study day (VISITDY) = 1
+or epoch (EPOCH) = BASELINE.
 
 ## Usage
 
@@ -60,13 +60,14 @@ create_participant_table(dm_domain = DM_RPTESTB,
 #> Joining with `by = join_by(STUDYID, USUBJID)`
 #> Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,
 #> ETHNIC, ARMCD, COUNTRY, SITEID, DTHFL, `BMI_kg/m2`, HEIGHT_cm, WEIGHT_kg)`
-#> # A tibble: 3 × 14
+#> # A tibble: 3 × 20
 #>   STUDYID USUBJID     AGE_YEARS SEX   RFSTDTC RACE  ETHNIC  ARMCD COUNTRY SITEID
 #>   <chr>   <chr>           <dbl> <chr> <chr>   <chr> <chr>   <chr> <chr>   <chr> 
 #> 1 RPTESTB RPTESTB_001        67 F     2023/01 White British PBO   UK      OXFORD
 #> 2 RPTESTB RPTESTB_002        18 F     2023/01 White Irish   TRT   UK      OXFORD
 #> 3 RPTESTB RPTESTB_003         4 M     2023/02 White British TRT   UK      OXFORD
-#> # ℹ 4 more variables: DTHFL <chr>, `BMI_kg/m2` <chr>, HEIGHT_cm <chr>,
-#> #   WEIGHT_kg <chr>
+#> # ℹ 10 more variables: DTHFL <chr>, `BMI_kg/m2` <chr>, HEIGHT_cm <chr>,
+#> #   WEIGHT_kg <chr>, HAZ <dbl>, HAZ_FLAG <int>, WAZ <dbl>, WAZ_FLAG <int>,
+#> #   WHZ <dbl>, WHZ_FLAG <int>
 
 ```

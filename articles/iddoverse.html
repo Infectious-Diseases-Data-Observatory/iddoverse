@@ -55,7 +55,8 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>iddoverse</h1>
+
+      <h1>iddoverse</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/vignettes/iddoverse.Rmd" class="external-link"><code>vignettes/iddoverse.Rmd</code></a></small>
@@ -159,11 +160,11 @@ timing variable, then pivots the rows by the best choice time variable
 The different events/findings/tests then become columns and the dataset
 is populated with the associated result, providing a condensed dataset
 which is more digestible and can be easily merged with other data.</p>
-<p>In <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code>, the first parameter is the two
-letter domain code followed by the domain data frame.</p>
+<p>In <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code>, the first parameter is the domain
+data frame followed by the two letter domain code.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="st">"mb"</span>,</span>
-<span>               <span class="va">MB_RPTESTB</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="va">MB_RPTESTB</span>, </span>
+<span>               <span class="st">"mb"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 5</span></span></span>
 <span><span class="co">#&gt;    STUDYID USUBJID     TIME  TIME_SOURCE `PFALCIPA_10^6/L`</span></span>
@@ -200,8 +201,8 @@ variable, so they can specify <code>VISITDY</code>. The
 <code>TIME_SOURCE</code> changes compared to the previous example as the
 hierarchy has changed.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="st">"MB"</span>,</span>
-<span>               <span class="va">MB_RPTESTB</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="va">MB_RPTESTB</span>,</span>
+<span>               <span class="st">"MB"</span>,</span>
 <span>               timing_variables <span class="op">=</span> <span class="st">"VISITDY"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 5</span></span></span>
@@ -225,22 +226,22 @@ hierarchy has changed.</p>
 of interest, by using <code>variables_include</code> to select just
 weight and temperature in the VS domain example below:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="st">"vs"</span>, </span>
-<span>               <span class="va">VS_RPTESTB</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="va">VS_RPTESTB</span>,</span>
+<span>               <span class="st">"vs"</span>, </span>
 <span>               variables_include <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TEMP"</span>, <span class="st">"WEIGHT"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 6</span></span></span>
-<span><span class="co">#&gt;   STUDYID USUBJID     TIME  TIME_SOURCE TEMP_C WEIGHT_kg</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001 1     DY          36.2   60       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_001 3     DY          37.4   <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_001 42    DY          37.5   <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> RPTESTB RPTESTB_002 1     DY          37.5   42       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> RPTESTB RPTESTB_002 4     DY          37.2   <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> RPTESTB RPTESTB_002 40    DY          37.9   <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> RPTESTB RPTESTB_003 2     DY          37.2   9.6      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> RPTESTB RPTESTB_003 5     DY          37.1   <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> RPTESTB RPTESTB_003 3     VISITNUM    37.7   <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   STUDYID USUBJID     TIME      TIME_SOURCE TEMP_C WEIGHT_kg</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001 1         DY          36.2   60       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_001 3         DY          37.4   <span style="color: #BB0000;">NA</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_001 42        DY          37.5   <span style="color: #BB0000;">NA</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> RPTESTB RPTESTB_002 1         DY          37.5   42       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> RPTESTB RPTESTB_002 4         DY          37.2   <span style="color: #BB0000;">NA</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> RPTESTB RPTESTB_002 40        DY          37.9   <span style="color: #BB0000;">NA</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> RPTESTB RPTESTB_003 2         DY          37.2   9.6      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> RPTESTB RPTESTB_003 5         DY          37.1   <span style="color: #BB0000;">NA</span>       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> RPTESTB RPTESTB_003 FOLLOW UP EPOCH       37.7   <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 <p>The location (<code>LOC</code>) and method (<code>METHOD</code>) of a
 test or finding may be required in the analysis dataset.
 <code>include_LOC</code> and <code>include_METHOD</code> can be set to
@@ -249,23 +250,23 @@ test/finding along with the units, (i.e. <code>TEMP_AXILLA_C</code>). If
 the location or method is <code>NA</code>, then <code>NA</code> will
 appear in the column name (i.e. <code>WEIGHT_NA_kg</code>).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="st">"vs"</span>, </span>
-<span>               <span class="va">VS_RPTESTB</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="va">VS_RPTESTB</span>,</span>
+<span>               <span class="st">"vs"</span>, </span>
 <span>               variables_include <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TEMP"</span>, <span class="st">"WEIGHT"</span><span class="op">)</span>, </span>
 <span>               include_LOC <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 7</span></span></span>
-<span><span class="co">#&gt;   STUDYID USUBJID     TIME  TIME_SOURCE TEMP_AXILLA_C TEMP_ORAL_CAVITY_C</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001 1     DY          36.2          <span style="color: #BB0000;">NA</span>                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_001 3     DY          37.4          <span style="color: #BB0000;">NA</span>                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_001 42    DY          37.5          <span style="color: #BB0000;">NA</span>                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> RPTESTB RPTESTB_002 1     DY          <span style="color: #BB0000;">NA</span>            37.5              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> RPTESTB RPTESTB_002 4     DY          <span style="color: #BB0000;">NA</span>            37.2              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> RPTESTB RPTESTB_002 40    DY          <span style="color: #BB0000;">NA</span>            37.9              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> RPTESTB RPTESTB_003 2     DY          37.2          <span style="color: #BB0000;">NA</span>                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> RPTESTB RPTESTB_003 5     DY          37.1          <span style="color: #BB0000;">NA</span>                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> RPTESTB RPTESTB_003 3     VISITNUM    37.7          <span style="color: #BB0000;">NA</span>                </span></span>
+<span><span class="co">#&gt;   STUDYID USUBJID     TIME      TIME_SOURCE TEMP_AXILLA_C TEMP_ORAL_CAVITY_C</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001 1         DY          36.2          <span style="color: #BB0000;">NA</span>                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_001 3         DY          37.4          <span style="color: #BB0000;">NA</span>                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_001 42        DY          37.5          <span style="color: #BB0000;">NA</span>                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> RPTESTB RPTESTB_002 1         DY          <span style="color: #BB0000;">NA</span>            37.5              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> RPTESTB RPTESTB_002 4         DY          <span style="color: #BB0000;">NA</span>            37.2              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> RPTESTB RPTESTB_002 40        DY          <span style="color: #BB0000;">NA</span>            37.9              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> RPTESTB RPTESTB_003 2         DY          37.2          <span style="color: #BB0000;">NA</span>                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> RPTESTB RPTESTB_003 5         DY          37.1          <span style="color: #BB0000;">NA</span>                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> RPTESTB RPTESTB_003 FOLLOW UP EPOCH       37.7          <span style="color: #BB0000;">NA</span>                </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: WEIGHT_NA_kg &lt;chr&gt;</span></span></span></code></pre></div>
 <p>When the function pivots the data, they may be occasions where two
 rows for the same test/finding/event have the same STUDYID, USUBJID,
@@ -282,8 +283,8 @@ affected will be reported in the console when running
 domains, allowing for a customised analysis dataset to be built.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="st">"MB"</span>, <span class="va">MB_RPTESTB</span>, timing_variables <span class="op">=</span> <span class="st">"VISIT"</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="st">"Vs"</span>, <span class="va">VS_RPTESTB</span>, timing_variables <span class="op">=</span> <span class="st">"VISIT"</span>, include_LOC <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="va">MB_RPTESTB</span>, <span class="st">"MB"</span>,  timing_variables <span class="op">=</span> <span class="st">"VISIT"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/prepare_domain.html">prepare_domain</a></span><span class="op">(</span><span class="va">VS_RPTESTB</span>, <span class="st">"Vs"</span>,  timing_variables <span class="op">=</span> <span class="st">"VISIT"</span>, include_LOC <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"</span></span>
 <span><span class="co">#&gt; [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"</span></span>
@@ -327,7 +328,14 @@ do provide useful key information with minimal user input, ideal for
 those who are not experienced programming users.</p>
 <p><code><a href="../reference/create_participant_table.html">create_participant_table()</a></code> creates a one row per
 participant analysis table along with several participant characteristic
-variables and baseline test information.</p>
+variables and baseline test information. World Health Organisation child
+growth standards are also derived if age, sex, height and weight are in
+the dataset; height for age (<code>HAZ</code>), weight for age
+(<code>WAZ</code>) and weight for height (<code>WHZ</code>)
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>-scores
+are calculated for participants under the age of 5, with respective
+flags (i.e. <code>HAZ_FLAG</code>) for scores outside a typical
+range.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/create_participant_table.html">create_participant_table</a></span><span class="op">(</span>dm_domain <span class="op">=</span> <span class="va">DM_RPTESTB</span>,</span>
 <span>                         rp_domain <span class="op">=</span> <span class="va">RP_RPTESTB</span>,</span>
@@ -339,14 +347,15 @@ variables and baseline test information.</p>
 <span><span class="co">#&gt; Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,</span></span>
 <span><span class="co">#&gt; ETHNIC, ARMCD, COUNTRY, SITEID, DTHFL, `BMI_kg/m2`, HEIGHT_cm, WEIGHT_kg,</span></span>
 <span><span class="co">#&gt; PREGIND_NA)`</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 21</span></span></span>
 <span><span class="co">#&gt;   STUDYID USUBJID     AGE_YEARS SEX   RFSTDTC RACE  ETHNIC  ARMCD COUNTRY SITEID</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> RPTESTB RPTESTB_001        67 F     2023/01 White British PBO   UK      OXFORD</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> RPTESTB RPTESTB_002        18 F     2023/01 White Irish   TRT   UK      OXFORD</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> RPTESTB RPTESTB_003         4 M     2023/02 White British TRT   UK      OXFORD</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5 more variables: DTHFL &lt;chr&gt;, `BMI_kg/m2` &lt;chr&gt;, HEIGHT_cm &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   WEIGHT_kg &lt;chr&gt;, PREGIND_NA &lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 11 more variables: DTHFL &lt;chr&gt;, `BMI_kg/m2` &lt;chr&gt;, HEIGHT_cm &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   WEIGHT_kg &lt;chr&gt;, PREGIND_NA &lt;chr&gt;, HAZ &lt;dbl&gt;, HAZ_FLAG &lt;int&gt;, WAZ &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   WAZ_FLAG &lt;int&gt;, WHZ &lt;dbl&gt;, WHZ_FLAG &lt;int&gt;</span></span></span></code></pre></div>
 <p><code><a href="../reference/create_malaria_pcr_table.html">create_malaria_pcr_table()</a></code> creates a one row per person,
 per timepoint table combining the polymerase chain reaction (PCR) test
 information, drawing from the Pharmacogenomics Genetics (PF), Disease
@@ -468,7 +477,7 @@ variables in a domain. Not all domains are currently covered in this
 function but most are. This function may be useful when deciding which
 variables to include in the <code><a href="../reference/prepare_domain.html">prepare_domain()</a></code> output.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/table_variables.html">table_variables</a></span><span class="op">(</span><span class="st">"vS"</span>, <span class="va">VS_RPTESTB</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/table_variables.html">table_variables</a></span><span class="op">(</span><span class="va">VS_RPTESTB</span>, <span class="st">"vS"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    BMI HEIGHT   TEMP WEIGHT </span></span>
 <span><span class="co">#&gt;      3      3      9      3</span></span></code></pre></div>
