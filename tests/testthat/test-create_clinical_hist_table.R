@@ -10,7 +10,7 @@ test_that("create_clinical_hist_table handles case where no MEDICAL HISTORY rows
     SAOCCUR = "Y", SAPRESP = "Y", SADY = 24
   )
 
-  res <- create_clinical_hist_table(sa_domain = sa_no_med_hist)
+  res <- suppressMessages(create_clinical_hist_table(sa_domain = sa_no_med_hist))
 
   expect_s3_class(res, "data.frame")
   expect_equal(nrow(res), 0)
@@ -35,10 +35,10 @@ test_that("create_clinical_hist_table filters SACAT == 'MEDICAL HISTORY' and rem
 
   expect_identical(out_table, out_prepare)
 
-  expect_true(all(out$USUBJID %in% c("P1")))
-  expect_false("DUMMY_A" %in% colnames(out))
+  expect_true(all(out_table$USUBJID %in% c("P1")))
+  expect_false("DUMMY_A" %in% colnames(out_table))
 
-  expect_true(all(c("ANEMIA_PRESP","FEVER_OCCURRENCE") %in% colnames(out)))
+  expect_true(all(c("ANEMIA_PRESP","FEVER_OCCURRENCE") %in% colnames(out_table)))
 
 })
 
@@ -63,7 +63,7 @@ test_that("create_clinical_hist_table uses correct custom timing variables", {
 
   expect_identical(out_table, out_prepare)
 
-  expect_true(all(c("ANEMIA_PRESP","FEVER_OCCURRENCE") %in% colnames(out)))
+  expect_true(all(c("ANEMIA_PRESP","FEVER_OCCURRENCE") %in% colnames(out_table)))
 
   expect_equal(nrow(out_table), 2)
 })
