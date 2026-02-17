@@ -66,6 +66,16 @@ jobs:
           ls -la
           ls -la docs || echo "docs not found in deploy job"
         shell: bash
+        
+      - name: Verify docs exist immediately before deploy
+        run: |
+          echo "PWD: $(pwd)"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "ls -la repo root:"
+          ls -la
+          echo "ls -la docs:"
+          ls -la docs || (echo "ERROR: docs not found" && false)
+        shell: bash
 
   deploy:
     name: Deploy to GitHub Pages
