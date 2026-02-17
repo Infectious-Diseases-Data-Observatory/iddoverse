@@ -60,6 +60,13 @@ jobs:
           find . -maxdepth 4 -type d -name docs -print || echo "no docs directory found under repo"
         shell: bash
 
+      - name: Debug in deploy job
+        run: |
+          echo "In deploy job - PWD: $(pwd)"
+          ls -la
+          ls -la docs || echo "docs not found in deploy job"
+        shell: bash
+
   deploy:
     name: Deploy to GitHub Pages
     needs: pkgdown
