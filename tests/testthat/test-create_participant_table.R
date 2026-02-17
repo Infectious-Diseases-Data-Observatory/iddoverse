@@ -64,6 +64,43 @@ test_that("create_participant_table selects baseline VISITDY == 1 from VS domain
 })
 
 test_that("create_participant_table selects baseline VISITDY == 1 from VS domain and left_joins to DM", {
+  dm <- tibble::tibble(
+    STUDYID = c("S"),
+    USUBJID = c("P1"),
+    AGE = c(35),
+    SEX = c("M")
+  )
+
+  # Create VS domain entries. Use VSTESTCD + VSTRESN + VSTRESU so prepare_domain will pivot a column like HEIGHT_cm
+  sc <- tibble::tibble(
+    STUDYID = c("S","S"),
+    USUBJID = c("P1","P1"),
+    SCTESTCD = c("MARISTAT","EDULEVEL"),
+    SCSTRESN = c(NA, NA),
+    SCSTRESU = c(NA, NA),
+    SCSTRESC = c("MARRIED", "SECONDARY"),
+    SCORRES = c("partnered",  "stage 11"),
+    SCORRESU = c(NA, NA),
+    VISITDY = c(1, 1),
+    EPOCH = c("BASELINE", "BASELINE")
+  )
+
+  out <- create_participant_table(dm_domain = dm, sc_domain = sc)
+
+  expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
+  expect_true(any(grepl("^EDULEVEL", colnames(out))))
+  expect_true(any(grepl("^MARISTAT", colnames(out))))
+
+  edulevel_col <- grep("^EDULEVEL", colnames(out), value = TRUE)[1]
+  maristat_col <- grep("^MARISTAT", colnames(out), value = TRUE)[1]
+  expect_false(is.na(out[[edulevel_col]][1]))
+  expect_false(is.na(out[[maristat_col]][1]))
+
+  expect_equal(out$USUBJID[1], "P1")
+})
+
+
+test_that("create_participant_table slices baseline VISITDY == 1 correctly", {
   dm <- tibble::tibble(STUDYID = "S", USUBJID = c("A","B"))
 
   # Create VS domain entries. Use VSTESTCD + VSTRESN + VSTRESU so prepare_domain will pivot a column like HEIGHT_cm
@@ -120,3 +157,4 @@ test_that("if AGEU present, AGE is converted to years", {
   expect_equal(as.numeric(out[3, "AGE_YEARS"]), 2)
   expect_false("AGE" %in% colnames(out))
 })
+
