@@ -1,0 +1,66 @@
+# Creates table of medical history features
+
+Uses the IDDO-SDTM clinical and adverse events (SA) domain to create a
+single dataset with various historic clinical information summarised.
+Historic refers to events that occurred before the study start.
+
+## Usage
+
+``` r
+create_clinical_hist_table(
+  sa_domain,
+  timing_variables = c("SAHR", "SADY", "SASTDY", "SACDSTDY", "VISITDY", "EPOCH"),
+  values_funct = first
+)
+```
+
+## Arguments
+
+- sa_domain:
+
+  A clinical and adverse events/SA domain data frame.
+
+- timing_variables:
+
+  Character list. List of timing variables which are to be used to
+  separate time points, this is hierarchical so the order is taken into
+  account. Default is: SAHR, SADY, SASTDY, SACDSTDY, VISITDY, EPOCH.
+
+  (using default for example) Each row will be initially summarised
+  based on the –HR (study hour) variable, if that is missing then the
+  –DY (study day) variable is used, and so on. The output will be one
+  row per participant, per time point, where the time point for each row
+  is the first available variable listed in timing_variables.
+
+- values_funct:
+
+  Function. The function which will determine which data row is used in
+  the output, in the event there are multiple rows for the same subject
+  with the same time points (as listed in timing_variables). Default is
+  first(), i.e. if there is two rows from the same day and time, the
+  first record will be taken, the second will be dropped. Choice of
+  timing_variables will impact the number of rows affected.
+
+## Value
+
+An analysis dataset, one row per person, per timepoint.
+
+## Examples
+
+``` r
+create_clinical_hist_table(SA_RPTESTB)
+#> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
+#> # A tibble: 1 × 6
+#>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE
+#>   <chr>   <chr>       <chr> <chr>       <chr>       <chr>           
+#> 1 RPTESTB RPTESTB_001 -18   STDY        N           Y               
+
+# Change which timing_variables are used to summarise the data
+create_clinical_hist_table(SA_RPTESTB,
+                           timing_variables = c("VISITDY", "EPOCH"))
+#> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
+#> # A tibble: 1 × 6
+#>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE
+#>   <chr>   <chr>       <chr> <chr>       <chr>       <chr>           
+#> 1 RPTESTB RPTESTB_001 1     VISITDY     N           Y               
+```

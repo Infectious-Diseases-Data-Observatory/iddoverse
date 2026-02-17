@@ -1,0 +1,124 @@
+# iddoverse
+
+  
+
+## Purpose
+
+To create analysis ready datasets (‘analysis datasets’) for researchers
+using data stored in the Infectious Diseases Data Observatory (IDDO)
+respoitory.
+
+These reusable functions aim to provide a toolbox for researchers to
+modify the analysis dataset to their study-specific needs, speeding up
+the time it takes to create analysable datasets.
+
+## Installation
+
+You can install the development version of `iddoverse` from
+[GitHub](https://github.com/) with the following code in the R console:
+
+``` r
+# uncomment below line if you have not installed 'devtools' on your machine
+# install.packages("devtools")
+devtools::install_github("Infectious-Diseases-Data-Observatory/iddoverse")
+library(iddoverse)
+```
+
+We recommend re-installing regularly as the package is developing
+constantly. Versions starting with ‘0.’ should be expected to change
+without notification.
+
+## Why is this useful?
+
+The package assists researchers to transform their datasets (transferred
+from IDDO), minimising the time spent on data transformation before
+analysis can begin. These functions specifically work on SDTM (Study
+Data Tabulation Model) data stored by IDDO. MAPPER data from IDDO is not
+supported in this package.
+
+Functions are documented and have example code. A
+[vignette](https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.html)
+provides a demostration/tutorial of the functions and data in the
+package.
+
+## Citation
+
+To cite `iddoverse` in publications, see
+[CITATION](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
+
+## Issues
+
+Improvements to the code are constantly being made, if you notice
+errors, bugs, want to suggest improvements or have ideas for better
+functionality, please describe them in
+[Issues](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/issues).
+
+## Contact
+
+Please contact Rhys Peploe (<rhys.peploe@iddo.org> or
+<rhyspeploe1998@gmail.com>) if you would like to know more, need support
+or are interested in contributing to the package.
+
+# Package index
+
+## All functions
+
+- [`check_data()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/check_data.md)
+  : Perform data checks on IDDO-SDTM data
+- [`convert_age_to_years()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/convert_age_to_years.md)
+  : Convert AGE to years.
+- [`create_clinical_hist_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_clinical_hist_table.md)
+  : Creates table of medical history features
+- [`create_clinical_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_clinical_table.md)
+  : Creates table of key clinical features
+- [`create_labs_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_labs_table.md)
+  : Create table of laboratory test results
+- [`create_malaria_parasitemia_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_malaria_parasitemia_table.md)
+  : Create table of parasitemia data specifically for malaria parasites.
+- [`create_malaria_pcr_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_malaria_pcr_table.md)
+  : Create table of malaria specific PCR data
+- [`create_participant_table()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/create_participant_table.md)
+  : Create table of participant details and baseline characteristics.
+- [`derive_anthro_scores()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/derive_anthro_scores.md)
+  : Calculate WHO growth standards using the anthro() package.
+- [`DM_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/DM_RPTESTB.md)
+  : IDDO-SDTM Tutorial Demographics (DM) Domain
+- [`DS_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/DS_RPTESTB.md)
+  : IDDO-SDTM Tutorial Disposition (DS) Domain
+- [`HO_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/HO_RPTESTB.md)
+  : IDDO-SDTM Tutorial Healthcare Encounters (HO) Domain
+- [`IN_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/IN_RPTESTB.md)
+  : IDDO-SDTM Tutorial Treatments and Interventions (IN) Domain
+- [`LB_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/LB_RPTESTB.md)
+  : IDDO-SDTM Tutorial Laboratory Test Results (LB) Domain
+- [`MB_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/MB_RPTESTB.md)
+  : IDDO-SDTM Tutorial Microbiology (MB) Domain
+- [`PE_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/PE_RPTESTB.md)
+  : IDDO-SDTM Tutorial Physical Examination (PE) Domain
+- [`PF_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/PF_RPTESTB.md)
+  : IDDO-SDTM Tutorial Pharmacogenomics Genetics (PF) Domain
+- [`prepare_domain()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/prepare_domain.md)
+  : Prepare IDDO-SDTM domain for analysis
+- [`RP_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/RP_RPTESTB.md)
+  : IDDO-SDTM Tutorial Reproductive System Findings (RP) Domain
+- [`RS_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/RS_RPTESTB.md)
+  : IDDO-SDTM Tutorial Disease Response and Clinical Classification (RS)
+  Domain
+- [`SA_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/SA_RPTESTB.md)
+  : IDDO-SDTM Tutorial Clinical and Adverse Events (SA) Domain
+- [`table_variables()`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/table_variables.md)
+  : Tabulate function to display variables in a given domain
+- [`TI_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/TI_RPTESTB.md)
+  : IDDO-SDTM Tutorial Trial Inclusion Exclusion Criteria (TI) Domain
+- [`TS_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/TS_RPTESTB.md)
+  : IDDO-SDTM Tutorial Trial Summary (TS) Domain
+- [`TV_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/TV_RPTESTB.md)
+  : IDDO-SDTM Tutorial Trial Visits (TV) Domain
+- [`VS_RPTESTB`](https://infectious-diseases-data-observatory.github.io/iddoverse/reference/VS_RPTESTB.md)
+  : IDDO-SDTM Tutorial Vital Signs (VS) Domain
+
+# Articles
+
+### All vignettes
+
+- [iddoverse](https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.md):
