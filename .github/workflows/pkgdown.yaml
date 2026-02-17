@@ -88,10 +88,23 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: Deploy to GitHub pages 🚀
-        if: github.event_name != 'pull_request'
+      - name: Verify docs exist immediately before deploy
+        run: |
+          echo "PWD: $(pwd)"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "ls -la repo root:"
+          ls -la
+          echo "ls -la docs:"
+          ls -la docs || (echo "ERROR: docs not found" && false)
+        shell: bash
+      
+      - name: (optional) wait a moment for FS to settle
+        run: sleep 2
+        shell: bash
+      
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
-          clean: false
           branch: gh-pages
-          folder: docs
+          folder: ./docs   
+          clean: false
