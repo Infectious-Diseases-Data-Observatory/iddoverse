@@ -13,7 +13,8 @@ name: pkgdown.yaml
 permissions: read-all
 
 jobs:
-  pkgdown:
+  build:
+    name: Build site
     runs-on: ubuntu-latest
     # Only restrict concurrency for non-PR jobs
     concurrency:
@@ -23,15 +24,19 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Setup R 
+        uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
@@ -40,46 +45,20 @@ jobs:
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
-      - name: Show repo and built files (debug)
+      - name: Verify docs exists
         run: |
-          pwd
-          ls -la
-          echo "Contents of docs (if present):"
-          ls -la docs || echo "docs not found"
-        shell: bash
-      
-      - name: debug show repo layout before deploy
-        run: |
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          pwd
-          echo "Repo root:"
-          ls -la
-          echo "Check docs at repo root:"
-          ls -la docs || echo "docs not found at repo root"
-          echo "Find any docs directories under repo:"
-          find . -maxdepth 4 -type d -name docs -print || echo "no docs directory found under repo"
+          echo "Listing docs:"
+          ls -la docs
         shell: bash
 
-      - name: Debug in deploy job
-        run: |
-          echo "In deploy job - PWD: $(pwd)"
-          ls -la
-          ls -la docs || echo "docs not found in deploy job"
-        shell: bash
-        
-      - name: Verify docs exist immediately before deploy
-        run: |
-          echo "PWD: $(pwd)"
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          echo "ls -la repo root:"
-          ls -la
-          echo "ls -la docs:"
-          ls -la docs || (echo "ERROR: docs not found" && false)
-        shell: bash
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
 
   deploy:
     name: Deploy to GitHub Pages
-    needs: pkgdown
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -104,7 +83,3 @@ jobs:
       
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.8.0
-        with:
-          branch: gh-pages
-          folder: ./docs   
-          clean: false
