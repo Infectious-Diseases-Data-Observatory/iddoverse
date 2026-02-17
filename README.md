@@ -16,7 +16,7 @@
 ## Purpose
 
 To create analysis ready datasets ('analysis datasets') for researchers 
-using data stored in the Infectious Diseases Data Observatory (IDDO) respoitory.
+using data stored in the Infectious Diseases Data Observatory (IDDO) repository.
 
 These reusable
 functions aim to provide a toolbox for researchers to modify the
