@@ -40,6 +40,14 @@ jobs:
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
+      - name: Show repo and built files (debug)
+        run: |
+          pwd
+          ls -la
+          echo "Contents of docs (if present):"
+          ls -la docs || echo "docs not found"
+        shell: bash
+
   deploy:
     name: Deploy to GitHub Pages
     needs: pkgdown
