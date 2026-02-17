@@ -42,7 +42,7 @@ jobs:
 
   deploy:
     name: Deploy to GitHub Pages
-    needs: build
+    needs: pkgdown
     runs-on: ubuntu-latest
     environment:
       name: github-pages
