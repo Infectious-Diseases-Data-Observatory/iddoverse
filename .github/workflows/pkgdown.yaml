@@ -47,6 +47,18 @@ jobs:
           echo "Contents of docs (if present):"
           ls -la docs || echo "docs not found"
         shell: bash
+      
+      - name: debug show repo layout before deploy
+        run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          pwd
+          echo "Repo root:"
+          ls -la
+          echo "Check docs at repo root:"
+          ls -la docs || echo "docs not found at repo root"
+          echo "Find any docs directories under repo:"
+          find . -maxdepth 4 -type d -name docs -print || echo "no docs directory found under repo"
+        shell: bash
 
   deploy:
     name: Deploy to GitHub Pages
