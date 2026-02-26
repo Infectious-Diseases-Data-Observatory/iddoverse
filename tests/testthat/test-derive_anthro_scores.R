@@ -81,4 +81,34 @@ test_that("rows with NA AGE are excluded (AGE_DAYS becomes NA and filter removes
   expect_true(is.na(out[which(out$USUBJID == "NA_age"), "WAZ_FLAG"]))
 })
 
+test_that("convert_age_to_years works when age_in_years is FALSE", {
+  df <- tibble::tibble(
+    STUDYID = "S",
+    USUBJID = c("A", "B"),
+    SEX = c(1, 2),
+    AGE = c(24, 104),
+    AGEU = c("MONTHS", "WEEKS"),
+    WEIGHT_kg = c(20, 30),
+    HEIGHT_cm = c(110, 140)
+  )
 
+  expect_error(derive_anthro_scores(df), "Required variable")
+
+  out <- derive_anthro_scores(df, age_in_years = FALSE)
+
+  expect_true(all(c("HAZ", "HAZ_FLAG", "WAZ", "WAZ_FLAG", "WHZ", "WHZ_FLAG") %in% colnames(out)))
+})
+
+test_that("convert_age_to_years fails when age_in_years is FALSE but no AGE vars", {
+  df <- tibble::tibble(
+    STUDYID = "S",
+    USUBJID = c("A", "B"),
+    SEX = c(1, 2),
+    WEIGHT_kg = c(20, 30),
+    HEIGHT_cm = c(110, 140)
+  )
+
+  expect_error(derive_anthro_scores(df, age_in_years = FALSE),
+               "Required variable")
+
+})
