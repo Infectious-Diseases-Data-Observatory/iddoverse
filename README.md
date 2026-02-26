@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 
- <img src="man/figures/iddoverse_hexsticker_solid.png" align="right" height="60"/>
+ <img src="man/figures/iddoverse_hexsticker_solid.png" align="right" height="120"/>
 
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/iddoverse)](https://CRAN.R-project.org/package=iddoverse)
@@ -16,7 +16,7 @@
 ## Purpose
 
 To create analysis ready datasets ('analysis datasets') for researchers 
-using data stored in the Infectious Diseases Data Observatory (IDDO) respoitory.
+using data stored in the Infectious Diseases Data Observatory (IDDO) repository.
 
 These reusable
 functions aim to provide a toolbox for researchers to modify the

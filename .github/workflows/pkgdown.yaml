@@ -13,7 +13,7 @@ name: pkgdown.yaml
 permissions: read-all
 
 jobs:
-  build:
+  build-and-deploy:
     name: Build site
     runs-on: ubuntu-latest
     # Only restrict concurrency for non-PR jobs
@@ -51,35 +51,12 @@ jobs:
           ls -la docs
         shell: bash
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
-          path: docs
+          clean: false
+          branch: gh-pages
+          folder: docs
 
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-    permissions:
-      pages: write
-      id-token: write
-      contents: read
-    steps:
-      - name: Verify docs exist immediately before deploy
-        run: |
-          echo "PWD: $(pwd)"
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          echo "ls -la repo root:"
-          ls -la
-          echo "ls -la docs:"
-          ls -la docs || (echo "ERROR: docs not found" && false)
-        shell: bash
-      
-      - name: (optional) wait a moment for FS to settle
-        run: sleep 2
-        shell: bash
-      
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+
