@@ -58,8 +58,10 @@ An analysis dataset, one row per person, per timepoint.
 create_clinical_table(dm_domain = DM_RPTESTB,
                       sa_domain = SA_RPTESTB,
                       vs_domain = VS_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the SA domain are: SADY, SASTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID, TIME, TIME_SOURCE)`
 #> # A tibble: 10 × 10

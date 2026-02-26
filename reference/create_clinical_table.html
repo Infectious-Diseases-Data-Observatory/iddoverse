@@ -100,8 +100,10 @@ timing_variables will impact the number of rows affected.</p></dd>
 <span class="r-in"><span><span class="fu">create_clinical_table</span><span class="op">(</span>dm_domain <span class="op">=</span> <span class="va">DM_RPTESTB</span>,</span></span>
 <span class="r-in"><span>                      sa_domain <span class="op">=</span> <span class="va">SA_RPTESTB</span>,</span></span>
 <span class="r-in"><span>                      vs_domain <span class="op">=</span> <span class="va">VS_RPTESTB</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID)`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the SA domain are: SADY, SASTDY, VISITDY, EPOCH"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID, TIME, TIME_SOURCE)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 10</span></span>

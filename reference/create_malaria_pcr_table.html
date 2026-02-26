@@ -85,7 +85,9 @@ timing_variables will impact the number of rows affected.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">create_malaria_pcr_table</span><span class="op">(</span><span class="va">PF_RPTESTB</span>, <span class="va">RS_RPTESTB</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the PF domain are: PFDY, PFCDSTDY, VISITDY, EPOCH"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the PF domain: 0"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the RS domain are: RSDY, RSCDSTDY, VISITDY, EPOCH"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the RS domain: 0"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(STUDYID, USUBJID, TIME, TIME_SOURCE)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 6</span></span>

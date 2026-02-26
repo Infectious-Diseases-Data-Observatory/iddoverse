@@ -103,6 +103,7 @@ domain code.
 ``` r
 prepare_domain(MB_RPTESTB, 
                "mb")
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: MBDY, MBCDSTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 #> # A tibble: 14 × 5
 #>    STUDYID USUBJID     TIME  TIME_SOURCE `PFALCIPA_10^6/L`
@@ -144,6 +145,7 @@ compared to the previous example as the hierarchy has changed.
 prepare_domain(MB_RPTESTB,
                "MB",
                timing_variables = "VISITDY")
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: VISITDY"
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 #> # A tibble: 14 × 5
 #>    STUDYID USUBJID     TIME  TIME_SOURCE `PFALCIPA_10^6/L`
@@ -172,6 +174,7 @@ temperature in the VS domain example below:
 prepare_domain(VS_RPTESTB,
                "vs", 
                variables_include = c("TEMP", "WEIGHT"))
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 6
 #>   STUDYID USUBJID     TIME      TIME_SOURCE TEMP_C WEIGHT_kg
@@ -198,6 +201,7 @@ prepare_domain(VS_RPTESTB,
                "vs", 
                variables_include = c("TEMP", "WEIGHT"), 
                include_LOC = TRUE)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 7
 #>   STUDYID USUBJID     TIME      TIME_SOURCE TEMP_AXILLA_C TEMP_ORAL_CAVITY_C
@@ -235,7 +239,9 @@ left_join(
   prepare_domain(MB_RPTESTB, "MB",  timing_variables = "VISIT"),
   prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_LOC = TRUE)
 )
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: VISIT"
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VISIT"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID, TIME, TIME_SOURCE)`
 #> # A tibble: 14 × 10
@@ -290,8 +296,10 @@ calculated for participants under the age of 5, with respective flags
 create_participant_table(dm_domain = DM_RPTESTB,
                          rp_domain = RP_RPTESTB,
                          vs_domain = VS_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the RP domain are: VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the RP domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
 #> Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,
@@ -317,7 +325,9 @@ Classification (RS) and (optionally) disposition (DS) domains.
 ``` r
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
                          rs_domain = RS_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the PF domain are: PFDY, PFCDSTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the PF domain: 0"
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the RS domain are: RSDY, RSCDSTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the RS domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID, TIME, TIME_SOURCE)`
 #> # A tibble: 3 × 6

@@ -8,6 +8,8 @@
 - prepare_domain: data first, domain second in parameter order to align
   with tidy principles, changes to downstream functions, examples,
   documentation, tests and vignette
+- prepare_domain: added a print message describing the timing variables
+  used in console
 - table_variables: data first, domain second in parameter order to align
   with tidy principles
 - prepare_domain: default timing changed to HR, DY, STDY, CDSTDY,

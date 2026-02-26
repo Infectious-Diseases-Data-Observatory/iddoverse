@@ -144,6 +144,7 @@ parameters.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Change which timing_variables are used to summarise the data</span></span></span>
 <span class="r-in"><span><span class="fu">prepare_domain</span><span class="op">(</span><span class="va">LB_RPTESTB</span>, <span class="st">"lb"</span>, timing_variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VISITNUM"</span>, <span class="st">"VISITDY"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the LB domain are: VISITNUM, VISITDY"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID     TIME  TIME_SOURCE HCG_NA   `HGB_g/L` `PLAT_10^9/L`</span>
@@ -160,6 +161,7 @@ parameters.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Include location in the output and change the values_fn to select the last result</span></span></span>
 <span class="r-in"><span><span class="fu">prepare_domain</span><span class="op">(</span><span class="va">VS_RPTESTB</span>, <span class="st">"vs"</span>, include_LOC <span class="op">=</span> <span class="cn">TRUE</span>, values_fn <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   STUDYID USUBJID    TIME  TIME_SOURCE `BMI_NA_kg/m2` HEIGHT_NA_cm TEMP_AXILLA_C</span>

@@ -54,8 +54,10 @@ An analysis dataset, one row per participant.
 create_participant_table(dm_domain = DM_RPTESTB,
                          lb_domain = LB_RPTESTB,
                          vs_domain = VS_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the LB domain are: VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID)`
 #> Joining with `by = join_by(STUDYID, USUBJID, AGE_YEARS, SEX, RFSTDTC, RACE,

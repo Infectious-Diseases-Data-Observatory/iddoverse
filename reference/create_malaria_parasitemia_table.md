@@ -64,6 +64,7 @@ An analysis dataset, one row per person, per timepoint.
 
 ``` r
 create_malaria_parasitemia_table(MB_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: MBDY, MBCDSTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 #> # A tibble: 14 × 5
 #>    STUDYID USUBJID     TIME  TIME_SOURCE `PFALCIPA_10^6/L`
@@ -85,6 +86,7 @@ create_malaria_parasitemia_table(MB_RPTESTB)
 
 # Change which timing_variables are used to summarise the data
 create_malaria_parasitemia_table(MB_RPTESTB, timing_variables = "EPOCH")
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 3"
 #> # A tibble: 9 × 5
 #>   STUDYID USUBJID     TIME      TIME_SOURCE `PFALCIPA_10^6/L`
@@ -101,6 +103,7 @@ create_malaria_parasitemia_table(MB_RPTESTB, timing_variables = "EPOCH")
 
 # Adding include_method = TRUE provides the method in the column of the analysis dataset
 create_malaria_parasitemia_table(MB_RPTESTB, include_method = TRUE)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: MBDY, MBCDSTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
 #> # A tibble: 14 × 5
 #>    STUDYID USUBJID     TIME  TIME_SOURCE `PFALCIPA_MICROSCOPY_10^6/L`

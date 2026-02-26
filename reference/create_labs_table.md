@@ -60,6 +60,7 @@ An analysis dataset, one row per person, per timepoint.
 
 ``` r
 create_labs_table(LB_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the LB domain are: LBDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"
 #> # A tibble: 9 × 6
 #>   STUDYID USUBJID     TIME      TIME_SOURCE `HGB_g/L` `PLAT_10^9/L`
@@ -78,6 +79,7 @@ create_labs_table(LB_RPTESTB)
 create_labs_table(LB_RPTESTB,
                   variables = c("HGB"),
                   timing_variables = c("EPOCH", "VISIT"))
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the LB domain are: EPOCH, VISIT"
 #> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"
 #> # A tibble: 6 × 5
 #>   STUDYID USUBJID     TIME      TIME_SOURCE `HGB_g/L`

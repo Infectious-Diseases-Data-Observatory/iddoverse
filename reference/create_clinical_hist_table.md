@@ -49,6 +49,7 @@ An analysis dataset, one row per person, per timepoint.
 
 ``` r
 create_clinical_hist_table(SA_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the SA domain are: SADY, SASTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
 #> # A tibble: 1 × 6
 #>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE
@@ -58,6 +59,7 @@ create_clinical_hist_table(SA_RPTESTB)
 # Change which timing_variables are used to summarise the data
 create_clinical_hist_table(SA_RPTESTB,
                            timing_variables = c("VISITDY", "EPOCH"))
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the SA domain are: VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the SA domain: 0"
 #> # A tibble: 1 × 6
 #>   STUDYID USUBJID     TIME  TIME_SOURCE FEVER_PRESP FEVER_OCCURRENCE

@@ -103,6 +103,7 @@ prepare_domain(DM_RPTESTB, "DM", variables_include = c("ARMCD", "AGE", "SEX"))
 
 # Change which timing_variables are used to summarise the data
 prepare_domain(LB_RPTESTB, "lb", timing_variables = c("VISITNUM", "VISITDY"))
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the LB domain are: VISITNUM, VISITDY"
 #> [1] "Number of rows where values_fn has been used to pick record in the LB domain: 0"
 #> # A tibble: 9 × 7
 #>   STUDYID USUBJID     TIME  TIME_SOURCE HCG_NA   `HGB_g/L` `PLAT_10^9/L`
@@ -119,6 +120,7 @@ prepare_domain(LB_RPTESTB, "lb", timing_variables = c("VISITNUM", "VISITDY"))
 
 # Include location in the output and change the values_fn to select the last result
 prepare_domain(VS_RPTESTB, "vs", include_LOC = TRUE, values_fn = dplyr::last)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 9
 #>   STUDYID USUBJID    TIME  TIME_SOURCE `BMI_NA_kg/m2` HEIGHT_NA_cm TEMP_AXILLA_C

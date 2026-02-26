@@ -46,7 +46,9 @@ An analysis dataset, one row per person, per timepoint.
 
 ``` r
 create_malaria_pcr_table(PF_RPTESTB, RS_RPTESTB)
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the PF domain are: PFDY, PFCDSTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the PF domain: 0"
+#> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the RS domain are: RSDY, RSCDSTDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the RS domain: 0"
 #> Joining with `by = join_by(STUDYID, USUBJID, TIME, TIME_SOURCE)`
 #> # A tibble: 3 × 6
