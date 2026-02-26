@@ -5,6 +5,7 @@
 * prepare_domain: default timing changed to HR, DY, STDY, CDSTDY, VISITDY, EPOCH (removed VISIT, VISITNUM, EVLINT, EVLINTX)
 * hexsticker logo includes package name
 * unit tests for all functions
+* GitHub action for website deployment
 
 # iddoverse 0.8.2
 * Additional unit tests in prepare_domain & check_data
