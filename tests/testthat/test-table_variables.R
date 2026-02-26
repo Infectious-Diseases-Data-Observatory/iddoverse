@@ -120,4 +120,7 @@ test_that("unknown/unsupported domain returns warning", {
 
   expect_warning(table_variables(df, "XX", by_STUDYID = FALSE),
                  regexp = "domain not included in table_variables")
+
+  expect_warning(table_variables(df, "XX", by_STUDYID = TRUE),
+                 regexp = "domain not included in table_variables")
 })
