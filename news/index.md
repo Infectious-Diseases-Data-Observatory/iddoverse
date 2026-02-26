@@ -14,6 +14,7 @@
   VISITDY, EPOCH (removed VISIT, VISITNUM, EVLINT, EVLINTX)
 - hexsticker logo includes package name
 - unit tests for all functions
+- GitHub action for website deployment
 
 ## iddoverse 0.8.2
 
