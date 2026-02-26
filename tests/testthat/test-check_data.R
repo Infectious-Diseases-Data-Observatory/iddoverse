@@ -140,3 +140,19 @@ test_that("missingness vector computed and present in returned list", {
   expect_equal(as.numeric(miss["A"]), round(1/3, 3))
   expect_equal(as.numeric(miss["B"]), 1.000)
 })
+
+test_that("STRESC is created if it does not exist in input data frame", {
+  df <- tibble::tibble(
+    STUDYID = c("S1","S1","S1","S1"),
+    USUBJID = c("a","b","c","d"),
+    LBTESTCD = c("T1","T1","T1","T1"),
+    LBSTRESN = c(1.5, NA, NA, NA),
+    LBMODIFY  = c(NA, "mod_val", NA, NA),
+    LBORRES   = c(NA, "or_val", NA, "5.0"),
+    LBORRESU  = c(NA, "U_OR", NA, "U_OR")
+  )
+
+  out <- capture.output(res <- check_data(df))
+
+  expect_equal(nrow(res$testcd), 1L)
+})
