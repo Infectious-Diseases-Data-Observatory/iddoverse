@@ -1,9 +1,9 @@
 test_that("convert_age_to_years: basic conversions", {
   df <- tibble::tibble(
-    USUBJID = c("P1", "P2", "P3", "P4"),
-    AGE = c(365, 104, 24, 30.7),
+    USUBJID = c("P1", "P2", "P3", "P4", "P5"),
+    AGE = c(876.6, 365, 104, 24, 30.7),
     # 365 days -> 1 year; 104 weeks -> floor(104/52)=2; 24 months -> floor(24/12)=2; 30.7 years -> floor(30.7)=30
-    AGEU = c("DAYS", "WEEKS", "MONTHS", "YEARS")
+    AGEU = c("HOURS", "DAYS", "WEEKS", "MONTHS", "YEARS")
   )
 
   out <- convert_age_to_years(df)
@@ -12,12 +12,13 @@ test_that("convert_age_to_years: basic conversions", {
   expect_true("AGE_YEARS" %in% colnames(out))
   expect_false("AGEU" %in% colnames(out))
 
-  expected1 <- 365 / 365.25
-  expected2 <- 104 / 52
-  expected3 <- 24 / 12
-  expected4 <- 30.7
+  expected1 <- 876.6 / 8766
+  expected2 <- 365 / 365.25
+  expected3 <- 104 / 52
+  expected4 <- 24 / 12
+  expected5 <- 30.7
 
-  expect_equal(out$AGE_YEARS, c(expected1, expected2, expected3, expected4))
+  expect_equal(out$AGE_YEARS, c(expected1, expected2, expected3, expected4, expected5))
 })
 
 test_that("AGEU is uppercased before conversion", {
