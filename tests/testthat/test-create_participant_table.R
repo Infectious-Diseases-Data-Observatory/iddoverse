@@ -63,7 +63,7 @@ test_that("create_participant_table selects baseline VISITDY == 1 from VS domain
   expect_equal(out$USUBJID[1], "P1")
 })
 
-test_that("create_participant_table selects baseline VISITDY == 1 from VS domain and left_joins to DM", {
+test_that("create_participant_table selects baseline VISITDY == 1 from sc domain and left_joins to DM", {
   dm <- tibble::tibble(
     STUDYID = c("S"),
     USUBJID = c("P1"),
@@ -71,7 +71,6 @@ test_that("create_participant_table selects baseline VISITDY == 1 from VS domain
     SEX = c("M")
   )
 
-  # Create VS domain entries. Use VSTESTCD + VSTRESN + VSTRESU so prepare_domain will pivot a column like HEIGHT_cm
   sc <- tibble::tibble(
     STUDYID = c("S","S"),
     USUBJID = c("P1","P1"),
@@ -99,6 +98,104 @@ test_that("create_participant_table selects baseline VISITDY == 1 from VS domain
   expect_equal(out$USUBJID[1], "P1")
 })
 
+test_that("create_participant_table selects baseline VISITDY == 1 from LB domain and left_joins to DM", {
+  dm <- tibble::tibble(
+    STUDYID = c("S"),
+    USUBJID = c("P1"),
+    AGE = c(35),
+    SEX = c("M")
+  )
+
+  lb <- tibble::tibble(
+    STUDYID = c("S"),
+    USUBJID = c("P1"),
+    LBTESTCD = c("G6PD"),
+    LBSTRESN = c(10),
+    LBSTRESU = c("U/g Hb"),
+    LBSTRESC = c("10"),
+    LBORRES = c("ten"),
+    LBORRESU = c("units"),
+    VISITDY = c(1),
+    EPOCH = c("BASELINE")
+  )
+
+  out <- create_participant_table(dm_domain = dm, lb_domain = lb)
+
+  expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
+  expect_true(any(grepl("^G6PD", colnames(out))))
+
+  G6PD_col <- grep("^G6PD", colnames(out), value = TRUE)[1]
+  expect_false(is.na(out[[G6PD_col]][1]))
+
+  expect_equal(out$USUBJID[1], "P1")
+})
+
+test_that("create_participant_table selects baseline VISITDY == 1 from MB domain and left_joins to DM", {
+  dm <- tibble::tibble(
+    STUDYID = c("S"),
+    USUBJID = c("P1"),
+    AGE = c(35),
+    SEX = c("M")
+  )
+
+  mb <- tibble::tibble(
+    STUDYID = c("S"),
+    USUBJID = c("P1"),
+    MBTESTCD = c("HIV"),
+    MBSTRESN = c(NA),
+    MBSTRESU = c(NA),
+    MBSTRESC = c("POSITIVE"),
+    MBORRES = c("+"),
+    MBORRESU = c("no units"),
+    VISITDY = c(1),
+    EPOCH = c("BASELINE")
+  )
+
+  out <- create_participant_table(dm_domain = dm, mb_domain = mb)
+
+  expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
+  expect_true(any(grepl("^HIV", colnames(out))))
+
+  hiv_col <- grep("^HIV", colnames(out), value = TRUE)[1]
+  expect_false(is.na(out[[hiv_col]][1]))
+
+  expect_equal(out$USUBJID[1], "P1")
+})
+
+test_that("create_participant_table selects baseline VISITDY == 1 from rp domain and left_joins to DM", {
+  dm <- tibble::tibble(
+    STUDYID = c("S"),
+    USUBJID = c("P1"),
+    AGE = c(35),
+    SEX = c("M")
+  )
+
+  rp <- tibble::tibble(
+    STUDYID = c("S","S"),
+    USUBJID = c("P1","P1"),
+    RPTESTCD = c("EGESTAGE","PREGIND"),
+    RPSTRESN = c(28, NA),
+    RPSTRESU = c("WEEKS", NA),
+    RPSTRESC = c("28", "POSITIVE"),
+    RPORRES = c("28w",  "pos"),
+    RPORRESU = c("wks", NA),
+    VISITDY = c(1, 1),
+    EPOCH = c("BASELINE", "BASELINE")
+  )
+
+  out <- create_participant_table(dm_domain = dm, rp_domain = rp)
+
+  expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
+  expect_true(any(grepl("^EGESTAGE", colnames(out))))
+  expect_true(any(grepl("^PREGIND", colnames(out))))
+
+  egestage_col <- grep("^EGESTAGE", colnames(out), value = TRUE)[1]
+  pregind_col <- grep("^PREGIND", colnames(out), value = TRUE)[1]
+  expect_false(is.na(out[[egestage_col]][1]))
+  expect_false(is.na(out[[pregind_col]][1]))
+
+  expect_equal(out$USUBJID[1], "P1")
+})
 
 test_that("create_participant_table slices baseline VISITDY == 1 correctly", {
   dm <- tibble::tibble(STUDYID = "S", USUBJID = c("A","B"))
@@ -158,3 +255,48 @@ test_that("if AGEU present, AGE is converted to years", {
   expect_false("AGE" %in% colnames(out))
 })
 
+test_that("anthro is derived if columns are present, and conversely", {
+  dm <- tibble::tibble(
+    STUDYID = "S1",
+    USUBJID = c("P1", "P2"),
+    AGE = c(2, 36),
+    AGEU = c("YEARS", "WEEKS"),
+    SEX = c("M", "F")
+  )
+
+  vs_with <- tibble::tibble(
+    STUDYID = "S1",
+    USUBJID = c("P1","P1","P2", "P2"),
+    VSTESTCD = c("HEIGHT", "WEIGHT", "HEIGHT","WEIGHT"),
+    VSTEST = c("Height", "Weight", "Height","Weight"),
+    VSSTRESN = c(58, 14, 68, 16.5),
+    VSSTRESU = c("cm", "kg", "cm", "kg"),
+    VSORRES = c("5-8", "1-4", "68", "16 1/2"),
+    VSORRESU = c("CM", "KG", "CM", "KG"),
+    VISITDY = 1,
+    EPOCH = "BASELINE"
+  )
+
+  vs_without <- tibble::tibble(
+    STUDYID = "S1",
+    USUBJID = c("P1", "P2"),
+    VSTESTCD = c("HEIGHT", "HEIGHT"),
+    VSTEST = c("Height", "Height"),
+    VSSTRESN = c(48, 54),
+    VSSTRESU = c("cm", "cm"),
+    VSORRES = c("4-8", "5-4"),
+    VSORRESU = c("CM", "CM"),
+    VISITDY = 1,
+    EPOCH = "BASELINE"
+  )
+
+  out_anthro <- create_participant_table(dm_domain = dm, vs_domain = vs_with)
+  out_without_anthro <- create_participant_table(dm_domain = dm, vs_domain = vs_without)
+
+  expect_true(all(c("HEIGHT_cm", "HAZ", "WAZ_FLAG", "WHZ") %in% colnames(out_anthro)))
+  expect_true(all(c("HEIGHT_cm") %in% colnames(out_without_anthro)))
+  expect_false(all(c("WEIGHT_kg", "HAZ", "WAZ_FLAG", "WHZ") %in% colnames(out_without_anthro)))
+
+  expect_equal(as.integer(out_anthro[1, "HAZ_FLAG"]), 1L)
+  expect_equal(as.integer(out_anthro[2, "WHZ_FLAG"]), 1L)
+})
