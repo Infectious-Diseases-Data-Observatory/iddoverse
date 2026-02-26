@@ -1,6 +1,7 @@
 # iddoverse 0.9.0
 * create_participant_table: baseline timing EPOCH == BASELINE then VISITDY == 1, change from any of VISITDY == 1, DY == 1 and EPOCH == BASELINE
 * prepare_domain: data first, domain second in parameter order to align with tidy principles, changes to downstream functions, examples, documentation, tests and vignette
+* prepare_domain: added a print message describing the timing variables used in console
 * table_variables: data first, domain second in parameter order to align with tidy principles
 * prepare_domain: default timing changed to HR, DY, STDY, CDSTDY, VISITDY, EPOCH (removed VISIT, VISITNUM, EVLINT, EVLINTX)
 * hexsticker logo includes package name

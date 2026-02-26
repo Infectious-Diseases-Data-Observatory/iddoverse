@@ -66,7 +66,7 @@ prepare_domain <- function(data, domain,
 
   event_domains <- c("SA", "HO", "ER", "PO")
 
-  # "DS" dealt with unique
+  # "DS" dealt with uniquely
 
   domain <- str_to_upper(domain)
 
@@ -75,6 +75,12 @@ prepare_domain <- function(data, domain,
   variables_include <- str_to_upper(variables_include)
 
   timing_variables <- timing_variables[which(timing_variables %in% names(data))]
+
+  if(print_messages == TRUE){
+    if(domain != "DM"){
+      print(str_c("The timing variable(s) hierarchy being used in prepare_domain() for the ", domain, " domain are: ", str_flatten(timing_variables, collapse = ", ")))
+    }
+  }
 
   if(include_LOC == TRUE & !(str_c(domain, "LOC") %in% names(data))){
     rlang::warn(str_c("This dataset does not have a location (", domain, "LOC) variable, yet include_LOC is TRUE"))

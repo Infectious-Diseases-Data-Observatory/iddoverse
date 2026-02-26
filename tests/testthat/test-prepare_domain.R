@@ -221,6 +221,8 @@ test_that("check print_messages parameter option", {
 
   expect_output(prepare_domain(sa, "SA", variables_include = c("FEVER"), print_messages = TRUE),
                  regexp = "Number of rows where values_fn has been used to pick record")
+  expect_output(prepare_domain(sa, "SA", variables_include = c("FEVER"), print_messages = TRUE),
+                regexp = "The timing variable")
 })
 
 test_that("prepare_domain errors when required STUDYID or USUBJID missing", {
