@@ -18,6 +18,7 @@ authors:
   orcid: "0000-0002-0391-4575"
   affiliation: 1, 2
 - name: Samantha Strudwick
+  ordic: "0000-0002-2946-8366"
   affiliation: 1, 2
 - name: Hannah Jauncey
   orcid: "0000-0003-1141-5781"
