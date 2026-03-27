@@ -51,12 +51,12 @@ range of programming ability. Advanced knowledge of SDTM is not required, thereb
 those in Low- and Middle- Income Countries (LMICs) where SDTM training and expertise is often more difficult to access. Overall, the `iddoverse`
 package aims to reduce time spent on data manipulation and facilitate the generation of reproducible analysis datasets [@patel]. 
 
-# Statement of need
+# Statement of Need
 
 In the context of infectious diseases, IDDO maximises the scientific utility of existing clinical data through the promotion of data reuse
 and the adoption of a responsible open-access data model [@pisani_lessons; @pisani_sharing]. By pooling multiple datasets, scientists can address 
 important questions using individual participant data meta-analysis (IPD-MA) techniques. To achieve this, IDDO standardises clinical study
-data from disparate sources into the SDTM format, thereby providing a consistent and comprehensive method to harmonise data. The result is 
+data from disparate sources into SDTM format, thereby providing a consistent and comprehensive method to harmonise data. The result is 
 a controlled, open-access database, which enables the global research community to address questions of public health relevance that would 
 otherwise not be possible using a standalone study.  A key challenge, however, is the effort and time required for transformation of data 
 to an analysis-ready format.  This mandates a working knowledge of the SDTM format and nomenclature, in addition to a good knowledge of IDDO’s 
@@ -81,7 +81,7 @@ Domains are tabular and usually stored in a long format; typically a row per eve
 per participant, per day. The package provides several synthetic datasets generated for user familiarisation and documentation. SDTM 
 findings domains, such as the microbiology (MB) domain, can have up to 4 columns for capturing the test results (i.e. `MBORRES`, `MBSTRESC` & `MBSTRESN`) 
 and a selection of over 20 timing variables. The MB domain, for example (see `MB_RPTESTB` below), has one row for every microbiology test and the test 
-result conducted in the study, `MB_RPTESTB`. Whilst this preserves the intricacies of the study data, it also creates complexity for analysis. 
+result conducted in the study. Whilst this preserves the intricacies of the study data, it also creates complexity for analysis. 
 The `iddoverse` package aims to minimise this analytical burden whilst maximising the retention of data granularity. 
 
 ```r
@@ -126,7 +126,7 @@ and contribute towards the global fight against infectious diseases.
 The `iddoverse` suite (Figure 1) comprises several functions. Most functions are domain-agnostic and can be applied 
 across special purpose, findings, and event domains. This approach contrasts with the earlier developmental versions 
 of the package (pre version 0.7.0) which had predominately domain-specific functions. Previously, a static selection 
-of SDTM variables was used, which proved to be too restrictive and impacted the generalisability of the function, so 
+of SDTM timing variables was used, which proved to be too restrictive and impacted the generalisability of the function, so 
 a customisable set has now been implemented.  
 
 A key limitation is that the iddoverse functions cannot address every need of researchers due to the large variability 
@@ -148,7 +148,7 @@ diseases and will not be relevant to most. The hierarchy of timing variables is 
 parameter to enable researchers to select the most appropriate variable(s) for their analysis. By choosing a ‘best choice’ timing 
 and result, potential confusion surrounding multiple columns is removed. 
 
-![Figure 2: Hierarchy of best choice results/events/findings in prepare_domain(). STRESN or DECOD would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order.](figures/Hierarchy Choices.tif)
+![Figure 2: Hierarchy of best choice results/events/findings in `prepare_domain()`. `STRESN` or `DECOD` would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order. The two letter domain code preceeds these variable names.](figures/Hierarchy Choices.tif)
 
 The `prepare_domain()` function then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study ID (`STUDYID`) 
 and participant number (`USUBJID`). The different events/findings/tests are transformed into columns, and the dataset is populated 
