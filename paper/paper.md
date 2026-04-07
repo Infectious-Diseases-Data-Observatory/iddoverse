@@ -6,7 +6,7 @@ tags:
 - Infectious Diseases
 - Data Transformation
 - Study Data Tabulation Model
-date: "27 March 2026" 
+date: "7 April 2026" 
 output: word_document 
 authors:
 - name: Rhys Peploe 
@@ -80,7 +80,7 @@ Data stored in SDTM format comprises a series of subsets called domains, with ea
 Domains are tabular and usually stored in a long format; typically a row per event per participant, which can result in multiple rows 
 per participant, per timepoint. The package provides several synthetic datasets generated for user familiarisation and documentation. SDTM 
 findings domains, such as the microbiology (MB) domain, can have up to 4 columns for capturing the test results (i.e. `MBORRES`, `MBSTRESC` & `MBSTRESN`) 
-and a selection of over 20 timing variables. The MB domain, for example (see `MB_RPTESTB` below), has one row for every microbiology test and the test 
+and a selection of over 20 timing variables. The MB domain, for example (see `MB_RPTESTB` below), has one row for every microbiology test and test 
 result conducted in the study. Whilst this preserves the intricacies of the study data, it also creates complexity for analysis. 
 The `iddoverse` package aims to minimise this analytical burden whilst maximising the retention of data granularity. 
 
@@ -126,10 +126,10 @@ and contribute towards the global fight against infectious diseases.
 The `iddoverse` suite (Figure 1) comprises several functions. Most functions are domain-agnostic and can be applied 
 across special purpose, findings, and event domains. This approach contrasts with the earlier developmental versions 
 of the package (pre version 0.7.0) which had predominately domain-specific functions. Previously, a static selection 
-of SDTM timing variables was used, which proved to be too restrictive and impacted the generalisability of the function, so 
+of SDTM timing variables was used, which proved to be too restrictive and impacted the generalisability of the functions, so 
 a customisable set has now been implemented.  
 
-A key limitation is that the iddoverse functions cannot address every need of researchers due to the large variability 
+A key limitation is that the `iddoverse` functions cannot address every need of researchers due to the large variability 
 in the datasets within, and across, diseases. The objective has been to provide assistance and automation of analysis
 datasets, whilst keeping the solution generalisable and customisable by the user. 
 
@@ -138,7 +138,7 @@ datasets, whilst keeping the solution generalisable and customisable by the user
 # iddoverse Functions
 
 A core function within the `iddoverse` package is `prepare_domain()`. This function enables the transformation of a 
-single IDDO-SDTM domain. In order to reduce the number of results and timing columns, the function amalgamates data 
+single IDDO-SDTM domain. In order to reduce the number of result and timing columns, the function amalgamates data 
 into one ‘best choice’ for ‘time’ and ‘result’.  For the ‘best result’, the standardised numeric result (i.e. `MBSTRESN`) 
 is taken first for each row.  If this standardised numeric result is missing for a given row, the standardised character value 
 (i.e. `MBSTRESC`) will instead be populated as the best choice result for that given row (Figure 2). If both standardised results 
@@ -179,8 +179,8 @@ with the associated result. Several domains can then be analysed separately or j
 Parameters provide customisation options such as variable selection, inclusion of information for test methodology or location, 
 and the mechanism for handling rows that are not uniquely separable in the pivot process. 
 
-Additionally, the package contains functions to create standardised analysis datasets, such as `create_participant_table()`. These 
-functions merge various domain analysis datasets together by using the `prepare_domain()` multiple times to extract specific variables 
+Additionally, the package contains functions to create standardised, multiple domain analysis datasets, such as `create_participant_table()`. These 
+functions merge various domain analysis datasets together by using the `prepare_domain()` function multiple times to extract specific variables 
 from their source domains. The choice of which variables to include is based on subject matter expertise. The purpose of these tables
 is to provide most of the key information required for analyses, for instance the information typically presented in Table 1 of clinical study publications.  
 
@@ -190,7 +190,7 @@ selection of parameters within `prepare_domain()`. Additionally, some utility an
 # Research Impact Statement
 
 The IDDO data repository contains over 1.3 million IPD records from over 600 studies and 70 countries, across 8 disease themes. Since February 2026,
-all researchers accessing data from the IDDO data repository have been provided with information on how to use and access the iddoverse package, 
+all researchers accessing data from the IDDO data repository have been provided with information on how to use and access the `iddoverse` package, 
 thus increasing the number and diversity of users and organisations. 
 
 Research which has used the `iddoverse` includes malaria studies conducted by the Liverpool School of Tropical Medicine and the 
@@ -206,7 +206,7 @@ result columns. Users will benefit from the `iddoverse` package as a solution to
 
 This research was supported by the Wellcome Trust [222410/Z/21/Z]. 
 
-Special thanks to Dr Caitlin Naylor for their project management support during the project. 
+Special thanks to Dr Caitlin Naylor for their project management during the project. 
 
 # AI Usage Disclosure 
 
