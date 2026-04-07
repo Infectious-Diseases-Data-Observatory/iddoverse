@@ -40,12 +40,12 @@ affiliations:
 # Summary
 
 Study Data Tabulation Model (SDTM), developed by the Clinical Data Interchange Standards Consortium (CDISC), is an internationally adopted 
-data storage standard [@cdisc].  The model provides a coherent framework for harmonising data from 
+data storage standard [@cdisc]. The model provides a coherent framework for harmonising data from 
 multiple clinical studies. Using a modified implementation of SDTM, the Infectious Diseases Data Observatory (IDDO) has developed a standardised
 repository of individual participant data from clinical studies spanning diseases of global health importance [@iddo]. Generating datasets amenable
-to analysis (‘analysis datasets’) from SDTM format requires complex transformations, which necessitates expenditure of additional time and resource by end-users. 
+to analysis (‘analysis datasets’) from SDTM format requires complex transformations, which requires additional time and resource by end-users. 
 
-The `iddoverse` package provides a suite of functions that transforms datasets from SDTM format into analysis datasets. Assuming a foundational 
+The `iddoverse` package provides a suite of functions that transforms datasets from SDTM into analysis datasets. Assuming a foundational 
 familiarity with the R software [@r_core], the package is intended for epidemiologists, statisticians, and data scientists with a diverse 
 range of programming ability. Advanced knowledge of SDTM is not required, thereby removing a potential challenge for data requesters, especially
 those in Low- and Middle- Income Countries (LMICs) where SDTM training and expertise is often more difficult to access. Overall, the `iddoverse`
@@ -58,7 +58,7 @@ and the adoption of a responsible open-access data model [@pisani_lessons; @pisa
 important questions using individual participant data meta-analysis (IPD-MA) techniques. To achieve this, IDDO standardises clinical study
 data from disparate sources into SDTM format, thereby providing a consistent and comprehensive method to harmonise data. The result is 
 a controlled, open-access database, which enables the global research community to address questions of public health relevance that would 
-otherwise not be possible using a standalone study.  A key challenge, however, is the effort and time required for transformation of data 
+otherwise not be possible using a standalone study.  A key challenge, however, is the effort and time required for transformation of the curated data 
 to an analysis-ready format.  This mandates a working knowledge of the SDTM format and nomenclature, in addition to a good knowledge of IDDO’s 
 specific implementation of SDTM (a necessary modification to existing implementation guidelines due to heterogeneity in legacy data [@iddo_KKSS]).
 End-users unfamiliar with IDDO’s SDTM implementation can therefore encounter challenges in utilising the data.  
@@ -78,7 +78,7 @@ for pharmaceutical regulatory submission.
 
 Data stored in SDTM format comprises a series of subsets called domains, with each domain corresponding to a specific data topic. 
 Domains are tabular and usually stored in a long format; typically a row per event per participant, which can result in multiple rows 
-per participant, per day. The package provides several synthetic datasets generated for user familiarisation and documentation. SDTM 
+per participant, per timepoint. The package provides several synthetic datasets generated for user familiarisation and documentation. SDTM 
 findings domains, such as the microbiology (MB) domain, can have up to 4 columns for capturing the test results (i.e. `MBORRES`, `MBSTRESC` & `MBSTRESN`) 
 and a selection of over 20 timing variables. The MB domain, for example (see `MB_RPTESTB` below), has one row for every microbiology test and the test 
 result conducted in the study. Whilst this preserves the intricacies of the study data, it also creates complexity for analysis. 
@@ -133,7 +133,7 @@ A key limitation is that the iddoverse functions cannot address every need of re
 in the datasets within, and across, diseases. The objective has been to provide assistance and automation of analysis
 datasets, whilst keeping the solution generalisable and customisable by the user. 
 
-![Figure 1: Flowchart of functions within the `iddoverse` package.](figures/Function Flowchart.tif)
+![Figure 1: Flowchart of functions within the `iddoverse` package.](figures/Figure 1 - Function Flowchart.tif)
 
 # iddoverse Functions
 
@@ -148,11 +148,11 @@ diseases and will not be relevant to most. The hierarchy of timing variables is 
 parameter to enable researchers to select the most appropriate variable(s) for their analysis. By choosing a ‘best choice’ timing 
 and result, potential confusion surrounding multiple columns is removed. 
 
-![Figure 2: Hierarchy of best choice results/events/findings in `prepare_domain()`. `STRESN` or `DECOD` would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order. The two letter domain code preceeds these variable names.](figures/Hierarchy Choices.tif)
+![Figure 2: Hierarchy of best choice results/events/findings in `prepare_domain()`. `STRESN` or `DECOD` would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order. The two letter domain code preceeds these variable names.](figures/Figure 2 - Hierarchy Choices.tif)
 
 The `prepare_domain()` function then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study ID (`STUDYID`) 
 and participant number (`USUBJID`). The different events/findings/tests are transformed into columns, and the dataset is populated 
-with the associated result. Several domains can then be analysed separately, or joined together by the uniquely identifying keys: `STUDYID`, `USUBJID`, `TIME` and `TIME_SOURCE`. 
+with the associated result. Several domains can then be analysed separately or joined together by the uniquely identifying keys: `STUDYID`, `USUBJID`, `TIME` and `TIME_SOURCE`. 
 
 ```r
 > prepare_domain(MB_RPTESTB, "mb")
@@ -189,14 +189,15 @@ selection of parameters within `prepare_domain()`. Additionally, some utility an
 
 # Research Impact Statement
 
+The IDDO data repository contains over 1.3 million IPD records from over 600 studies and 70 countries, across 8 disease themes. Since February 2026,
+all researchers accessing data from the IDDO data repository have been provided with information on how to use and access the iddoverse package, 
+thus increasing the number and diversity of users and organisations. 
+
 Research which has used the `iddoverse` includes malaria studies conducted by the Liverpool School of Tropical Medicine and the 
 Mahidol-Oxford Tropical Medicine Research Unit in Thailand (unpublished at time of writing). Published works which have used the `iddoverse` 
 package include research on factors associated with death from Ebola [@trokon] and two visceral leishmaniasis meta-analyses 
 [@munir; @kumar]. Additionally, the package is being used internally by IDDO to create summaries to check, and subsequently 
 improve, the quality of the data standardisation.  
-
-Since February 2026, all researchers accessing the IDDO data repository have been provided with information on how to use and access the 
-`iddoverse` package, thus increasing the number and diversity of users and organisations. 
 
 In a survey conducted by IDDO, several users of the IDDO data repository have reported confusion with the variety of timing variables and 
 result columns. Users will benefit from the `iddoverse` package as a solution to this complexity. 
