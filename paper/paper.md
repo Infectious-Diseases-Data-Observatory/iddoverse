@@ -13,6 +13,7 @@ authors:
   orcid: "0009-0001-1669-3716" 
   affiliation: 1, 2
 - name: James Wilson
+  orcid: "0000-0003-3615-4928"
   affiliation: 1, 2
 - name: Jennifer Lee
   orcid: "0000-0002-0391-4575"
