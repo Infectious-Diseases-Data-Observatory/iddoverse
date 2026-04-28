@@ -14,7 +14,8 @@ create_participant_table(
   mb_domain = NULL,
   rp_domain = NULL,
   sc_domain = NULL,
-  vs_domain = NULL
+  vs_domain = NULL,
+  print_messages = TRUE
 )
 ```
 
@@ -43,6 +44,11 @@ create_participant_table(
 - vs_domain:
 
   A vital signs/VS domain data frame.
+
+- print_messages:
+
+  Boolean. Should messages from the function be generated and shown in
+  the user's console. Default is TRUE.
 
 ## Value
 

@@ -10,7 +10,8 @@ Historic refers to events that occurred before the study start.
 create_clinical_hist_table(
   sa_domain,
   timing_variables = c("SAHR", "SADY", "SASTDY", "SACDSTDY", "VISITDY", "EPOCH"),
-  values_funct = first
+  values_funct = first,
+  print_messages = TRUE
 )
 ```
 
@@ -40,6 +41,11 @@ create_clinical_hist_table(
   first(), i.e. if there is two rows from the same day and time, the
   first record will be taken, the second will be dropped. Choice of
   timing_variables will impact the number of rows affected.
+
+- print_messages:
+
+  Boolean. Should messages from the function be generated and shown in
+  the user's console. Default is TRUE.
 
 ## Value
 

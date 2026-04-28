@@ -11,7 +11,8 @@ create_malaria_pcr_table(
   pf_domain,
   rs_domain,
   ds_domain = NULL,
-  values_funct = first
+  values_funct = first,
+  print_messages = TRUE
 )
 ```
 
@@ -37,6 +38,11 @@ create_malaria_pcr_table(
   first(), i.e. if there is two rows from the same day and time, the
   first record will be taken, the second will be dropped. Choice of
   timing_variables will impact the number of rows affected.
+
+- print_messages:
+
+  Boolean. Should messages from the function be generated and shown in
+  the user's console. Default is TRUE.
 
 ## Value
 

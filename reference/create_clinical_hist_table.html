@@ -11,7 +11,7 @@ refers to events that occurred before the study start."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">iddoverse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,8 @@ refers to events that occurred before the study start.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_clinical_hist_table</span><span class="op">(</span></span>
 <span>  <span class="va">sa_domain</span>,</span>
 <span>  timing_variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SAHR"</span>, <span class="st">"SADY"</span>, <span class="st">"SASTDY"</span>, <span class="st">"SACDSTDY"</span>, <span class="st">"VISITDY"</span>, <span class="st">"EPOCH"</span><span class="op">)</span>,</span>
-<span>  values_funct <span class="op">=</span> <span class="va">first</span></span>
+<span>  values_funct <span class="op">=</span> <span class="va">first</span>,</span>
+<span>  print_messages <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -79,6 +80,11 @@ with the same time points (as listed in timing_variables). Default is
 first(), i.e. if there is two rows from the same day and time, the first
 record will be taken, the second will be dropped. Choice of
 timing_variables will impact the number of rows affected.</p></dd>
+
+
+<dt id="arg-print-messages">print_messages<a class="anchor" aria-label="anchor" href="#arg-print-messages"></a></dt>
+<dd><p>Boolean. Should messages from the function be generated
+and shown in the user's console. Default is TRUE.</p></dd>
 
 </dl></div>
     <div class="section level2">
