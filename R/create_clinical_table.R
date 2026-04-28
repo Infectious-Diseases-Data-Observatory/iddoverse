@@ -15,6 +15,8 @@
 #'   first(), i.e. if there is two rows from the same day and time, the first
 #'   record will be taken, the second will be dropped. Choice of
 #'   timing_variables will impact the number of rows affected.
+#' @param print_messages Boolean. Should messages from the function be generated
+#'   and shown in the user's console. Default is TRUE.
 #'
 #' @returns An analysis dataset, one row per person, per timepoint.
 #'
@@ -28,26 +30,30 @@
 #'
 create_clinical_table <- function(dm_domain, mb_domain = NULL, mp_domain = NULL,
                                   sa_domain = NULL, vs_domain = NULL,
-                                  values_funct = first){
+                                  values_funct = first,
+                                  print_messages = TRUE){
   data <- prepare_domain(dm_domain, "dm", variables_include = "")
 
   if(!is.null(mb_domain)){
     data <- data %>%
       full_join(prepare_domain(mb_domain, "mb",  variables_include = c("MTB", "HIV"),
-                               values_fn = values_funct))
+                               values_fn = values_funct,
+                               print_messages = print_messages))
   }
 
   if(!is.null(mp_domain)){
     data <- data %>%
       full_join(prepare_domain(mp_domain, "mp",  include_LOC = TRUE,
-                               values_fn = values_funct))
+                               values_fn = values_funct,
+                               print_messages = print_messages))
   }
 
 
   if(!is.null(vs_domain)){
     data <- data %>%
       full_join(prepare_domain(vs_domain, "vs",
-                               values_fn = values_funct))
+                               values_fn = values_funct,
+                               print_messages = print_messages))
   }
 
   if(!is.null(sa_domain)){
@@ -57,7 +63,8 @@ create_clinical_table <- function(dm_domain, mb_domain = NULL, mp_domain = NULL,
                                  "vomiting", "nausea", "fever",  "diarrhea",
                                  "abdominal pain", "jaundice", "bleeding",
                                  "anemia", "anorexia", "blood transfusion"),
-                               values_fn = values_funct))
+                               values_fn = values_funct,
+                               print_messages = print_messages))
   }
 
   data <- data %>%

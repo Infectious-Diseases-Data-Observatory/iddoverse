@@ -7,7 +7,7 @@ test_that("replicate labs table to verify output", {
     LBORRES = c("ten", "ninty-nine", "twenty two"), LBORRESU = "units"
   )
 
-  out_table <- create_labs_table(lb_domain = lb)
+  out_table <- create_labs_table(lb_domain = lb, print_messages = FALSE)
   out_prepare <- prepare_domain(lb, "lb", print_messages = FALSE)
 
   expect_identical(out_table, out_prepare)
@@ -24,7 +24,8 @@ test_that("check labs table additional parameters", {
   )
 
   out_table <- create_labs_table(lb_domain = lb, variables = "HGB",
-                                 include_method = TRUE, timing_variables = "VISITDY")
+                                 include_method = TRUE, timing_variables = "VISITDY",
+                                 print_messages = FALSE)
   out_prepare <- prepare_domain(lb, "lb", variables_include = "HGB",
                                 include_METHOD = TRUE, timing_variables = "VISITDY",
                                 print_messages = FALSE)
