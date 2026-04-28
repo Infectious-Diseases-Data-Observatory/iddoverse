@@ -20,6 +20,8 @@
 #'   first(), i.e. if there is two rows from the same day and time, the first
 #'   record will be taken, the second will be dropped. Choice of
 #'   timing_variables will impact the number of rows affected.
+#' @param print_messages Boolean. Should messages from the function be generated
+#'   and shown in the user's console. Default is TRUE.
 #'
 #' @returns An analysis dataset, one row per person, per timepoint.
 #'
@@ -36,7 +38,8 @@ create_clinical_hist_table <- function(sa_domain,
                                        timing_variables = c(
                                          "SAHR", "SADY", "SASTDY", "SACDSTDY",
                                          "VISITDY", "EPOCH"),
-                                       values_funct = first){
+                                       values_funct = first,
+                                       print_messages = TRUE){
   assert_data_frame(sa_domain, required_vars = exprs(SACAT))
 
   data_sa <- sa_domain %>%
@@ -44,7 +47,8 @@ create_clinical_hist_table <- function(sa_domain,
 
   data <- prepare_domain(data_sa, "SA",
                  variables_include = c("fever", "anemia", "malaria", "hiv"),
-                 timing_variables = timing_variables, values_fn = values_funct) %>%
+                 timing_variables = timing_variables, values_fn = values_funct,
+                 print_messages = print_messages) %>%
     remove_empty("cols")
 
   return(data)

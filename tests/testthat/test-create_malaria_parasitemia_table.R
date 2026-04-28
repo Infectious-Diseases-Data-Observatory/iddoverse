@@ -8,7 +8,7 @@ test_that("replicate labs table to verify output", {
     MBORRESU = c("units", "units", "units", "cycle number")
   )
 
-  out_table <- create_malaria_parasitemia_table(mb_domain = mb)
+  out_table <- create_malaria_parasitemia_table(mb_domain = mb, print_messages = FALSE)
   out_prepare <- prepare_domain(mb, "MB",
                                 variables_include = c(
                                   "PFALCIPA", "PFALCIPS", "PFALCIP",
@@ -33,7 +33,8 @@ test_that("check labs table additional parameters", {
   out_table <- create_malaria_parasitemia_table(mb_domain = mb,
                                                 variables = "PFALCIPA",
                                                 include_method = TRUE,
-                                                timing_variables = "VISITDY")
+                                                timing_variables = "VISITDY",
+                                                print_messages = FALSE)
   out_prepare <- prepare_domain(mb, "MB",
                                 variables_include = "PFALCIPA",
                                 timing_variables = "VISITDY",

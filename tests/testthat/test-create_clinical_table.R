@@ -22,9 +22,9 @@ test_that("create_clinical_table full_joins prepared domain outputs and removes 
                        SAOCCUR = "Y", SAPRESP = NA,
                        SASTDY = 1)
 
-  out <- suppressMessages(create_clinical_table(dm_domain = dm, mb_domain = mb,
-                                                mp_domain = mp, sa_domain = sa,
-                                                vs_domain = vs))
+  out <- create_clinical_table(dm_domain = dm, mb_domain = mb,
+                               mp_domain = mp, sa_domain = sa, vs_domain = vs,
+                               print_messages = FALSE)
 
   expect_true(any(grepl("^MTB", colnames(out))) &
                 any(grepl("^WIDTH_", colnames(out))) &
