@@ -2,6 +2,7 @@
 * prepare_domain: message about the number of rows using value_fn now more accurately reflects the number of rows, as it is now groups by LOC and METHOD if appropiate
 * Additional tests to cover change to prepare_domain
 * print_messages added to table functions, with equivalent documentation changes
+* Logo consistency changes with worlddatr
 
 # iddoverse 0.9.0
 * create_participant_table: baseline timing EPOCH == BASELINE then VISITDY == 1, change from any of VISITDY == 1, DY == 1 and EPOCH == BASELINE
