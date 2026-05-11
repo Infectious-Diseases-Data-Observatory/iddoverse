@@ -61,6 +61,7 @@ An analysis dataset, one row per person, per timepoint.
 ## Examples
 
 ``` r
+
 create_clinical_table(dm_domain = DM_RPTESTB,
                       sa_domain = SA_RPTESTB,
                       vs_domain = VS_RPTESTB)

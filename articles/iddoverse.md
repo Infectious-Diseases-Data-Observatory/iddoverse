@@ -12,6 +12,7 @@ documentation and examples which can be viewed using the `?` command.
 ## Installing the Package
 
 ``` r
+
 # uncomment the following lines to install these packages if required
 # install.packages(c("devtools", "dplyr"))
 # devtools::install_github("Infectious-Diseases-Data-Observatory/iddoverse")
@@ -34,6 +35,7 @@ can be used to gain familiarity with the IDDO-SDTM data. Each domain
 starts with the two letter domain code followed by `_RPTESTB`.
 
 ``` r
+
 # demographics (DM) domain
 DM_RPTESTB
 #> # A tibble: 3 × 22
@@ -101,6 +103,7 @@ the first parameter is the domain data frame followed by the two letter
 domain code.
 
 ``` r
+
 prepare_domain(MB_RPTESTB, 
                "mb")
 #> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: MBDY, MBCDSTDY, VISITDY, EPOCH"
@@ -142,6 +145,7 @@ variable, so they can specify `VISITDY`. The `TIME_SOURCE` changes
 compared to the previous example as the hierarchy has changed.
 
 ``` r
+
 prepare_domain(MB_RPTESTB,
                "MB",
                timing_variables = "VISITDY")
@@ -171,6 +175,7 @@ interest, by using `variables_include` to select just weight and
 temperature in the VS domain example below:
 
 ``` r
+
 prepare_domain(VS_RPTESTB,
                "vs", 
                variables_include = c("TEMP", "WEIGHT"))
@@ -197,6 +202,7 @@ along with the units, (i.e. `TEMP_AXILLA_C`). If the location or method
 is `NA`, then `NA` will appear in the column name (i.e. `WEIGHT_NA_kg`).
 
 ``` r
+
 prepare_domain(VS_RPTESTB,
                "vs", 
                variables_include = c("TEMP", "WEIGHT"), 
@@ -235,6 +241,7 @@ prepared domains, allowing for a customised analysis dataset to be
 built.
 
 ``` r
+
 left_join(
   prepare_domain(MB_RPTESTB, "MB",  timing_variables = "VISIT"),
   prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_LOC = TRUE)
@@ -288,11 +295,12 @@ creates a one row per participant analysis table along with several
 participant characteristic variables and baseline test information.
 World Health Organisation child growth standards are also derived if
 age, sex, height and weight are in the dataset; height for age (`HAZ`),
-weight for age (`WAZ`) and weight for height (`WHZ`) $z$-scores are
+weight for age (`WAZ`) and weight for height (`WHZ`) $`z`$-scores are
 calculated for participants under the age of 5, with respective flags
 (i.e. `HAZ_FLAG`) for scores outside a typical range.
 
 ``` r
+
 create_participant_table(dm_domain = DM_RPTESTB,
                          rp_domain = RP_RPTESTB,
                          vs_domain = VS_RPTESTB)
@@ -323,6 +331,7 @@ Pharmacogenomics Genetics (PF), Disease Response and Clinical
 Classification (RS) and (optionally) disposition (DS) domains.
 
 ``` r
+
 create_malaria_pcr_table(pf_domain = PF_RPTESTB,
                          rs_domain = RS_RPTESTB)
 #> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the PF domain are: PFDY, PFCDSTDY, VISITDY, EPOCH"
@@ -367,6 +376,7 @@ present. The possible outputs are:
   accompanied with a plot visualising the information.
 
 ``` r
+
 check_data(DM_RPTESTB)
 ```
 
@@ -437,6 +447,7 @@ function may be useful when deciding which variables to include in the
 output.
 
 ``` r
+
 table_variables(VS_RPTESTB, "vS")
 #> 
 #>    BMI HEIGHT   TEMP WEIGHT 
@@ -452,6 +463,7 @@ and
 (if `age_in_years = FALSE`)
 
 ``` r
+
 age_df <- DM_RPTESTB %>% select(STUDYID, DOMAIN, USUBJID, AGE, AGEU)
 age_df
 #> # A tibble: 3 × 5

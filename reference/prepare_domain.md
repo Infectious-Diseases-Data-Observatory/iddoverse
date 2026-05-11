@@ -81,6 +81,7 @@ parameters.
 ## Examples
 
 ``` r
+
 prepare_domain(DM_RPTESTB, "DM")
 #> # A tibble: 3 × 21
 #>   STUDYID DOMAIN USUBJID SUBJID RFSTDTC DTHDTC DTHFL SITEID INVID INVNAM BRTHDTC

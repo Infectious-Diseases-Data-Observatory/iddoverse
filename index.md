@@ -18,6 +18,7 @@ You can install the development version of `iddoverse` from
 [GitHub](https://github.com/) with the following code in the R console:
 
 ``` r
+
 # uncomment below line if you have not installed 'devtools' on your machine
 # install.packages("devtools")
 devtools::install_github("Infectious-Diseases-Data-Observatory/iddoverse")
