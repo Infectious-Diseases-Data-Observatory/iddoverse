@@ -154,7 +154,7 @@ diseases and will not be relevant to most. The hierarchy of timing variables is 
 parameter to enable researchers to select the most appropriate variable(s) for their analysis. By choosing a ‘best choice’ timing 
 and result, potential confusion surrounding multiple columns is removed. 
 
-![Hierarchy of best choice results/events/findings in `prepare_domain()`. `STRESN` or `DECOD` would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order. The two letter domain code preceeds these variable names.](figures/Figure 2 - Hierarchy Choices.tif){ height=300px keepaspectratio=true }
+![Hierarchy of best choice results/events/findings in `prepare_domain()`. `STRESN` or `DECOD` would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order. The two letter domain code preceeds these variable names.](figures/Figure 2 - Hierarchy Choices.tif){ height=600px keepaspectratio=true }
 
 The `prepare_domain()` function then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study ID (`STUDYID`) 
 and participant number (`USUBJID`). The different events/findings/tests are transformed into columns, and the dataset is populated 
