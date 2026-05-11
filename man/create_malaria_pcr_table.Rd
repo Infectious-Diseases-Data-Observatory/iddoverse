@@ -8,7 +8,8 @@ create_malaria_pcr_table(
   pf_domain,
   rs_domain,
   ds_domain = NULL,
-  values_funct = first
+  values_funct = first,
+  print_messages = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ with the same time points (as listed in timing_variables). Default is
 first(), i.e. if there is two rows from the same day and time, the first
 record will be taken, the second will be dropped. Choice of
 timing_variables will impact the number of rows affected.}
+
+\item{print_messages}{Boolean. Should messages from the function be generated
+and shown in the user's console. Default is TRUE.}
 }
 \value{
 An analysis dataset, one row per person, per timepoint.

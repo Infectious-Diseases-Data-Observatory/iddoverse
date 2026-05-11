@@ -233,3 +233,75 @@ test_that("prepare_domain errors when required STUDYID or USUBJID missing", {
   expect_error(prepare_domain(df_missing2, "LB"), regexp = "STUDYID|USUBJID", ignore.case = TRUE)
 })
 
+test_that("value_fun_check correctly accounts for LOC splitting duplicates", {
+  lb <- tibble::tibble(
+    STUDYID = "S",
+    USUBJID = "P1",
+    LBTESTCD = c("HGB","HGB"),
+    LBSTDY = c("1","1"),
+    LBSTRESN = c(10, 11),
+    LBSTRESU = c("U","U"),
+    LBORRES= c("ten", "eleven"),
+    LBORRESU = "Units",
+    LBLOC = c("L1","L2")
+  )
+
+  msg_no_loc <- capture.output(
+    prepare_domain(lb, "LB", include_LOC = FALSE, print_messages = TRUE)
+  )
+  expect_true(any(grepl("Number of rows.*: 1", msg_no_loc)))
+
+  msg_with_loc <- capture.output(
+    prepare_domain(lb, "LB", include_LOC = TRUE, print_messages = TRUE)
+  )
+  expect_true(any(grepl("Number of rows.*: 0", msg_with_loc)))
+})
+
+test_that("value_fun_check correctly accounts for METHOD splitting duplicates", {
+  lb <- tibble::tibble(
+    STUDYID = "S",
+    USUBJID = "P1",
+    LBTESTCD = c("HGB","HGB"),
+    LBSTDY = c("1","1"),
+    LBSTRESN = c(10, 11),
+    LBSTRESU = c("U","U"),
+    LBORRES= c("ten", "eleven"),
+    LBORRESU = "Units",
+    LBMETHOD = c("M1","M2")
+  )
+
+  msg_no_method <- capture.output(
+    prepare_domain(lb, "LB", include_METHOD = FALSE, print_messages = TRUE)
+  )
+  expect_true(any(grepl("Number of rows.*: 1", msg_no_method)))
+
+  msg_with_method <- capture.output(
+    prepare_domain(lb, "LB", include_METHOD = TRUE, print_messages = TRUE)
+  )
+  expect_true(any(grepl("Number of rows.*: 0", msg_with_method)))
+})
+
+test_that("value_fun_check correctly accounts for both LOC and METHOD splitting duplicates", {
+  lb <- tibble::tibble(
+    STUDYID = "S",
+    USUBJID = "P1",
+    LBTESTCD = c("HGB","HGB"),
+    LBSTDY = c("1","1"),
+    LBSTRESN = c(10, 11),
+    LBSTRESU = c("U","U"),
+    LBORRES= c("ten", "eleven"),
+    LBORRESU = "Units",
+    LBLOC = c("L1","L2"),
+    LBMETHOD = c("M1","M2")
+  )
+
+  msg_no_meth_loc <- capture.output(
+    prepare_domain(lb, "LB", include_METHOD = FALSE, include_LOC = FALSE, print_messages = TRUE)
+  )
+  expect_true(any(grepl("Number of rows.*: 1", msg_no_meth_loc)))
+
+  msg_with_meth_loc <- capture.output(
+    prepare_domain(lb, "LB", include_METHOD = TRUE, include_LOC = TRUE,print_messages = TRUE)
+  )
+  expect_true(any(grepl("Number of rows.*: 0", msg_with_meth_loc)))
+})

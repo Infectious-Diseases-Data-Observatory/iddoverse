@@ -13,6 +13,8 @@
 #'   first(), i.e. if there is two rows from the same day and time, the first
 #'   record will be taken, the second will be dropped. Choice of
 #'   timing_variables will impact the number of rows affected.
+#' @param print_messages Boolean. Should messages from the function be generated
+#'   and shown in the user's console. Default is TRUE.
 #'
 #' @returns An analysis dataset, one row per person, per timepoint.
 #'
@@ -22,20 +24,24 @@
 #' create_malaria_pcr_table(PF_RPTESTB, RS_RPTESTB)
 #'
 create_malaria_pcr_table <- function(pf_domain, rs_domain, ds_domain = NULL,
-                                     values_funct = first){
+                                     values_funct = first,
+                                     print_messages = TRUE){
 
 
   data_pf <- prepare_domain(pf_domain, "PF",  variables_include = "INTP",
-                            values_fn = values_funct)
+                            values_fn = values_funct,
+                            print_messages = print_messages)
 
 
   data_rs <- prepare_domain(rs_domain, "RS", variables_include = "WHOMAL01",
-                            values_fn = values_funct)
+                            values_fn = values_funct,
+                            print_messages = print_messages)
 
   data <- full_join(data_pf, data_rs)
 
   if(!is.null(ds_domain)){
-    data_ds <- prepare_domain(ds_domain, "DS", values_fn = values_funct)
+    data_ds <- prepare_domain(ds_domain, "DS", values_fn = values_funct,
+                              print_messages = print_messages)
 
     data <- full_join(data, data_ds)
   }

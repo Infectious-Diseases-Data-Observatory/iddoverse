@@ -19,6 +19,7 @@
 #' @importFrom dplyr last
 #' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
+#' @importFrom dplyr n
 #' @importFrom dplyr relocate
 #' @importFrom dplyr rename
 #' @importFrom dplyr right_join

@@ -2,7 +2,8 @@ test_that("create_participant_table errors when optional domain is missing requi
   dm <- tibble::tibble(STUDYID = "S", USUBJID = "P1")
   sc <- tibble::tibble(STUDYID = "S", USUBJID = "P1", EDULEVEL = "HIGH")
 
-  expect_error(create_participant_table(dm_domain = dm, sc_domain = sc),
+  expect_error(create_participant_table(dm_domain = dm, sc_domain = sc,
+                                        print_messages = FALSE),
                regexp = "VISITDY|EPOCH", ignore.case = TRUE)
 })
 
@@ -20,7 +21,8 @@ test_that("create_participant_table with DM only returns DM columns", {
                                   mb_domain = NULL,
                                   rp_domain = NULL,
                                   sc_domain = NULL,
-                                  vs_domain = NULL)
+                                  vs_domain = NULL,
+                                  print_messages = FALSE)
 
   expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX", "ARMCD") %in% colnames(out)))
   expect_equal(nrow(out), nrow(dm))
@@ -49,7 +51,8 @@ test_that("create_participant_table selects baseline VISITDY == 1 from VS domain
     EPOCH = c("BASELINE", "TREATMENT", "BASELINE")
   )
 
-  out <- create_participant_table(dm_domain = dm, vs_domain = vs)
+  out <- create_participant_table(dm_domain = dm, vs_domain = vs,
+                                  print_messages = FALSE)
 
   expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
   expect_true(any(grepl("^HEIGHT", colnames(out))))
@@ -84,7 +87,8 @@ test_that("create_participant_table selects baseline VISITDY == 1 from sc domain
     EPOCH = c("BASELINE", "BASELINE")
   )
 
-  out <- create_participant_table(dm_domain = dm, sc_domain = sc)
+  out <- create_participant_table(dm_domain = dm, sc_domain = sc,
+                                  print_messages = FALSE)
 
   expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
   expect_true(any(grepl("^EDULEVEL", colnames(out))))
@@ -119,7 +123,8 @@ test_that("create_participant_table selects baseline VISITDY == 1 from LB domain
     EPOCH = c("BASELINE")
   )
 
-  out <- create_participant_table(dm_domain = dm, lb_domain = lb)
+  out <- create_participant_table(dm_domain = dm, lb_domain = lb,
+                                  print_messages = FALSE)
 
   expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
   expect_true(any(grepl("^G6PD", colnames(out))))
@@ -151,7 +156,8 @@ test_that("create_participant_table selects baseline VISITDY == 1 from MB domain
     EPOCH = c("BASELINE")
   )
 
-  out <- create_participant_table(dm_domain = dm, mb_domain = mb)
+  out <- create_participant_table(dm_domain = dm, mb_domain = mb,
+                                  print_messages = FALSE)
 
   expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
   expect_true(any(grepl("^HIV", colnames(out))))
@@ -183,7 +189,8 @@ test_that("create_participant_table selects baseline VISITDY == 1 from rp domain
     EPOCH = c("BASELINE", "BASELINE")
   )
 
-  out <- create_participant_table(dm_domain = dm, rp_domain = rp)
+  out <- create_participant_table(dm_domain = dm, rp_domain = rp,
+                                  print_messages = FALSE)
 
   expect_true(all(c("STUDYID", "USUBJID", "AGE", "SEX") %in% colnames(out)))
   expect_true(any(grepl("^EGESTAGE", colnames(out))))
@@ -214,7 +221,8 @@ test_that("create_participant_table slices baseline VISITDY == 1 correctly", {
     EPOCH = "BASELINE"
   )
 
-  out <- create_participant_table(dm_domain = dm, vs_domain = vs)
+  out <- create_participant_table(dm_domain = dm, vs_domain = vs,
+                                  print_messages = FALSE)
 
   expect_equal(nrow(out), 2)
 
@@ -247,7 +255,8 @@ test_that("if AGEU present, AGE is converted to years", {
                                   mb_domain = NULL,
                                   rp_domain = NULL,
                                   sc_domain = NULL,
-                                  vs_domain = NULL)
+                                  vs_domain = NULL,
+                                  print_messages = FALSE)
 
   expect_true(all(c("STUDYID", "USUBJID", "AGE_YEARS", "SEX", "ARMCD") %in% colnames(out)))
   expect_true(as.numeric(out[2, "AGE_YEARS"]) < 0.11)
@@ -290,8 +299,10 @@ test_that("anthro is derived if columns are present, and conversely", {
     EPOCH = "BASELINE"
   )
 
-  out_anthro <- create_participant_table(dm_domain = dm, vs_domain = vs_with)
-  out_without_anthro <- create_participant_table(dm_domain = dm, vs_domain = vs_without)
+  out_anthro <- create_participant_table(dm_domain = dm, vs_domain = vs_with,
+                                         print_messages = FALSE)
+  out_without_anthro <- create_participant_table(dm_domain = dm, vs_domain = vs_without,
+                                                 print_messages = FALSE)
 
   expect_true(all(c("HEIGHT_cm", "HAZ", "WAZ_FLAG", "WHZ") %in% colnames(out_anthro)))
   expect_true(all(c("HEIGHT_cm") %in% colnames(out_without_anthro)))

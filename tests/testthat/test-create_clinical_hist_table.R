@@ -1,7 +1,7 @@
 test_that("create_clinical_hist_table errors when required SACAT column missing", {
   sa_incomplete <- tibble::tibble(STUDYID = "S", USUBJID = "P1")
 
-  expect_error(create_clinical_hist_table(sa_incomplete), regexp = "SACAT", ignore.case = TRUE)
+  expect_error(create_clinical_hist_table(sa_incomplete, print_messages = FALSE), regexp = "SACAT", ignore.case = TRUE)
 })
 
 test_that("create_clinical_hist_table handles case where no MEDICAL HISTORY rows exist", {
@@ -10,7 +10,7 @@ test_that("create_clinical_hist_table handles case where no MEDICAL HISTORY rows
     SAOCCUR = "Y", SAPRESP = "Y", SADY = 24
   )
 
-  res <- suppressMessages(create_clinical_hist_table(sa_domain = sa_no_med_hist))
+  res <- create_clinical_hist_table(sa_domain = sa_no_med_hist, print_messages = FALSE)
 
   expect_s3_class(res, "data.frame")
   expect_equal(nrow(res), 0)
@@ -28,7 +28,7 @@ test_that("create_clinical_hist_table filters SACAT == 'MEDICAL HISTORY' and rem
     DUMMY_A = c(NA, NA, NA)
   )
 
-  out_table <- create_clinical_hist_table(sa_domain = sa)
+  out_table <- create_clinical_hist_table(sa_domain = sa, print_messages = FALSE)
   out_prepare <- prepare_domain(sa %>% filter(SACAT == "MEDICAL HISTORY"),
                                 "sa", variables_include = c("ANEMIA", "FEVER"),
                                 print_messages = FALSE)
@@ -55,7 +55,8 @@ test_that("create_clinical_hist_table uses correct custom timing variables", {
   )
 
   out_table <- create_clinical_hist_table(sa_domain = sa,
-                                          timing_variables = "VISIT")
+                                          timing_variables = "VISIT",
+                                          print_messages = FALSE)
   out_prepare <- prepare_domain(sa %>% filter(SACAT == "MEDICAL HISTORY"),
                                 "sa", variables_include = c("ANEMIA", "FEVER"),
                                 print_messages = FALSE,

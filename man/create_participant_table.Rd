@@ -10,7 +10,8 @@ create_participant_table(
   mb_domain = NULL,
   rp_domain = NULL,
   sc_domain = NULL,
-  vs_domain = NULL
+  vs_domain = NULL,
+  print_messages = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ create_participant_table(
 \item{sc_domain}{A subject characteristics/SC domain data frame.}
 
 \item{vs_domain}{A vital signs/VS domain data frame.}
+
+\item{print_messages}{Boolean. Should messages from the function be generated
+and shown in the user's console. Default is TRUE.}
 }
 \value{
 An analysis dataset, one row per participant.

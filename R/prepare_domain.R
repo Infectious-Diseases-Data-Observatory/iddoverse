@@ -179,17 +179,17 @@ prepare_domain <- function(data, domain,
         timing_variables[i]
     }
 
-    value_fun_check <- data %>%
-      group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD) %>%
-      dplyr::summarise(n = dplyr::n()) %>%
-      ungroup() %>%
-      filter(n > 1)
-
-    if(print_messages == TRUE){
-      print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
-    }
-
     if(include_LOC == FALSE & include_METHOD == FALSE){
+      value_fun_check <- data %>%
+        group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD) %>%
+        summarise(n = n()) %>%
+        ungroup() %>%
+        filter(n > 1)
+
+      if(print_messages == TRUE){
+        print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+      }
+
       data <- data %>%
         pivot_wider(
           id_cols = c(
@@ -202,6 +202,16 @@ prepare_domain <- function(data, domain,
           values_fn = values_fn
         )
     } else if(include_LOC == TRUE & include_METHOD == FALSE){
+      value_fun_check <- data %>%
+        group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD, LOC) %>%
+        summarise(n = n()) %>%
+        ungroup() %>%
+        filter(n > 1)
+
+      if(print_messages == TRUE){
+        print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+      }
+
       data <- data %>%
       pivot_wider(
         id_cols = c(
@@ -214,6 +224,16 @@ prepare_domain <- function(data, domain,
         values_fn = values_fn
       )
     }else if(include_LOC == FALSE & include_METHOD == TRUE){
+      value_fun_check <- data %>%
+        group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD, METHOD) %>%
+        summarise(n = n()) %>%
+        ungroup() %>%
+        filter(n > 1)
+
+      if(print_messages == TRUE){
+        print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+      }
+
       data <- data %>%
       pivot_wider(
         id_cols = c(
@@ -226,6 +246,16 @@ prepare_domain <- function(data, domain,
         values_fn = values_fn
       )
     }else{
+      value_fun_check <- data %>%
+        group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD, LOC, METHOD) %>%
+        summarise(n = n()) %>%
+        ungroup() %>%
+        filter(n > 1)
+
+      if(print_messages == TRUE){
+        print(str_c("Number of rows where values_fn has been used to pick record in the ", domain, " domain: ", nrow(value_fun_check)))
+      }
+
       data <- data %>%
         pivot_wider(
           id_cols = c(

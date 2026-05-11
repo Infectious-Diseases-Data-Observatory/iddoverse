@@ -11,6 +11,8 @@
 #' @param rp_domain A reproductive system findings/RP domain data frame.
 #' @param sc_domain A subject characteristics/SC domain data frame.
 #' @param vs_domain A vital signs/VS domain data frame.
+#' @param print_messages Boolean. Should messages from the function be generated
+#'   and shown in the user's console. Default is TRUE.
 #'
 #' @returns An analysis dataset, one row per participant.
 #'
@@ -27,7 +29,8 @@ create_participant_table <- function(dm_domain,
                                      mb_domain = NULL,
                                      rp_domain = NULL,
                                      sc_domain = NULL,
-                                     vs_domain = NULL){
+                                     vs_domain = NULL,
+                                     print_messages = TRUE){
   data <- prepare_domain(dm_domain, "dm",
                          variables_include = c("STUDYID", "USUBJID", "AGEU",
                                                "AGE", "SEX","RFSTDTC",
@@ -41,7 +44,8 @@ create_participant_table <- function(dm_domain,
       left_join(
         prepare_domain(sc_domain, "sc",
                        variables_include = c("EDULEVEL", "MARISTAT"),
-                       timing_variables = c("VISITDY", "EPOCH"))%>%
+                       timing_variables = c("VISITDY", "EPOCH"),
+                       print_messages = print_messages)%>%
           filter(
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
@@ -61,7 +65,8 @@ create_participant_table <- function(dm_domain,
       left_join(
         prepare_domain(vs_domain, "vs",
                        variables_include = c("HEIGHT", "WEIGHT", "BMI", "MUARMCIR"),
-                       timing_variables = c("VISITDY", "EPOCH")) %>%
+                       timing_variables = c("VISITDY", "EPOCH"),
+                       print_messages = print_messages) %>%
           filter(
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
@@ -81,7 +86,8 @@ create_participant_table <- function(dm_domain,
       left_join(
         prepare_domain(lb_domain, "lb",
                        variables_include = c("G6PD"),
-                       timing_variables = c("VISITDY", "EPOCH")) %>%
+                       timing_variables = c("VISITDY", "EPOCH"),
+                       print_messages = print_messages) %>%
           filter(
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
@@ -101,7 +107,8 @@ create_participant_table <- function(dm_domain,
       left_join(
         prepare_domain(mb_domain, "mb",
                        variables_include = c("HIV"),
-                       timing_variables = c("VISITDY", "EPOCH")) %>%
+                       timing_variables = c("VISITDY", "EPOCH"),
+                       print_messages = print_messages) %>%
           filter(
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
@@ -121,7 +128,8 @@ create_participant_table <- function(dm_domain,
       left_join(
         prepare_domain(rp_domain, "rp",
                        variables_include = c("PREGIND", "EGESTAGE"),
-                       timing_variables = c("VISITDY", "EPOCH")) %>%
+                       timing_variables = c("VISITDY", "EPOCH"),
+                       print_messages = print_messages) %>%
           filter(
               (TIME == 1 & TIME_SOURCE == "VISITDY") |
               (TIME == "BASELINE" & TIME_SOURCE == "EPOCH")
