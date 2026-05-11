@@ -1,16 +1,20 @@
 ---
-title: "Welcome to the iddoverse: An R package for converting IDDO-SDTM data into 
-analysis datasets"
+title: "Welcome to the iddoverse: An R package for converting IDDO-SDTM data into
+  analysis datasets"
 tags:
 - R
 - Infectious Diseases
 - Data Transformation
 - Study Data Tabulation Model
-date: "7 April 2026" 
-output: word_document 
+date: "7 April 2026"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
 authors:
-- name: Rhys Peploe 
-  orcid: "0009-0001-1669-3716" 
+- name: Rhys Peploe
+  orcid: "0009-0001-1669-3716"
   affiliation: 1, 2
 - name: James Wilson
   orcid: "0000-0003-3615-4928"
@@ -34,7 +38,8 @@ bibliography: paper.bib
 affiliations:
 - name: Infectious Diseases Data Observatory (IDDO), Oxford, United Kingdom
   index: 1
-- name: Centre for Tropical Medicine and Global Health, Nuffield Department of Medicine, Oxford, United Kingdom
+- name: Centre for Tropical Medicine and Global Health, Nuffield Department of Medicine,
+    Oxford, United Kingdom
   index: 2
 ---
 
@@ -149,7 +154,7 @@ diseases and will not be relevant to most. The hierarchy of timing variables is 
 parameter to enable researchers to select the most appropriate variable(s) for their analysis. By choosing a ‘best choice’ timing 
 and result, potential confusion surrounding multiple columns is removed. 
 
-![Hierarchy of best choice results/events/findings in `prepare_domain()`. `STRESN` or `DECOD` would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order. The two letter domain code preceeds these variable names.](figures/Figure 2 - Hierarchy Choices.tif)
+![Hierarchy of best choice results/events/findings in `prepare_domain()`. `STRESN` or `DECOD` would be used in the first instance and, where rows are missing this information, they are populated with the variables under them in order. The two letter domain code preceeds these variable names.](figures/Figure 2 - Hierarchy Choices.tif){ height=300px keepaspectratio=true }
 
 The `prepare_domain()` function then pivots the rows by the best choice time variable (`TIME`, `TIME_SOURCE`), the study ID (`STUDYID`) 
 and participant number (`USUBJID`). The different events/findings/tests are transformed into columns, and the dataset is populated 
