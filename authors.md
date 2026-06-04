@@ -10,7 +10,7 @@
 Source:
 [`inst/CITATION`](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
 
-R. Peploe, Wilson J, Lee J, Strudwick S, Jauncey H, Watson JA, Dahal P
+Peploe R, Wilson J, Lee J, Strudwick S, Jauncey H, Watson JA, Dahal P
 (2026), 'Welcome to the iddoverse: An R package for converting IDDO-SDTM
 data to analysis datasets', Infectious Diseases Data Observatory,
 University of Oxford, Oxford, UK. Available:
