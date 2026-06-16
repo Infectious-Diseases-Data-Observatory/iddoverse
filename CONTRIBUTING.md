@@ -75,10 +75,10 @@ We welcome pull requests for:
 
 In particular, the following would be valuable additions to the package:
 
-- [] A cheatsheet for functions
-- [] Adding alt text to figures in vignette
-- [] Expanding the synthetic data in the package
-- [] Translating the vignette into other languages, such as French
+- [ ] A cheatsheet for functions
+- [ ] Adding alt text to figures in vignette
+- [ ] Expanding the synthetic data in the package
+- [ ] Translating the vignette into other languages, such as French
 
 Please keep changes as small and focused as possible.
 
