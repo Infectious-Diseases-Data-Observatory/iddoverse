@@ -1,6 +1,5 @@
 ---
-title: "Welcome to the iddoverse: An R package for converting IDDO-SDTM data into
-  analysis datasets"
+title: "iddoverse: An R package for converting IDDO-SDTM data into analysis datasets"
 tags:
 - R
 - Infectious Diseases

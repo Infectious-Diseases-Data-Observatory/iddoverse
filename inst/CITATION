@@ -3,7 +3,7 @@ citHeader("To cite iddoverse in publications use:")
 citEntry(
   entry    = "article",
   journal  = "Journal of Open Sourse Software",
-  title    = "Welcome to the iddoverse: An R package for converting IDDO-SDTM data into analysis datasets",
+  title    = "iddoverse: An R package for converting IDDO-SDTM data into analysis datasets",
   author   = "Peploe R, Wilson J, Lee J, Strudwick S, Jauncey H, Watson JA, Dahal P",
   institution = "Infectious Diseases Data Observatory (IDDO), University of Oxford, Oxford, UK",
   year     = "2026",
@@ -11,7 +11,7 @@ citEntry(
   note     = "Package Version 0.9.1",
   textVersion = paste(
     "R. Peploe, Wilson J, Lee J, Strudwick S, Jauncey H, Watson JA, Dahal P (2026),
-    'Welcome to the iddoverse: An R package for converting IDDO-SDTM data to analysis datasets',
+    'iddoverse: An R package for converting IDDO-SDTM data into analysis datasets',
     Infectious Diseases Data Observatory, University of Oxford, Oxford, UK.
     Available: https://github.com/Infectious-Diseases-Data-Observatory/iddoverse"
   )
