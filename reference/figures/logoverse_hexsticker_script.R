@@ -1,5 +1,3 @@
-# install.packages("hexSticker")
-
 library(hexSticker)
 library(magick)
 
