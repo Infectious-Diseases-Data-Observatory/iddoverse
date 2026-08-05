@@ -93,7 +93,7 @@ test_that("AGEU warning when NA/NULL AGEU",{
   df_warn <- tibble::tibble(
     USUBJID = c("P1", "P2", "P3", "P4", "P5"),
     AGE = c(876.6, 365, 104, 24, 30.7),
-    AGEU = c("HOURS", "DAYS", NA, "MONTHS", "YEARS")
+    AGEU = c("HOURS", "DAYS", NA, NA, "YEARS")
   )
 
   df_no_warn <- tibble::tibble(
