@@ -14,7 +14,7 @@
 #'
 #' convert_age_to_years(DM_RPTESTB)
 #'
-convert_age_to_years <- function(data) {
+convert_age_to_years <- function(data, remove_AGEU = TRUE) {
 
   assert_data_frame(data, required_vars = exprs(AGE, AGEU))
 
@@ -30,6 +30,7 @@ convert_age_to_years <- function(data) {
 
     for (i in seq(1, nrow(data), 1)) {
       if (is.na(data$AGEU[i])) {
+        warn("There exists rows which NA/NULL AGEU. The AGE on these rows has not been converted. Check the input data to ensure this is intended.")
         next
       } else if(data$AGEU[i] == "HOURS"){
         data$AGE[i] <- data$AGE[i] / 8766
@@ -49,9 +50,15 @@ convert_age_to_years <- function(data) {
       }
     }
 
-    data = data %>%
-      select(-AGEU) %>%
-      rename("AGE_YEARS" = "AGE")
+    if(remove_AGEU == TRUE){
+      data = data %>%
+        select(-AGEU) %>%
+        rename("AGE_YEARS" = "AGE")
+    } else{
+      data = data %>%
+        rename("AGE_YEARS" = "AGE")
+    }
+
   }
 
   return(data)

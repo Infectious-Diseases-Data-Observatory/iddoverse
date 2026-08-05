@@ -40,7 +40,7 @@ test_that("rows with NA AGEU are skipped and AGE left unchanged (except floor on
     AGEU = c(NA_character_, "YEARS")
   )
 
-  out <- convert_age_to_years(df)
+  out <- suppressWarnings(convert_age_to_years(df))
 
   # For the NA AGEU row, the loop does 'next' and leaves AGE unchanged (10.4)
   expect_equal(out$AGE_YEARS[1], 10.4)
@@ -72,4 +72,36 @@ test_that("non-standard AGEU values", {
     AGEU = c("UNKNOWN", "CENTURIES", "HOURS", "WEEKS")
   )
   expect_error(convert_age_to_years(df))
+})
+
+test_that("remove AGEU works", {
+  df <- tibble::tibble(
+    USUBJID = c("P1", "P2", "P3", "P4", "P5"),
+    AGE = c(876.6, 365, 104, 24, 30.7),
+    AGEU = c("HOURS", "DAYS", NA, "MONTHS", "YEARS")
+  )
+
+  output_AGEU = suppressWarnings(convert_age_to_years(df, remove_AGEU = FALSE))
+
+  output_no_AGEU = suppressWarnings(convert_age_to_years(df))
+
+  expect_true("AGEU" %in% colnames(output_AGEU))
+  expect_false("AGEU" %in% colnames(output_no_AGEU))
+})
+
+test_that("AGEU warning when NA/NULL AGEU",{
+  df_warn <- tibble::tibble(
+    USUBJID = c("P1", "P2", "P3", "P4", "P5"),
+    AGE = c(876.6, 365, 104, 24, 30.7),
+    AGEU = c("HOURS", "DAYS", NA, "MONTHS", "YEARS")
+  )
+
+  df_no_warn <- tibble::tibble(
+    USUBJID = c("P1", "P2", "P3", "P4", "P5"),
+    AGE = c(876.6, 365, 104, 24, 30.7),
+    AGEU = c("HOURS", "DAYS", "WEEKS", "MONTHS", "YEARS")
+  )
+
+  expect_warning(convert_age_to_years(df_warn), regexp = "There exists")
+  expect_no_warning(convert_age_to_years(df_no_warn))
 })
