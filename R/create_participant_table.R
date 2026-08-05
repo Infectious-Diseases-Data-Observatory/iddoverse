@@ -3,7 +3,9 @@
 #' Joins several IDDO-SDTM domains together to create a single dataset with
 #' participant demographics, characteristics and baseline test results or
 #' findings. Baseline timing is defined as planned
-#' study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE.
+#' study day (VISITDY) = 1 or epoch (EPOCH) = BASELINE. If height, weight, age 
+#' and sex are available, then anthro growth standards will be computed 
+#' for under 5 year olds
 #'
 #' @param dm_domain A demographics/DM domain data frame.
 #' @param lb_domain A laboratory/LB domain data frame.
@@ -14,7 +16,7 @@
 #' @param print_messages Boolean. Should messages from the function be generated
 #'   and shown in the user's console. Default is TRUE.
 #'
-#' @returns An analysis dataset, one row per participant.
+#' @returns An analysis dataset, one row per participant. 
 #'
 #' @export
 #'
