@@ -1,7 +1,6 @@
-# iddoverse: Converting IDDO-SDTM Data To Analysis Datasets
+# iddoverse: An R package for converting IDDO-SDTM data into analysis datasets
 
-Functions to convert IDDO-curated SDTM domains into analysis datasets,
-similar to the Analysis Data Model (ADaM).
+Functions to convert IDDO-curated SDTM domains into analysis datasets.
 
 ## See also
 
@@ -16,3 +15,8 @@ Useful links:
 
 **Maintainer**: Rhys Peploe <rhyspeploe1998@gmail.com>
 ([ORCID](https://orcid.org/0009-0001-1669-3716))
+
+Authors:
+
+- Rhys Peploe <rhyspeploe1998@gmail.com>
+  ([ORCID](https://orcid.org/0009-0001-1669-3716))
