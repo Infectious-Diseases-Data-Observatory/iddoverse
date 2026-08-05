@@ -4,6 +4,8 @@
 #'
 #' @param data data frame containing the AGE and AGEU variables; typically the
 #'   Demographics (DM) domain.
+#' @param remove_AGEU Boolean. Whether the AGEU variable should be removed from
+#'   the output. Default is TRUE.
 #'
 #' @return data frame with AGE in years as opposed to the original values.
 #'

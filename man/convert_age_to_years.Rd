@@ -9,6 +9,9 @@ convert_age_to_years(data, remove_AGEU = TRUE)
 \arguments{
 \item{data}{data frame containing the AGE and AGEU variables; typically the
 Demographics (DM) domain.}
+
+\item{remove_AGEU}{Boolean. Whether the AGEU variable should be removed from
+the output. Default is TRUE.}
 }
 \value{
 data frame with AGE in years as opposed to the original values.
