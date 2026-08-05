@@ -4,9 +4,9 @@
 \name{iddoverse-package}
 \alias{iddoverse}
 \alias{iddoverse-package}
-\title{iddoverse: Converting IDDO-SDTM Data To Analysis Datasets}
+\title{iddoverse: An R package for converting IDDO-SDTM data into analysis datasets}
 \description{
-Functions to convert IDDO-curated SDTM domains into analysis datasets, similar to the Analysis Data Model (ADaM).
+Functions to convert IDDO-curated SDTM domains into analysis datasets.
 }
 \seealso{
 Useful links:
@@ -18,6 +18,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Rhys Peploe \email{rhyspeploe1998@gmail.com} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
+
+Authors:
+\itemize{
+  \item Rhys Peploe \email{rhyspeploe1998@gmail.com} (\href{https://orcid.org/0009-0001-1669-3716}{ORCID})
+}
 
 }
 \keyword{internal}
