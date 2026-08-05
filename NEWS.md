@@ -1,3 +1,6 @@
+# iddoverse 0.9.2
+* convert_age_to_years: fixed issue where non standard AGEU were not flagged due to the presence of standard AGEUs also in the data
+
 # iddoverse 0.9.1
 * prepare_domain: message about the number of rows using value_fn now more accurately reflects the number of rows, as it is now groups by LOC and METHOD if appropiate
 * Additional tests to cover change to prepare_domain

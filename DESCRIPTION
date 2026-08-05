@@ -1,6 +1,6 @@
 Package: iddoverse
 Title: An R package for converting IDDO-SDTM data into analysis datasets
-Version: 0.9.1
+Version: 0.9.2
 Authors@R: 
     person("Rhys", "Peploe", , "rhyspeploe1998@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0001-1669-3716"))
