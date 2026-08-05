@@ -67,9 +67,9 @@ test_that("function handles zero-row data frame without error and returns same s
 
 test_that("non-standard AGEU values", {
   df <- tibble::tibble(
-    USUBJID = c("X1","X2"),
-    AGE = c(15.9, 7.1),
-    AGEU = c("UNKNOWN", "CENTURIES")
+    USUBJID = c("X1","X2", "X3", "X4"),
+    AGE = c(15.9, 7.1, 24, 52),
+    AGEU = c("UNKNOWN", "CENTURIES", "HOURS", "WEEKS")
   )
   expect_error(convert_age_to_years(df))
 })

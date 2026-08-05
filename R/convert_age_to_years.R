@@ -24,7 +24,7 @@ convert_age_to_years <- function(data) {
   if(nrow(data) == 0){
     # skip to end if empty
   } else{
-    if(!any(data$AGEU %in% c("HOURS", "DAYS", "WEEKS", "MONTHS", "YEARS"))){
+    if(any(data$AGEU %in% c("HOURS", "DAYS", "WEEKS", "MONTHS", "YEARS") == FALSE)){
       rlang::abort("There exists a non-standard AGEU (age units) which is not HOURS, DAYS, WEEKS, MONTHS or YEARS. Convert this manually before using convert_age_to_years")
     }
 
