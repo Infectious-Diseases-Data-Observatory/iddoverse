@@ -28,9 +28,12 @@ convert_age_to_years <- function(data, remove_AGEU = TRUE) {
       rlang::abort("There exists a non-standard AGEU (age units) which is not HOURS, DAYS, WEEKS, MONTHS, YEARS or NA. Convert this manually before using convert_age_to_years")
     }
 
+    if(any(is.na(data$AGEU) | is.null(data$AGEU))){
+      warn("There exists rows which NA/NULL AGEU. The AGE on these rows has not been converted. Check the input data to ensure this is intended.")
+    }
+
     for (i in seq(1, nrow(data), 1)) {
       if (is.na(data$AGEU[i])) {
-        warn("There exists rows which NA/NULL AGEU. The AGE on these rows has not been converted. Check the input data to ensure this is intended.")
         next
       } else if(data$AGEU[i] == "HOURS"){
         data$AGE[i] <- data$AGE[i] / 8766
