@@ -5,7 +5,7 @@ Convert the AGE of all subjects to years and change the AGEU to "YEARS".
 ## Usage
 
 ``` r
-convert_age_to_years(data)
+convert_age_to_years(data, remove_AGEU = TRUE)
 ```
 
 ## Arguments

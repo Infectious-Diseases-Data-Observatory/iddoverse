@@ -3,7 +3,9 @@
 Joins several IDDO-SDTM domains together to create a single dataset with
 participant demographics, characteristics and baseline test results or
 findings. Baseline timing is defined as planned study day (VISITDY) = 1
-or epoch (EPOCH) = BASELINE.
+or epoch (EPOCH) = BASELINE. If height, weight, age and sex are
+available, then anthro growth standards will be computed for under 5
+year olds
 
 ## Usage
 
