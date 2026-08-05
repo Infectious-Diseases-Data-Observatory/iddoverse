@@ -4,6 +4,8 @@
 
 - convert_age_to_years: fixed issue where non standard AGEU were not
   flagged due to the presence of standard AGEUs also in the data
+- convert_age_to_years: new parameter to keep AGEU if desired. Warning
+  message when AGEU is NA
 - Update roxygen version to 8.0.0
 
 ## iddoverse 0.9.1
