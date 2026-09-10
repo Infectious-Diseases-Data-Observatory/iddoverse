@@ -28,7 +28,7 @@ test_that("findings domain: STRESN → STRESC → MODIFY → ORRES precedence, T
   expect_equal(out$TIME_SOURCE[1], "STDY")
 })
 
-test_that("include_LOC/include_METHOD produce expected column-name patterns", {
+test_that("include_location/include_method produce expected column-name patterns", {
   lb <- tibble::tibble(
     STUDYID = "ST1", USUBJID = "S1",
     LBTESTCD = "HGB",
@@ -38,10 +38,10 @@ test_that("include_LOC/include_METHOD produce expected column-name patterns", {
     LBLOC = "L1", LBMETHOD = "M1"
   )
 
-  out_none <- prepare_domain(lb, "LB", include_LOC = FALSE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
-  out_loc <- prepare_domain(lb, "LB", include_LOC = TRUE, include_METHOD = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
-  out_method <- prepare_domain(lb, "LB", include_LOC = FALSE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
-  out_both <- prepare_domain(lb, "LB", include_LOC = TRUE, include_METHOD = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_none <- prepare_domain(lb, "LB", include_location = FALSE, include_method = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_loc <- prepare_domain(lb, "LB", include_location = TRUE, include_method = FALSE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_method <- prepare_domain(lb, "LB", include_location = FALSE, include_method = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
+  out_both <- prepare_domain(lb, "LB", include_location = TRUE, include_method = TRUE, variables_include = c("HGB"), timing_variables = c("LBSTDY"), print_messages = FALSE)
 
   # When both included, names_glue = "{TESTCD}_{LOC}_{METHOD}_{UNITS}_{.value}"
   # After removing _RESULTS we expect column "HGB_L1_M1_U"
@@ -56,7 +56,7 @@ test_that("include_LOC/include_METHOD produce expected column-name patterns", {
   expect_equal(as.character(out_none$HGB_U[1]), "7")
 })
 
-test_that("include_LOC warns and is reset to FALSE if domain does not have LOC", {
+test_that("include_location warns and is reset to FALSE if domain does not have LOC", {
   lb <- tibble::tibble(
     STUDYID = "ST1", USUBJID = "S1",
     LBTESTCD = "HGB", LBSTDY = "1",
@@ -64,13 +64,13 @@ test_that("include_LOC warns and is reset to FALSE if domain does not have LOC",
     LBORRES = "seven", LBORRESU = "units"
   )
 
-  expect_warning(out <- prepare_domain(lb, "LB", include_LOC = TRUE, print_messages = FALSE),
+  expect_warning(out <- prepare_domain(lb, "LB", include_location = TRUE, print_messages = FALSE),
                  regexp = "does not have a location", ignore.case = TRUE)
   # no LOC in output column names
   expect_false(any(grepl("_L", colnames(out)) & grepl("_U", colnames(out))))
 })
 
-test_that("include_METHOD warns and is reset to FALSE if domain does not have METHOD", {
+test_that("include_method warns and is reset to FALSE if domain does not have METHOD", {
   lb <- tibble::tibble(
     STUDYID = "ST1", USUBJID = "S1",
     LBTESTCD = "HGB", LBSTDY = "1",
@@ -78,7 +78,7 @@ test_that("include_METHOD warns and is reset to FALSE if domain does not have ME
     LBORRES = "seven", LBORRESU = "units"
   )
 
-  expect_warning(out <- prepare_domain(lb, "LB", include_METHOD = TRUE, print_messages = FALSE),
+  expect_warning(out <- prepare_domain(lb, "LB", include_method = TRUE, print_messages = FALSE),
                  regexp = "does not have a method", ignore.case = TRUE)
   # no METHOD token present in column names
   expect_false(any(grepl("_M", colnames(out)) & grepl("_U", colnames(out))))
@@ -247,12 +247,12 @@ test_that("value_fun_check correctly accounts for LOC splitting duplicates", {
   )
 
   msg_no_loc <- capture.output(
-    prepare_domain(lb, "LB", include_LOC = FALSE, print_messages = TRUE)
+    prepare_domain(lb, "LB", include_location = FALSE, print_messages = TRUE)
   )
   expect_true(any(grepl("Number of rows.*: 1", msg_no_loc)))
 
   msg_with_loc <- capture.output(
-    prepare_domain(lb, "LB", include_LOC = TRUE, print_messages = TRUE)
+    prepare_domain(lb, "LB", include_location = TRUE, print_messages = TRUE)
   )
   expect_true(any(grepl("Number of rows.*: 0", msg_with_loc)))
 })
@@ -271,12 +271,12 @@ test_that("value_fun_check correctly accounts for METHOD splitting duplicates", 
   )
 
   msg_no_method <- capture.output(
-    prepare_domain(lb, "LB", include_METHOD = FALSE, print_messages = TRUE)
+    prepare_domain(lb, "LB", include_method = FALSE, print_messages = TRUE)
   )
   expect_true(any(grepl("Number of rows.*: 1", msg_no_method)))
 
   msg_with_method <- capture.output(
-    prepare_domain(lb, "LB", include_METHOD = TRUE, print_messages = TRUE)
+    prepare_domain(lb, "LB", include_method = TRUE, print_messages = TRUE)
   )
   expect_true(any(grepl("Number of rows.*: 0", msg_with_method)))
 })
@@ -296,12 +296,12 @@ test_that("value_fun_check correctly accounts for both LOC and METHOD splitting 
   )
 
   msg_no_meth_loc <- capture.output(
-    prepare_domain(lb, "LB", include_METHOD = FALSE, include_LOC = FALSE, print_messages = TRUE)
+    prepare_domain(lb, "LB", include_method = FALSE, include_location = FALSE, print_messages = TRUE)
   )
   expect_true(any(grepl("Number of rows.*: 1", msg_no_meth_loc)))
 
   msg_with_meth_loc <- capture.output(
-    prepare_domain(lb, "LB", include_METHOD = TRUE, include_LOC = TRUE,print_messages = TRUE)
+    prepare_domain(lb, "LB", include_method = TRUE, include_location = TRUE,print_messages = TRUE)
   )
   expect_true(any(grepl("Number of rows.*: 0", msg_with_meth_loc)))
 })

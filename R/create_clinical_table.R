@@ -43,7 +43,7 @@ create_clinical_table <- function(dm_domain, mb_domain = NULL, mp_domain = NULL,
 
   if(!is.null(mp_domain)){
     data <- data %>%
-      full_join(prepare_domain(mp_domain, "mp",  include_LOC = TRUE,
+      full_join(prepare_domain(mp_domain, "mp",  include_location = TRUE,
                                values_fn = values_funct,
                                print_messages = print_messages))
   }

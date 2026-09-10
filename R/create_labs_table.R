@@ -50,7 +50,7 @@ create_labs_table <- function(lb_domain,
                               print_messages = TRUE){
 
   prepare_domain(lb_domain, "LB",
-                 include_METHOD = include_method,
+                 include_method = include_method,
                  variables_include = variables,
                  timing_variables = timing_variables,
                  values_fn = values_funct,

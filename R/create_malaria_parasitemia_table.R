@@ -54,8 +54,8 @@ create_malaria_parasitemia_table <- function(mb_domain,
                                              print_messages = TRUE){
 
   prepare_domain(mb_domain, "MB",
-                 include_METHOD = include_method,
-                 include_LOC = include_location,
+                 include_method = include_method,
+                 include_location = include_location,
                  variables_include = variables,
                  timing_variables = timing_variables,
                  values_fn = values_funct,

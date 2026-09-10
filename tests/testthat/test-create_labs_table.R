@@ -27,7 +27,7 @@ test_that("check labs table additional parameters", {
                                  include_method = TRUE, timing_variables = "VISITDY",
                                  print_messages = FALSE)
   out_prepare <- prepare_domain(lb, "lb", variables_include = "HGB",
-                                include_METHOD = TRUE, timing_variables = "VISITDY",
+                                include_method = TRUE, timing_variables = "VISITDY",
                                 print_messages = FALSE)
 
   expect_identical(out_table, out_prepare)

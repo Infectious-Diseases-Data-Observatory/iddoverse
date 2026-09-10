@@ -79,13 +79,13 @@ prepare_domain(VS_RPTESTB,
                variables_include = c("TEMP", "WEIGHT"))
 ```
 
-The location (`LOC`) and method (`METHOD`) of a test or finding may be required in the analysis dataset. `include_LOC` and `include_METHOD` can be set to `TRUE` to include them in the column names of the test/finding along with the units, (i.e. `TEMP_AXILLA_C`). If the location or method is `NA`, then `NA` will appear in the column name (i.e. `WEIGHT_NA_kg`).
+The location (`LOC`) and method (`METHOD`) of a test or finding may be required in the analysis dataset. `include_location` and `include_method` can be set to `TRUE` to include them in the column names of the test/finding along with the units, (i.e. `TEMP_AXILLA_C`). If the location or method is `NA`, then `NA` will appear in the column name (i.e. `WEIGHT_NA_kg`).
 
 ```{r}
 prepare_domain(VS_RPTESTB,
                "vs", 
                variables_include = c("TEMP", "WEIGHT"), 
-               include_LOC = TRUE)
+               include_location = TRUE)
 ```
 
 When the function pivots the data, they may be occasions where two rows for the same test/finding/event have the same STUDYID, USUBJID, TIME value & TIME_SOURCE, in this scenario, the rows are not uniquely separable so the first row is taken by default (the `first()` function used). This can be changed to another function using the `values_fn` parameter. The number of rows affected will be reported in the console when running `prepare_domain()` by default, unless `print_messages` is set to `FALSE`.
@@ -95,7 +95,7 @@ Once one domain has been transformed, the consistent keys (`STUDYID`, `USUBJID`,
 ```{r}
 left_join(
   prepare_domain(MB_RPTESTB, "MB",  timing_variables = "VISIT"),
-  prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_LOC = TRUE)
+  prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_location = TRUE)
 )
 ```
 

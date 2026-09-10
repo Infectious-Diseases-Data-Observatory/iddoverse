@@ -38,7 +38,7 @@ test_that("check labs table additional parameters", {
   out_prepare <- prepare_domain(mb, "MB",
                                 variables_include = "PFALCIPA",
                                 timing_variables = "VISITDY",
-                                include_METHOD = TRUE, print_messages = FALSE)
+                                include_method = TRUE, print_messages = FALSE)
 
   expect_identical(out_table, out_prepare)
   expect_true("PFALCIPA_M1_U" %in% names(out_table))
