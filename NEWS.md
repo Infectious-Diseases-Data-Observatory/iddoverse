@@ -1,3 +1,8 @@
+# iddoverse 1.0.0
+* stable package release
+* prepare_domain: include_LOC and include_METHOD changed to include_location and include_method for consistency with create_ functions
+* changes to tests and vignettes consistent with include_LOC and METHOD change above
+
 # iddoverse 0.9.2
 * convert_age_to_years: fixed issue where non standard AGEU were not flagged due to the presence of standard AGEUs also in the data
 * convert_age_to_years: new parameter to keep AGEU if desired. Warning message when AGEU is NA
