@@ -5,13 +5,13 @@
 #' two letter domain name as well as the domain data file.
 #'
 #' @param data Domain data frame.
-#' @param domain Character. The two letter domain name of the data.
-#'      Domain options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP",
-#'      "PF", "AU", "PC", "SA", "HO", "ER", "PO", "DS
-#' @param include_LOC Boolean. Should the location (--LOC) be included in the
-#'   output. Default is FALSE.
-#' @param include_METHOD Boolean. Should the method (--METHOD) be included in
-#'   the output. Default is FALSE.
+#' @param domain Character. The two letter domain name of the data. Domain
+#'   options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF", "AU",
+#'   "PC", "SA", "HO", "ER", "PO", "DS
+#' @param include_location Boolean. Should the finding/event location (--LOC) be
+#'   included in the output. Default is FALSE.
+#' @param include_method Boolean. Should the finding/event method (--METHOD) be
+#'   included in the output. Default is FALSE.
 #' @param variables_include Character list. List of variables to include in the
 #'   output. Default is to include all available variables.
 #' @param timing_variables Character list. List of timing variables which are to
@@ -48,11 +48,11 @@
 #' prepare_domain(LB_RPTESTB, "lb", timing_variables = c("VISITNUM", "VISITDY"))
 #'
 #' # Include location in the output and change the values_fn to select the last result
-#' prepare_domain(VS_RPTESTB, "vs", include_LOC = TRUE, values_fn = dplyr::last)
+#' prepare_domain(VS_RPTESTB, "vs", include_location = TRUE, values_fn = dplyr::last)
 #'
 prepare_domain <- function(data, domain,
-                           include_LOC = FALSE,
-                           include_METHOD = FALSE,
+                           include_location = FALSE,
+                           include_method = FALSE,
                            variables_include = c(),
                            timing_variables = c(
                              str_c(domain, "HR"), str_c(domain, "DY"),
@@ -82,14 +82,14 @@ prepare_domain <- function(data, domain,
     }
   }
 
-  if(include_LOC == TRUE & !(str_c(domain, "LOC") %in% names(data))){
-    rlang::warn(str_c("This dataset does not have a location (", domain, "LOC) variable, yet include_LOC is TRUE"))
-    include_LOC = FALSE
+  if(include_location == TRUE & !(str_c(domain, "LOC") %in% names(data))){
+    rlang::warn(str_c("This dataset does not have a location (", domain, "LOC) variable, yet include_location is TRUE"))
+    include_location = FALSE
   }
 
-  if(include_METHOD == TRUE & !(str_c(domain, "METHOD") %in% names(data))){
-    rlang::warn(str_c("This dataset does not have a method (", domain, "METHOD) variable, yet include_METHOD is TRUE"))
-    include_METHOD = FALSE
+  if(include_method == TRUE & !(str_c(domain, "METHOD") %in% names(data))){
+    rlang::warn(str_c("This dataset does not have a method (", domain, "METHOD) variable, yet include_method is TRUE"))
+    include_method = FALSE
   }
 
   if(domain %in% special_domains){
@@ -126,12 +126,12 @@ prepare_domain <- function(data, domain,
     data[, "TESTCD"] <-
       data[, str_c(domain, "TESTCD")]
 
-    if(include_LOC == TRUE){
+    if(include_location == TRUE){
       data[, "LOC"] <-
         data[, str_c(domain, "LOC")]
     }
 
-    if(include_METHOD == TRUE){
+    if(include_method == TRUE){
       data[, "METHOD"] <-
         data[, str_c(domain, "METHOD")]
     }
@@ -179,7 +179,7 @@ prepare_domain <- function(data, domain,
         timing_variables[i]
     }
 
-    if(include_LOC == FALSE & include_METHOD == FALSE){
+    if(include_location == FALSE & include_method == FALSE){
       value_fun_check <- data %>%
         group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD) %>%
         summarise(n = n()) %>%
@@ -201,7 +201,7 @@ prepare_domain <- function(data, domain,
           names_glue = "{TESTCD}_{UNITS}_{.value}",
           values_fn = values_fn
         )
-    } else if(include_LOC == TRUE & include_METHOD == FALSE){
+    } else if(include_location == TRUE & include_method == FALSE){
       value_fun_check <- data %>%
         group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD, LOC) %>%
         summarise(n = n()) %>%
@@ -223,7 +223,7 @@ prepare_domain <- function(data, domain,
         names_glue = "{TESTCD}_{LOC}_{UNITS}_{.value}",
         values_fn = values_fn
       )
-    }else if(include_LOC == FALSE & include_METHOD == TRUE){
+    }else if(include_location == FALSE & include_method == TRUE){
       value_fun_check <- data %>%
         group_by(STUDYID, USUBJID, TIME, TIME_SOURCE, TESTCD, METHOD) %>%
         summarise(n = n()) %>%

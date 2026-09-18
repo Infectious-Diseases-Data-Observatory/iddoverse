@@ -12,10 +12,10 @@ We aim to keep the project open, clear, and useful for the global research commu
 
 Please:
 
--   read the existing documentation and open issues before you begin
--   check whether someone is already working on the same problem
--   open an issue before starting major changes
--   keep pull requests focused on one change where possible
+- read the existing documentation and open issues before you begin
+- check whether someone is already working on the same problem
+- open an issue before starting major changes
+- keep pull requests focused on one change where possible
 
 If you are unsure where to start, get in touch through GitHub Issues.
 
@@ -29,19 +29,19 @@ You can contribute in several ways.
 
 Please open a GitHub Issue if you find:
 
--   errors or unexpected behaviour
--   problems with documentation
--   installation issues
--   broken examples or workflows
+- errors or unexpected behaviour
+- problems with documentation
+- installation issues
+- broken examples or workflows
 
 When reporting a bug, include:
 
--   what you expected to happen
--   what happened instead
--   a reproducible example
--   your operating system
--   your R version
--   package versions where relevant
+- what you expected to happen
+- what happened instead
+- a reproducible example
+- your operating system
+- your R version
+- package versions where relevant
 
 Clear examples help us fix problems quickly.
 
@@ -51,27 +51,27 @@ We welcome ideas that help researchers use `iddoverse` more effectively.
 
 Examples include:
 
--   new features
--   better workflows
--   improved documentation
--   performance improvements
--   accessibility improvements
+- new features
+- better workflows
+- improved documentation
+- performance improvements
+- accessibility improvements
 
 Please explain:
 
--   the problem you want to solve
--   why the change would help users
--   any suggested implementation details
+- the problem you want to solve
+- why the change would help users
+- any suggested implementation details
 
 ## Contribute code
 
 We welcome pull requests for:
 
--   bug fixes
--   new features
--   tests
--   documentation updates
--   performance improvements
+- bug fixes
+- new features
+- tests
+- documentation updates
+- performance improvements
 
 In particular, the following would be valuable additions to the package:
 
@@ -79,6 +79,7 @@ In particular, the following would be valuable additions to the package:
 - [ ] Adding alt text to figures in vignette
 - [ ] Expanding the synthetic data in the package
 - [ ] Translating the vignette into other languages, such as French
+- [ ] A data dictionary as a function to create a customised dictionary for the user's data
 
 Please keep changes as small and focused as possible.
 
@@ -88,16 +89,16 @@ Please keep changes as small and focused as possible.
 
 Please make sure that you have:
 
--   added or updated tests
--   updated documentation where needed
--   run package checks
--   checked that examples work
+- added or updated tests
+- updated documentation where needed
+- run package checks
+- checked that examples work
 
 #### When you open a pull request:
 
--   Describe the change clearly
--   Link related issues where relevant
--   Explain any important design decisions
+- Describe the change clearly
+- Link related issues where relevant
+- Explain any important design decisions
 
 A member of our team will review your contribution and may suggest changes before merging.
 
@@ -115,9 +116,9 @@ By contributing to `iddoverse`, you agree that your contributions will be releas
 
 We expect contributors to:
 
--   treat others with respect
--   give constructive feedback
--   support an inclusive research community
+- treat others with respect
+- give constructive feedback
+- support an inclusive research community
 
 We do not tolerate harassment, discrimination, or abusive behaviour.
 

@@ -42,7 +42,8 @@ test_that("create_clinical_table full_joins prepared domain outputs and removes 
 test_that("create_clinical_table handles NULL optional domains and returns DM data", {
   dm <- tibble::tibble(STUDYID = "S", USUBJID = "P1")
 
-  out <- create_clinical_table(dm_domain = dm, mb_domain = NULL, mp_domain = NULL, sa_domain = NULL, vs_domain = NULL)
+  out <- create_clinical_table(dm_domain = dm, mb_domain = NULL, mp_domain = NULL,
+                               sa_domain = NULL, vs_domain = NULL)
 
   expect_true(all(c("STUDYID", "USUBJID") %in% colnames(out)))
   expect_false(all(c("AGE") %in% colnames(out)))

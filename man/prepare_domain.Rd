@@ -7,8 +7,8 @@
 prepare_domain(
   data,
   domain,
-  include_LOC = FALSE,
-  include_METHOD = FALSE,
+  include_location = FALSE,
+  include_method = FALSE,
   variables_include = c(),
   timing_variables = c(str_c(domain, "HR"), str_c(domain, "DY"), str_c(domain, "STDY"),
     str_c(domain, "CDSTDY"), "VISITDY", "EPOCH"),
@@ -19,15 +19,15 @@ prepare_domain(
 \arguments{
 \item{data}{Domain data frame.}
 
-\item{domain}{Character. The two letter domain name of the data.
-Domain options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP",
-"PF", "AU", "PC", "SA", "HO", "ER", "PO", "DS}
+\item{domain}{Character. The two letter domain name of the data. Domain
+options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF", "AU",
+"PC", "SA", "HO", "ER", "PO", "DS}
 
-\item{include_LOC}{Boolean. Should the location (--LOC) be included in the
-output. Default is FALSE.}
+\item{include_location}{Boolean. Should the finding/event location (--LOC) be
+included in the output. Default is FALSE.}
 
-\item{include_METHOD}{Boolean. Should the method (--METHOD) be included in
-the output. Default is FALSE.}
+\item{include_method}{Boolean. Should the finding/event method (--METHOD) be
+included in the output. Default is FALSE.}
 
 \item{variables_include}{Character list. List of variables to include in the
 output. Default is to include all available variables.}
@@ -72,6 +72,6 @@ prepare_domain(DM_RPTESTB, "DM", variables_include = c("ARMCD", "AGE", "SEX"))
 prepare_domain(LB_RPTESTB, "lb", timing_variables = c("VISITNUM", "VISITDY"))
 
 # Include location in the output and change the values_fn to select the last result
-prepare_domain(VS_RPTESTB, "vs", include_LOC = TRUE, values_fn = dplyr::last)
+prepare_domain(VS_RPTESTB, "vs", include_location = TRUE, values_fn = dplyr::last)
 
 }
