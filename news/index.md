@@ -8,6 +8,7 @@
   functions
 - changes to tests and vignettes consistent with include_LOC and METHOD
   change above
+- LB_RPTESTB: populate domain field
 
 ## iddoverse 0.9.2
 
