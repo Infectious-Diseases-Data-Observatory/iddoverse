@@ -432,7 +432,7 @@ check_data(DM_RPTESTB)
     #> 
     #> $missingness
     #>  STUDYID   DOMAIN  USUBJID    LBSEQ LBTESTCD   LBTEST  LBORRES LBMODIFY 
-    #>      0.0      1.0      0.0      0.0      0.0      0.0      0.0      1.0 
+    #>      0.0      0.0      0.0      0.0      0.0      0.0      0.0      1.0 
     #> LBORRESU LBSTRESC LBSTRESN LBSTRESU VISITNUM    VISIT  VISITDY    EPOCH 
     #>      0.1      0.9      0.1      0.1      0.0      0.0      0.1      0.0 
     #>    LBDTC     LBDY LBEVINTX 
