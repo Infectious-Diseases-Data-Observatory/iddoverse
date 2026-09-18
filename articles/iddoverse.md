@@ -196,17 +196,18 @@ prepare_domain(VS_RPTESTB,
 ```
 
 The location (`LOC`) and method (`METHOD`) of a test or finding may be
-required in the analysis dataset. `include_LOC` and `include_METHOD` can
-be set to `TRUE` to include them in the column names of the test/finding
-along with the units, (i.e. `TEMP_AXILLA_C`). If the location or method
-is `NA`, then `NA` will appear in the column name (i.e. `WEIGHT_NA_kg`).
+required in the analysis dataset. `include_location` and
+`include_method` can be set to `TRUE` to include them in the column
+names of the test/finding along with the units, (i.e. `TEMP_AXILLA_C`).
+If the location or method is `NA`, then `NA` will appear in the column
+name (i.e. `WEIGHT_NA_kg`).
 
 ``` r
 
 prepare_domain(VS_RPTESTB,
                "vs", 
                variables_include = c("TEMP", "WEIGHT"), 
-               include_LOC = TRUE)
+               include_location = TRUE)
 #> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 7
@@ -244,7 +245,7 @@ built.
 
 left_join(
   prepare_domain(MB_RPTESTB, "MB",  timing_variables = "VISIT"),
-  prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_LOC = TRUE)
+  prepare_domain(VS_RPTESTB, "Vs",  timing_variables = "VISIT", include_location = TRUE)
 )
 #> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the MB domain are: VISIT"
 #> [1] "Number of rows where values_fn has been used to pick record in the MB domain: 0"
@@ -484,8 +485,8 @@ convert_age_to_years(age_df)
 
 ## Other Resources
 
-- Paper: [‘Welcome to the iddoverse: An R package for converting
-  IDDO-SDTM data into analysis
+- Paper: [‘iddoverse: An R package for converting IDDO-SDTM data into
+  analysis
   datasets’](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/tree/main/paper)
 - [IDDO Wiki](https://wiki.iddo.org/en/Data-Engineering) - requires
   registration on [IDDO Website](https://www.iddo.org/user/login)

@@ -10,8 +10,8 @@ requires the two letter domain name as well as the domain data file.
 prepare_domain(
   data,
   domain,
-  include_LOC = FALSE,
-  include_METHOD = FALSE,
+  include_location = FALSE,
+  include_method = FALSE,
   variables_include = c(),
   timing_variables = c(str_c(domain, "HR"), str_c(domain, "DY"), str_c(domain, "STDY"),
     str_c(domain, "CDSTDY"), "VISITDY", "EPOCH"),
@@ -32,15 +32,15 @@ prepare_domain(
   "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF", "AU",
   "PC", "SA", "HO", "ER", "PO", "DS
 
-- include_LOC:
+- include_location:
 
-  Boolean. Should the location (–LOC) be included in the output. Default
-  is FALSE.
+  Boolean. Should the finding/event location (–LOC) be included in the
+  output. Default is FALSE.
 
-- include_METHOD:
+- include_method:
 
-  Boolean. Should the method (–METHOD) be included in the output.
-  Default is FALSE.
+  Boolean. Should the finding/event method (–METHOD) be included in the
+  output. Default is FALSE.
 
 - variables_include:
 
@@ -120,7 +120,7 @@ prepare_domain(LB_RPTESTB, "lb", timing_variables = c("VISITNUM", "VISITDY"))
 #> 9 RPTESTB RPTESTB_003 3     VISITNUM    NA       102       NA           
 
 # Include location in the output and change the values_fn to select the last result
-prepare_domain(VS_RPTESTB, "vs", include_LOC = TRUE, values_fn = dplyr::last)
+prepare_domain(VS_RPTESTB, "vs", include_location = TRUE, values_fn = dplyr::last)
 #> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"
 #> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"
 #> # A tibble: 9 × 9

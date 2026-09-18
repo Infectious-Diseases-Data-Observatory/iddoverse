@@ -88,6 +88,9 @@ Expanding the synthetic data in the package
 
 Translating the vignette into other languages, such as French
 
+A data dictionary as a function to create a customised dictionary for
+the user’s data
+
 Please keep changes as small and focused as possible.
 
 ### Pull requests

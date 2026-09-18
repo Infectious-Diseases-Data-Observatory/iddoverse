@@ -11,7 +11,7 @@ two letter domain name as well as the domain data file."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">iddoverse</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,8 +49,8 @@ two letter domain name as well as the domain data file.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prepare_domain</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">domain</span>,</span>
-<span>  include_LOC <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_METHOD <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_location <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_method <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  variables_include <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  timing_variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">str_c</span><span class="op">(</span><span class="va">domain</span>, <span class="st">"HR"</span><span class="op">)</span>, <span class="fu">str_c</span><span class="op">(</span><span class="va">domain</span>, <span class="st">"DY"</span><span class="op">)</span>, <span class="fu">str_c</span><span class="op">(</span><span class="va">domain</span>, <span class="st">"STDY"</span><span class="op">)</span>,</span>
 <span>    <span class="fu">str_c</span><span class="op">(</span><span class="va">domain</span>, <span class="st">"CDSTDY"</span><span class="op">)</span>, <span class="st">"VISITDY"</span>, <span class="st">"EPOCH"</span><span class="op">)</span>,</span>
@@ -68,19 +68,19 @@ two letter domain name as well as the domain data file.</p>
 
 
 <dt id="arg-domain">domain<a class="anchor" aria-label="anchor" href="#arg-domain"></a></dt>
-<dd><p>Character. The two letter domain name of the data.
-Domain options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP",
-"PF", "AU", "PC", "SA", "HO", "ER", "PO", "DS</p></dd>
+<dd><p>Character. The two letter domain name of the data. Domain
+options: "DM", "LB", "MB", "VS", "RS", "DD", "RP", "SC", "MP", "PF", "AU",
+"PC", "SA", "HO", "ER", "PO", "DS</p></dd>
 
 
-<dt id="arg-include-loc">include_LOC<a class="anchor" aria-label="anchor" href="#arg-include-loc"></a></dt>
-<dd><p>Boolean. Should the location (–LOC) be included in the
-output. Default is FALSE.</p></dd>
+<dt id="arg-include-location">include_location<a class="anchor" aria-label="anchor" href="#arg-include-location"></a></dt>
+<dd><p>Boolean. Should the finding/event location (–LOC) be
+included in the output. Default is FALSE.</p></dd>
 
 
-<dt id="arg-include-method">include_METHOD<a class="anchor" aria-label="anchor" href="#arg-include-method"></a></dt>
-<dd><p>Boolean. Should the method (–METHOD) be included in
-the output. Default is FALSE.</p></dd>
+<dt id="arg-include-method">include_method<a class="anchor" aria-label="anchor" href="#arg-include-method"></a></dt>
+<dd><p>Boolean. Should the finding/event method (–METHOD) be
+included in the output. Default is FALSE.</p></dd>
 
 
 <dt id="arg-variables-include">variables_include<a class="anchor" aria-label="anchor" href="#arg-variables-include"></a></dt>
@@ -160,7 +160,7 @@ parameters.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> RPTESTB RPTESTB_003 3     VISITNUM    <span style="color: #BB0000;">NA</span>       102       <span style="color: #BB0000;">NA</span>           </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Include location in the output and change the values_fn to select the last result</span></span></span>
-<span class="r-in"><span><span class="fu">prepare_domain</span><span class="op">(</span><span class="va">VS_RPTESTB</span>, <span class="st">"vs"</span>, include_LOC <span class="op">=</span> <span class="cn">TRUE</span>, values_fn <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">prepare_domain</span><span class="op">(</span><span class="va">VS_RPTESTB</span>, <span class="st">"vs"</span>, include_location <span class="op">=</span> <span class="cn">TRUE</span>, values_fn <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="va"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">last</a></span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The timing variable(s) hierarchy being used in prepare_domain() for the VS domain are: VSDY, VISITDY, EPOCH"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Number of rows where values_fn has been used to pick record in the VS domain: 0"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 9</span></span>
