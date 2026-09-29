@@ -37,6 +37,8 @@ The package assists researchers to transform their datasets (transferred from ID
 
 Functions are documented and have example code. A [vignette](https://infectious-diseases-data-observatory.github.io/iddoverse/articles/iddoverse.html) provides a demostration/tutorial of the functions and data in the package.
 
+A walkthrough demostration of the package can be found on [IDDO's youtube](https://www.youtube.com/watch?v=C5v4AJpyKSM)
+
 ## Citation
 
 To cite `iddoverse` in publications, see [CITATION](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
