@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/Infectious-Diseases-Data-Observatory/iddoverse/blob/v1.0.0/inst/CITATION)
 
 R. Peploe, Wilson J, Lee J, Strudwick S, Jauncey H, Watson JA, Dahal P
 (2026), 'iddoverse: An R package for converting IDDO-SDTM data into
