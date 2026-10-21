@@ -42,8 +42,8 @@ Functions are documented and have example code. A
 provides a demostration/tutorial of the functions and data in the
 package.
 
-A walkthrough demostration of the package can be found on [IDDO’s
-youtube](https://www.youtube.com/watch?v=C5v4AJpyKSM)
+A walkthrough demostration of the package can be found on
+[youtube](https://www.youtube.com/watch?v=dOzC1FuPfvQ)
 
 ## Citation
 
