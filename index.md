@@ -43,7 +43,7 @@ provides a demostration/tutorial of the functions and data in the
 package.
 
 A walkthrough demostration of the package can be found on
-[youtube](https://www.youtube.com/watch?v=dOzC1FuPfvQ)
+[youtube](https://www.youtube.com/watch?v=C5v4AJpyKSM)
 
 ## Citation
 
